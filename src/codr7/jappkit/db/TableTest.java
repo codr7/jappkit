@@ -14,6 +14,11 @@ public class TableTest {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table_store");
         StringColumn col = new StringColumn(tbl, "string");
+        Record rec = new Record();
+        rec.set(col, "foo");
+        Tx tx = new Tx();
+        tbl.store(rec, tx);
+        assertEquals(rec.get(tbl.id), Long.valueOf(1));
         scm.drop();
         scm.open(Instant.now());
         assertEquals(42, 42);

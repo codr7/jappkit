@@ -1,16 +1,28 @@
 package codr7.jappkit.db;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 public class Record {
-    public <ValueT> ValueT get(Column<ValueT> column) {
-        return (ValueT) fields.get(column);
+    public static final Record DELETED = new Record();
+
+    public Object getObject(Column<?> it) { return fields.get(it); }
+    public <ValueT> ValueT get(Column<ValueT> it) {
+        return (ValueT) getObject(it);
     }
 
-    public <ValueT> void set(Column<ValueT> column, ValueT value) {
+    public void setObject(Column<?> column, Object value) {
         fields.put(column, value);
     }
+    public <ValueT> void set(Column<ValueT> column, ValueT value) {
+        setObject(column, value);
+    }
 
-    private final Map<Column, Object> fields = new TreeMap<>();
+    public Stream<Map.Entry<Column<?>, Object>> getFields() {
+        return fields.entrySet().stream();
+    }
+
+    private final Map<Column<?>, Object> fields = new TreeMap<>(Comparator.comparing(Object::toString));
 }

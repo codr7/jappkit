@@ -13,10 +13,12 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Table extends Relation {
-    public final Column<Long> id = new LongColumn("id");
+    public final Column<Long> id;
 
     public Table(Schema schema, String name) {
         super(schema, name);
+        id = new LongColumn(this, "id");
+        System.err.println(columns);
     }
 
     @Override
@@ -39,6 +41,21 @@ public class Table extends Relation {
 
     public long getNextRecordId() {
         return nextRecordId.incrementAndGet();
+    }
+
+    public void store(Record it, Tx tx) {
+        Long id = it.get(Table.this.id);
+
+        if (id == null) {
+            id = getNextRecordId();
+            it.set(Table.this.id, id);
+        }
+
+        final long idv = id.longValue();
+
+        it.getFields().forEach((Map.Entry<Column<?>, Object> f) -> {
+            tx.set(idv, f.getKey(), f.getValue());
+        });
     }
 
     private File keyFile;
