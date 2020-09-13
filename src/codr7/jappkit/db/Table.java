@@ -26,8 +26,8 @@ public class Table extends Relation {
 
     @Override
     public void open(Instant maxTime) {
-        keyFile = new File(Path.of(schema.root, name, ".key").toString());
-        dataFile = new File(Path.of(schema.root, name, ".dat").toString());
+        keyFile = new File(Path.of(schema.root.toString(), name, ".key").toString());
+        dataFile = new File(Path.of(schema.root.toString(), name, ".dat").toString());
         //todo
     }
 

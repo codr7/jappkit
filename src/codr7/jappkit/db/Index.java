@@ -20,7 +20,7 @@ public class Index extends Relation {
 
     @Override
     public void open(Instant maxTime) {
-        file = new File(Path.of(schema.root, name, ".idx").toString());
+        file = new File(Path.of(schema.root.toString(), name, ".idx").toString());
     }
 
     @Override

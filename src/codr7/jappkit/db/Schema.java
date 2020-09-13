@@ -1,14 +1,15 @@
 package codr7.jappkit.db;
 
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import static codr7.jappkit.db.Utils.*;
 
 public class Schema {
-    public final String root;
+    public final Path root;
 
-    public Schema(String root) {
+    public Schema(Path root) {
         this.root = root;
     }
 
