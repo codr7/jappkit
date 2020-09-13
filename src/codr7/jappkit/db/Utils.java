@@ -11,14 +11,14 @@ public final class Utils {
         return rmdir(new File(path));
     }
 
-    static boolean rmdir(File _) {
-        File[] fs = _.listFiles();
+    static boolean rmdir(File it) {
+        File[] fs = it.listFiles();
 
         if (fs != null) {
-            for (File f: _) { rmdir(_); }
+            for (File f: fs) { rmdir(f); }
         }
 
-        return _.delete();
+        return it.delete();
     }
 
     private Utils() { }

@@ -1,5 +1,7 @@
 package codr7.jappkit.db;
 
+import codr7.jappkit.db.columns.LongColumn;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -11,16 +13,21 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Table extends Relation {
-    public final Column<Long> id = new Column<Long>("id");
+    public final Column<Long> id = new LongColumn("id");
 
     public Table(Schema schema, String name) {
         super(schema, name);
     }
 
     @Override
+    public void addColumn(Column<?> it) {
+        columns.put(it.name, it);
+    }
+
+    @Override
     public void open(Instant maxTime) {
         keyFile = new File(Path.of(schema.root, name, ".key").toString());
-        dataFile = new File(Path.of(schema.root, name, ".dat").toString())
+        dataFile = new File(Path.of(schema.root, name, ".dat").toString());
         //todo
     }
 

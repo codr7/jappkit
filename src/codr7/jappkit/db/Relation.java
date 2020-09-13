@@ -6,6 +6,7 @@ public abstract class Relation {
     public final Schema schema;
     public final String name;
 
+    public abstract void addColumn(Column<?> it);
     public abstract void open(Instant maxTime);
     public abstract void close();
 

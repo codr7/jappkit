@@ -12,12 +12,12 @@ public class Schema {
         this.root = root;
     }
 
-    public void addIndex(Index _) {
-        indexes.add(_);
+    public void addIndex(Index it) {
+        indexes.add(it);
     }
 
-    public void addTable(Table _) {
-        tables.add(_);
+    public void addTable(Table it) {
+        tables.add(it);
     }
 
     public void drop() {
@@ -26,13 +26,13 @@ public class Schema {
 
     public void open(Instant maxTime) {
         mkdir(root);
-        for (Index _: indexes) { _.open(maxTime); }
-        for (Table _: tables) { _.open(maxTime); }
+        for (Index it: indexes) { it.open(maxTime); }
+        for (Table it: tables) { it.open(maxTime); }
     }
 
     public void close() {
-        for (Index _: indexes) { _.close(); }
-        for (Table _: tables) { _.close(); }
+        for (Index it: indexes) { it.close(); }
+        for (Table it: tables) { it.close(); }
     }
 
     private final List<Table> tables = new ArrayList<>();

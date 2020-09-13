@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="" />
+    <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Cmp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Index.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Relation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Relation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Schema.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Utils.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,6 +39,9 @@
     </option>
   </component>
   <component name="ProjectId" id="1hSsHFREuk3P1C5vjT1HT5JdL6o" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -37,6 +53,7 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="TestNG" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.TestNG" value="" />
     <property name="create.test.in.the.same.root" value="true" />
@@ -99,10 +116,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="178" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1600017847427" />
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1600026364498">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1600026364498" />
     <state x="683" y="209" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1600016720722">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="683" y="209" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600016720722" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600024640896">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600024640896" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600024640896">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600024640896" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600024640894">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600024640894" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600024640896">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600024640896" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600017720451">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
