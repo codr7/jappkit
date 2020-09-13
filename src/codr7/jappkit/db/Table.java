@@ -1,4 +1,4 @@
-package codr7.jappkit;
+package codr7.jappkit.db;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class Table extends Definition {
+public class Table extends Relation {
     public final Column<Long> id = new Column<Long>("id");
 
     public Table(Schema schema, String name) {

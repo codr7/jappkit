@@ -1,6 +1,6 @@
-package codr7.jappkit.errors;
+package codr7.jappkit.db.errors;
 
-import codr7.jappkit.Error;
+import codr7.jappkit.db.Error;
 
 import java.io.IOException;
 

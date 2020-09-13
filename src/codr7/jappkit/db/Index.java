@@ -1,4 +1,4 @@
-package codr7.jappkit;
+package codr7.jappkit.db;
 
 import java.io.File;
 import java.time.Instant;
@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.nio.file.Path;
 
-public class Index extends Definition{
+public class Index extends Relation {
     public Index(Schema schema, String name) {
         super(schema, name);
     }

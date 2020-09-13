@@ -1,4 +1,4 @@
-package codr7.jappkit;
+package codr7.jappkit.db;
 
 public class Error extends RuntimeException {
     public Error(String spec, Object...args) {

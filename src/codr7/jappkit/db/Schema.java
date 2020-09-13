@@ -1,9 +1,9 @@
-package codr7.jappkit;
+package codr7.jappkit.db;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import static codr7.jappkit.Utils.*;
+import static codr7.jappkit.db.Utils.*;
 
 public class Schema {
     public final String root;

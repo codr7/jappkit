@@ -1,4 +1,4 @@
-package codr7.jappkit;
+package codr7.jappkit.db;
 
 import org.testng.annotations.*;
 
