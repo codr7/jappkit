@@ -13,8 +13,7 @@ public class TableTest {
     public void store() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table_store");
-        StringColumn col = new StringColumn("string");
-        tbl.addColumn(col);
+        StringColumn col = new StringColumn(tbl, "string");
         scm.drop();
         scm.open(Instant.now());
         assertEquals(42, 42);

@@ -3,11 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Index.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Schema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

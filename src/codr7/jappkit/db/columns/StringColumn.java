@@ -2,10 +2,11 @@ package codr7.jappkit.db.columns;
 
 import codr7.jappkit.db.Cmp;
 import codr7.jappkit.db.Column;
+import codr7.jappkit.db.Table;
 
 public class StringColumn extends Column<String> {
-    public StringColumn(String name) {
-        super(name);
+    public StringColumn(Table table, String name) {
+        super(table, name);
     }
 
     @Override
