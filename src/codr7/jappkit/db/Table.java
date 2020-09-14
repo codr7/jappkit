@@ -39,6 +39,10 @@ public class Table extends Relation {
         dataFile = null;
     }
 
+    public void commit(Record it) {
+        //todo write to disk & update records
+    }
+
     public long getNextRecordId() {
         return nextRecordId.incrementAndGet();
     }
@@ -69,9 +73,10 @@ public class Table extends Relation {
         }
 
         final long idv = id.longValue();
+        final Record txr = tx.set(this, idv);
 
         it.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
-            tx.set(idv, f.getKey(), f.getValue());
+            txr.setObject(f.getKey(), f.getValue());
         });
     }
 

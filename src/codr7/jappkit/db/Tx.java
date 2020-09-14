@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Tx {
-    public void set(long recordId, Column<?> column, Object value) {
-        Map<Long, Record> rs = updates.get(column.table);
+    public Record set(Table table, long recordId) {
+        Map<Long, Record> rs = updates.get(table);
 
         if (rs == null) {
             rs = new TreeMap<>();
-            updates.put(column.table, rs);
+            updates.put(table, rs);
         }
 
         Record r = rs.get(recordId);
@@ -20,13 +20,21 @@ public class Tx {
             rs.put(recordId, r);
         }
 
-        r.setObject(column, value);
+        return r;
     }
 
     public Record get(Table table, long recordId) {
         Map<Long, Record> rs = updates.get(table);
         if (rs == null) { return null; }
         return rs.get(recordId);
+    }
+
+    public void commit() {
+        for (Map.Entry<Table, Map<Long, Record>> i: updates.entrySet()) {
+            for (Map.Entry<Long, Record> j: i.getValue().entrySet()) {
+                i.getKey().commit(j.getValue());
+            }
+        }
     }
 
     private Map<Table, Map<Long, Record>> updates = new TreeMap<>(Comparator.comparing(Object::toString));
