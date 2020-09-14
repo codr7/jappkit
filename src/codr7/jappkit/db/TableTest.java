@@ -14,11 +14,14 @@ public class TableTest {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table_store");
         StringColumn col = new StringColumn(tbl, "string");
-        Record rec = new Record();
-        rec.set(col, "foo");
+        Record r = new Record();
+        r.set(col, "foo");
         Tx tx = new Tx();
-        tbl.store(rec, tx);
-        assertEquals(rec.get(tbl.id), Long.valueOf(1));
+        tbl.store(r, tx);
+        assertEquals(r.get(tbl.id), Long.valueOf(1));
+        Record lr = tbl.load(r.get(tbl.id), tx);
+        assertEquals(lr.get(tbl.id), Long.valueOf(1));
+        assertEquals(lr.get(col), "foo");
         scm.drop();
         scm.open(Instant.now());
         assertEquals(42, 42);

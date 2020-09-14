@@ -43,6 +43,23 @@ public class Table extends Relation {
         return nextRecordId.incrementAndGet();
     }
 
+    public Record load(long recordId, Tx tx) {
+        Record r = null;
+        Record txr = tx.get(this, recordId);
+
+        if (txr != null) {
+            final Record lr = new Record();
+
+            txr.getFields().forEach((Map.Entry<Column<?>, Object> f) -> {
+                lr.setObject(f.getKey(), f.getValue());
+            });
+
+            r = lr;
+        }
+
+        return r;
+    }
+
     public void store(Record it, Tx tx) {
         Long id = it.get(Table.this.id);
 

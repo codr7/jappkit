@@ -23,12 +23,10 @@ public class Tx {
         r.setObject(column, value);
     }
 
-    public Object get(long recordId, Column<?> column) {
-        Map<Long, Record> rs = updates.get(column.table);
+    public Record get(Table table, long recordId) {
+        Map<Long, Record> rs = updates.get(table);
         if (rs == null) { return null; }
-        Record r = rs.get(recordId);
-        if (r == null) { return null; }
-        return r.getObject(column);
+        return rs.get(recordId);
     }
 
     private Map<Table, Map<Long, Record>> updates = new TreeMap<>(Comparator.comparing(Object::toString));
