@@ -50,7 +50,7 @@ public class Table extends Relation {
         if (txr != null) {
             final Record lr = new Record();
 
-            txr.getFields().forEach((Map.Entry<Column<?>, Object> f) -> {
+            txr.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
                 lr.setObject(f.getKey(), f.getValue());
             });
 
@@ -70,7 +70,7 @@ public class Table extends Relation {
 
         final long idv = id.longValue();
 
-        it.getFields().forEach((Map.Entry<Column<?>, Object> f) -> {
+        it.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
             tx.set(idv, f.getKey(), f.getValue());
         });
     }

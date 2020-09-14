@@ -20,7 +20,7 @@ public class Record {
         setObject(column, value);
     }
 
-    public Stream<Map.Entry<Column<?>, Object>> getFields() {
+    public Stream<Map.Entry<Column<?>, Object>> fields() {
         return fields.entrySet().stream();
     }
 
