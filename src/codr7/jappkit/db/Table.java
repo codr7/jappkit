@@ -1,9 +1,14 @@
 package codr7.jappkit.db;
 
 import codr7.jappkit.db.columns.LongColumn;
+import codr7.jappkit.db.errors.IOError;
 
-import java.io.File;
+import java.io.EOFException;
+import java.io.IOException;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +23,7 @@ public class Table extends Relation {
     public Table(Schema schema, String name) {
         super(schema, name);
         id = new LongColumn(this, "id");
-        System.err.println(columns);
+        schema.addTable(this);
     }
 
     @Override
@@ -28,9 +33,26 @@ public class Table extends Relation {
 
     @Override
     public void open(Instant maxTime) {
-        keyFile = new File(Path.of(schema.root.toString(), name, ".key").toString());
-        dataFile = new File(Path.of(schema.root.toString(), name, ".dat").toString());
-        //todo
+        try {
+            Path keyPath = Path.of(schema.root.toString(), name + ".key");
+            keyFile = Files.newByteChannel(keyPath, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
+            Path dataPath = Path.of(schema.root.toString(), name + ".dat");
+            dataFile = Files.newByteChannel(dataPath, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
+        } catch (IOException e) {
+            throw new IOError(e);
+        }
+
+        try {
+            for (; ; ) {
+                long recordId = Encoding.readLong(keyFile);
+                long pos = Encoding.readLong(keyFile);
+                records.put(recordId, pos);
+            }
+        } catch (IOError e) {
+            if (e.cause.getClass() != EOFException.class) {
+                throw e;
+            }
+        }
     }
 
     @Override
@@ -40,7 +62,19 @@ public class Table extends Relation {
     }
 
     public void commit(Record it) {
-        //todo write to disk & update records
+        Long id = it.get(Table.this.id);
+        if (id == null) { throw new E(String.format("Missing id for table: %s", name)); }
+        long pos = -1;
+
+        try {
+            pos = dataFile.size();
+            dataFile.position(pos);
+        } catch (IOException e) { throw new IOError(e); }
+
+        it.write(dataFile);
+        Encoding.writeLong(id, keyFile);
+        Encoding.writeLong(pos, keyFile);
+        records.put(id, pos);
     }
 
     public long getNextRecordId() {
@@ -48,20 +82,32 @@ public class Table extends Relation {
     }
 
     public Record load(long recordId, Tx tx) {
-        Record r = null;
-        Record txr = tx.get(this, recordId);
+        Record r = tx.get(this, recordId);
 
-        if (txr != null) {
-            final Record lr = new Record();
+        if (r == null) {
+            Long pos = records.get(recordId);
+            if (pos == null) { return null; }
+            try { dataFile.position(pos); }
+            catch (IOException e) { throw new IOError(e); }
 
-            txr.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
-                lr.setObject(f.getKey(), f.getValue());
-            });
+            r = new Record();
+            long len = Encoding.readLong(dataFile);
 
-            r = lr;
+            for (long i = 0; i < len; i++) {
+              String cn = Encoding.readString(dataFile);
+              Column<?> c = columns.get(cn);
+              if (c == null) { throw new E(String.format("Unknown column: %s", cn)); }
+              r.setObject(c, c.load(dataFile));
+            }
         }
 
-        return r;
+        final Record lr = new Record();
+
+        r.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
+            lr.setObject(f.getKey(), f.getValue());
+        });
+
+        return lr;
     }
 
     public void store(Record it, Tx tx) {
@@ -80,8 +126,8 @@ public class Table extends Relation {
         });
     }
 
-    private File keyFile;
-    private File dataFile;
+    private SeekableByteChannel keyFile;
+    private SeekableByteChannel dataFile;
     private final Map<String, Column<?>> columns = new HashMap<>();
     private final List<Index> indexes = new ArrayList<>();
     private final Map<Long, Long> records = new ConcurrentSkipListMap<>();

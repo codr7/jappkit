@@ -35,6 +35,8 @@ public class Tx {
                 i.getKey().commit(j.getValue());
             }
         }
+
+        updates.clear();
     }
 
     private Map<Table, Map<Long, Record>> updates = new TreeMap<>(Comparator.comparing(Object::toString));

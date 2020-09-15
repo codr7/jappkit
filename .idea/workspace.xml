@@ -2,9 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testdb/table_store.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testdb/table_store.key" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/E.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/E.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Record.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Record.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Tx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Tx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/errors/IOError.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/errors/IOError.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +49,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
@@ -119,6 +130,9 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Project_Structure" timestamp="1600017847427">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -136,30 +150,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="714" y="71" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600033254382" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600085097082">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600130082301">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600085097082" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600085097082">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600130082301" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600130082301">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600085097082" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600085097082">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600130082301" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600130082301">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600085097082" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600085097082">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600130082301" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600130082301">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600085097082" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600130082301" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600017720451">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1600017720451" />
-    <state width="498" height="398" key="SwitcherDM" timestamp="1600036609404">
+    <state width="498" height="398" key="SwitcherDM" timestamp="1600126585514">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="498" height="398" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1600036609404" />
+    <state width="498" height="398" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1600126585514" />
     <state x="665" y="413" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1600017819568">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
