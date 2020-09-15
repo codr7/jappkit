@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Stream;
 
 public class Table extends Relation {
     public final Column<Long> id;
@@ -124,6 +125,12 @@ public class Table extends Relation {
         it.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
             txr.setObject(f.getKey(), f.getValue());
         });
+    }
+
+    public Stream<Record> records(Tx tx) {
+        Stream<Record> rs = records.keySet().stream().map((Long id) -> load(id, tx));
+        Stream<Record> txrs = tx.records(this).filter((r) -> records.get(r.get(id)) == null);
+        return Stream.concat(rs, txrs);
     }
 
     private SeekableByteChannel keyFile;

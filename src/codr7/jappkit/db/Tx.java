@@ -3,6 +3,7 @@ package codr7.jappkit.db;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 public class Tx {
     public Record set(Table table, long recordId) {
@@ -27,6 +28,12 @@ public class Tx {
         Map<Long, Record> rs = updates.get(table);
         if (rs == null) { return null; }
         return rs.get(recordId);
+    }
+
+    public Stream<Record> records(Table table) {
+        Map<Long, Record> rs = updates.get(table);
+        if (rs == null) { return Stream.empty(); }
+        return rs.values().stream();
     }
 
     public void commit() {

@@ -27,11 +27,15 @@ public class TableTest {
         Record lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(tbl.id), Long.valueOf(1));
         assertEquals(lr.get(col), "foo");
+        assertEquals(tbl.records(tx).count(), 1);
+        tbl.records(tx).forEach((Record x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
 
         tx.commit();
         lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(tbl.id), Long.valueOf(1));
         assertEquals(lr.get(col), "foo");
+        assertEquals(tbl.records(tx).count(), 1);
+        tbl.records(tx).forEach((x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
 
         scm.close();
     }
