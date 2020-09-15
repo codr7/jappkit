@@ -1,7 +1,7 @@
 package codr7.jappkit.db;
 
 import codr7.jappkit.db.columns.LongColumn;
-import codr7.jappkit.db.errors.IOError;
+import codr7.jappkit.db.errors.EIO;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class Table extends Relation {
             Path dataPath = Path.of(schema.root.toString(), name + ".dat");
             dataFile = Files.newByteChannel(dataPath, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
         } catch (IOException e) {
-            throw new IOError(e);
+            throw new EIO(e);
         }
 
         try {
@@ -49,8 +49,8 @@ public class Table extends Relation {
                 long pos = Encoding.readLong(keyFile);
                 records.put(recordId, pos);
             }
-        } catch (IOError e) {
-            if (e.cause.getClass() != EOFException.class) {
+        } catch (EIO e) {
+            if (e.getCause().getClass() != EOFException.class) {
                 throw e;
             }
         }
@@ -64,13 +64,13 @@ public class Table extends Relation {
 
     public void commit(Record it) {
         Long id = it.get(Table.this.id);
-        if (id == null) { throw new E(String.format("Missing id for table: %s", name)); }
+        if (id == null) { throw new E("Missing id for table: %s", name); }
         long pos = -1;
 
         try {
             pos = dataFile.size();
             dataFile.position(pos);
-        } catch (IOException e) { throw new IOError(e); }
+        } catch (IOException e) { throw new EIO(e); }
 
         it.write(dataFile);
         Encoding.writeLong(id, keyFile);
@@ -89,7 +89,7 @@ public class Table extends Relation {
             Long pos = records.get(recordId);
             if (pos == null) { return null; }
             try { dataFile.position(pos); }
-            catch (IOException e) { throw new IOError(e); }
+            catch (IOException e) { throw new EIO(e); }
 
             r = new Record();
             long len = Encoding.readLong(dataFile);
@@ -97,7 +97,7 @@ public class Table extends Relation {
             for (long i = 0; i < len; i++) {
               String cn = Encoding.readString(dataFile);
               Column<?> c = columns.get(cn);
-              if (c == null) { throw new E(String.format("Unknown column: %s", cn)); }
+              if (c == null) { throw new E("Unknown column: %s", cn); }
               r.setObject(c, c.load(dataFile));
             }
         }

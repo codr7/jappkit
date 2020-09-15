@@ -1,6 +1,6 @@
 package codr7.jappkit.db;
 
-import codr7.jappkit.db.errors.IOError;
+import codr7.jappkit.db.errors.EIO;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -13,16 +13,16 @@ public final class Encoding {
         ByteBuffer buf = ByteBuffer.allocate(1);
 
         try {
-            if (in.read(buf) == -1) { throw new IOError(new EOFException()); }
+            if (in.read(buf) == -1) { throw new EIO(new EOFException()); }
         }
-        catch (IOException e){ throw new IOError(e); }
+        catch (IOException e){ throw new EIO(e); }
 
         buf.rewind();
         byte len = buf.get();
         buf = ByteBuffer.allocate(len);
 
         try { in.read(buf); }
-        catch (IOException e){ throw new IOError(e); }
+        catch (IOException e){ throw new EIO(e); }
 
         buf.rewind();
         byte[] bs = new byte[len];
@@ -35,7 +35,7 @@ public final class Encoding {
         ByteBuffer buf = ByteBuffer.allocate((int)len);
 
         try { in.read(buf); }
-        catch (IOException e) { throw new IOError(e); }
+        catch (IOException e) { throw new EIO(e); }
 
         buf.rewind();
         byte[] bs = new byte[(int)len];
@@ -54,7 +54,7 @@ public final class Encoding {
         buf.rewind();
 
         try { out.write(buf); }
-        catch (IOException e) { throw new IOError(e); }
+        catch (IOException e) { throw new EIO(e); }
     }
 
     public static void writeString(String it, SeekableByteChannel out) {
@@ -68,7 +68,7 @@ public final class Encoding {
         buf.rewind();
 
         try { out.write(buf); }
-        catch (IOException e) { throw new IOError(e); }
+        catch (IOException e) { throw new EIO(e); }
     }
 
     private Encoding() { }
