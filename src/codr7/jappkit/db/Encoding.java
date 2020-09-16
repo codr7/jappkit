@@ -9,6 +9,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SeekableByteChannel;
 
 public final class Encoding {
+    public static final String charsetName = "UTF-8";
+
     public static long readLong(SeekableByteChannel in) {
         ByteBuffer buf = ByteBuffer.allocate(1);
 
@@ -44,9 +46,7 @@ public final class Encoding {
     }
 
     public static void writeLong(long it, SeekableByteChannel out) {
-        byte[] bs = null;
-        try { bs = Long.valueOf(it).toString().getBytes("UTF-8"); }
-        catch (UnsupportedEncodingException e) { throw new E(e.getMessage()); }
+        byte[] bs = Long.valueOf(it).toString().getBytes();
 
         ByteBuffer buf = ByteBuffer.allocate(bs.length + 1);
         buf.put((byte)bs.length);
@@ -59,7 +59,7 @@ public final class Encoding {
 
     public static void writeString(String it, SeekableByteChannel out) {
         byte[] bs = null;
-        try { bs = it.getBytes("UTF-8"); }
+        try { bs = it.getBytes(charsetName); }
         catch (UnsupportedEncodingException e) { throw new E(e.getMessage()); }
 
         writeLong(bs.length, out);
