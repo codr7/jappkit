@@ -2,17 +2,21 @@ package codr7.jappkit.db;
 
 import java.nio.channels.SeekableByteChannel;
 
-public abstract class Column<ValueT> {
+public class Column<ValueT> {
     public final Table table;
+    public final ColumnType<ValueT> type;
     public final String name;
 
-    public abstract Cmp cmp(ValueT x, ValueT y);
-    public abstract Object load(SeekableByteChannel in);
-    public abstract void store(Object it, SeekableByteChannel out);
-
-    protected Column(Table table, String name) {
+    public Column(Table table, ColumnType<ValueT> type, String name) {
         this.table = table;
+        this.type = type;
         this.name = name;
         table.addColumn(this);
     }
+
+    public Cmp cmp(ValueT x, ValueT y) { return type.cmp(x, y); }
+
+    public Object load(SeekableByteChannel in) { return type.load(in); }
+
+    public void store(Object it, SeekableByteChannel out) { type.store(it, out); }
 }
