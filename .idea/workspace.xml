@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/ColumnType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/ListColumn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/ColumnType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/ColumnType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" afterDir="false" />
     </list>
@@ -154,30 +155,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="714" y="71" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600033254382" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600252846428">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600256905477">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600252846428" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600252846428">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600256905477" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600256905477">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600252846428" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600252846427">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600256905477" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600256905477">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600252846427" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600252846428">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600256905477" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600256905477">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600252846428" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600256905477" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600017720451">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1600017720451" />
-    <state width="498" height="398" key="SwitcherDM" timestamp="1600126585514">
+    <state width="498" height="398" key="SwitcherDM" timestamp="1600255827227">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="498" height="398" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1600126585514" />
+    <state width="498" height="398" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1600255827227" />
     <state x="665" y="413" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1600017819568">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -186,9 +187,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600016171572" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1600252425380">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1600256589424">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1600252425380" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1600256589424" />
   </component>
 </project>

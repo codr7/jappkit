@@ -16,6 +16,8 @@ public class Column<ValueT> {
 
     public Cmp cmp(ValueT x, ValueT y) { return type.cmp(x, y); }
 
+    public ValueT init() { return type.init(); }
+
     public Object load(SeekableByteChannel in) { return type.load(in); }
 
     public void store(Object it, SeekableByteChannel out) { type.store(it, out); }
