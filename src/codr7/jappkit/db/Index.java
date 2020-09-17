@@ -1,6 +1,12 @@
 package codr7.jappkit.db;
 
-import java.io.File;
+import codr7.jappkit.db.errors.EIO;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +26,30 @@ public class Index extends Relation {
 
     @Override
     public void open(Instant maxTime) {
-        file = new File(Path.of(schema.root.toString(), name, ".idx").toString());
+        try {
+            Path dataPath = Path.of(schema.root.toString(), name + ".idx");
+            file = Files.newByteChannel(dataPath, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
+        } catch (IOException e) {
+            throw new EIO(e);
+        }
+
+        try {
+            for (; ; ) {
+                Object[] key = new Object[columns.size()];
+                for (int i = 0; i < key.length; i++) { columns.get(i).load(file); }
+                long recordId = Encoding.readLong(file);
+                records.put(key, recordId);
+            }
+        } catch (EIO e) {
+            if (e.getCause().getClass() != EOFException.class) {
+                throw e;
+            }
+        }
     }
 
     @Override
     public void close() {
+        try { file.close(); } catch (IOException e) { throw new EIO(e); }
         file = null;
     }
 
@@ -44,7 +69,7 @@ public class Index extends Relation {
         return Cmp.EQ.asInt;
     }
 
-    private File file;
+    private SeekableByteChannel file;
     private final List<Column<?>> columns = new ArrayList<>();
     private final Map<Object[], Long> records = new ConcurrentSkipListMap<>((Object[] x, Object[] y) -> compareKeys(x, y));
 }

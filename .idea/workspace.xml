@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/MapColumn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/TableTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Index.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,22 +151,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="714" y="71" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600033254382" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600261380344">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600351838542">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600261380344" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600261380344">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600351838542" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600351838511">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600261380344" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600261380343">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600351838510" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600351838510">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600261380343" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600261380344">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600351838510" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600351838511">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600261380344" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600351838511" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600017720451">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -188,5 +187,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1600256589424" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1600352072822">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1600352072822" />
   </component>
 </project>

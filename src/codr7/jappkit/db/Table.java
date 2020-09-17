@@ -58,8 +58,13 @@ public class Table extends Relation {
 
     @Override
     public void close() {
-        keyFile = null;
-        dataFile = null;
+        try {
+            keyFile.close();
+            keyFile = null;
+
+            dataFile.close();
+            dataFile = null;
+        } catch (IOException e) { throw new EIO(e); }
     }
 
     public void commit(Record it) {
