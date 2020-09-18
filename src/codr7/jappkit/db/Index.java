@@ -20,8 +20,9 @@ public class Index extends Relation {
     }
 
     @Override
-    public void addColumn(Column<?> it) {
+    public Index addColumn(Column<?> it) {
         columns.add(it);
+        return this;
     }
 
     @Override
@@ -51,6 +52,7 @@ public class Index extends Relation {
     public void close() {
         try { file.close(); } catch (IOException e) { throw new EIO(e); }
         file = null;
+        records.clear();
     }
 
     public int compareKeys(Object[] x, Object[] y) {
@@ -69,7 +71,38 @@ public class Index extends Relation {
         return Cmp.EQ.asInt;
     }
 
+    public Object[] key(Record it) {
+        Object[] out = new Object[columns.size()];
+        int i = 0;
+
+        for (Column<?> c: columns) { out[i++] = it.getObject(c); }
+        return out;
+    }
+
+    public Long find(Object[] key, Tx tx) {
+        Long out = tx.get(this, key);
+        if (out == null) { out = records.get(key); }
+        return out;
+    }
+
+    public void commit(Object[] key, long recordId) {
+        records.put(key, recordId);
+    }
+
+    public void add(Record it, long id, Tx tx) {
+        Object[] k = key(it);
+        if (records.containsKey(k) || tx.get(this, k) != null) { throw new E("Duplicate key in index '%s'", name); }
+        tx.put(this, k, id);
+    }
+
+    public boolean remove(Record it, Tx tx) {
+        Object[] k = key(it);
+        if (tx.get(this, k) == null) { return false; }
+        tx.put(this, k, -1);
+        return true;
+    }
+
     private SeekableByteChannel file;
     private final List<Column<?>> columns = new ArrayList<>();
-    private final Map<Object[], Long> records = new ConcurrentSkipListMap<>((Object[] x, Object[] y) -> compareKeys(x, y));
+    private final Map<Object[], Long> records = new ConcurrentSkipListMap<>(this::compareKeys);
 }

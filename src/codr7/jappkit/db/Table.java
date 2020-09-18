@@ -28,8 +28,15 @@ public class Table extends Relation {
     }
 
     @Override
-    public void addColumn(Column<?> it) {
+    public Table addColumn(Column<?> it) {
+        if (columns.containsKey(it.name)) { throw new E("Duplicate column: %v", it.name); }
         columns.put(it.name, it);
+        return this;
+    }
+
+    public Table addIndex(Index it) {
+        indexes.add(it);
+        return this;
     }
 
     @Override
@@ -65,6 +72,9 @@ public class Table extends Relation {
             dataFile.close();
             dataFile = null;
         } catch (IOException e) { throw new EIO(e); }
+
+        records.clear();
+        nextRecordId.set(0L);
     }
 
     public void commit(Record it) {
@@ -87,26 +97,28 @@ public class Table extends Relation {
         return nextRecordId.incrementAndGet();
     }
 
-    public Record load(long recordId, Tx tx) {
-        Record r = tx.get(this, recordId);
+    public Record load(long recordId) {
+        Long pos = records.get(recordId);
+        if (pos == null) { return null; }
+        try { dataFile.position(pos); }
+        catch (IOException e) { throw new EIO(e); }
 
-        if (r == null) {
-            Long pos = records.get(recordId);
-            if (pos == null) { return null; }
-            try { dataFile.position(pos); }
-            catch (IOException e) { throw new EIO(e); }
+        final Record r = new Record();
+        long len = Encoding.readLong(dataFile);
 
-            r = new Record();
-            long len = Encoding.readLong(dataFile);
-
-            for (long i = 0; i < len; i++) {
-              String cn = Encoding.readString(dataFile);
-              Column<?> c = columns.get(cn);
-              if (c == null) { throw new E("Unknown column: %s", cn); }
-              r.setObject(c, c.load(dataFile));
-            }
+        for (long i = 0; i < len; i++) {
+            String cn = Encoding.readString(dataFile);
+            Column<?> c = columns.get(cn);
+            if (c == null) { throw new E("Unknown column: %s", cn); }
+            r.setObject(c, c.load(dataFile));
         }
 
+        return r;
+    }
+
+    public Record load(long recordId, Tx tx) {
+        Record r = tx.get(this, recordId);
+        if (r == null) { return load(recordId); }
         final Record lr = new Record();
 
         r.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
@@ -124,12 +136,17 @@ public class Table extends Relation {
             it.set(Table.this.id, id);
         }
 
+        Record pr = load(id);
+
+        if (pr != null) {
+            for (Index idx: indexes) { idx.remove(pr, tx); }
+        }
+
         final long idv = id.longValue();
         final Record txr = tx.set(this, idv);
 
-        it.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
-            txr.setObject(f.getKey(), f.getValue());
-        });
+        it.fields().forEach((Map.Entry<Column<?>, Object> f) -> { txr.setObject(f.getKey(), f.getValue()); });
+        for (Index idx: indexes) { idx.add(it, id, tx); }
     }
 
     public Stream<Record> records(Tx tx) {

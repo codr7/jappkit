@@ -17,8 +17,10 @@ public class Record {
     public void setObject(Column<?> column, Object value) {
         fields.put(column, value);
     }
-    public <ValueT> void set(Column<ValueT> column, ValueT value) {
+
+    public <ValueT> Record set(Column<ValueT> column, ValueT value) {
         setObject(column, value);
+        return this;
     }
 
     public Stream<Map.Entry<Column<?>, Object>> fields() {
