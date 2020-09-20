@@ -31,7 +31,7 @@ public class Index extends Relation {
     public void open(Instant maxTime) {
         try {
             Path dataPath = Path.of(schema.root.toString(), name + ".idx");
-            file = Files.newByteChannel(dataPath, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
+            file = Files.newByteChannel(dataPath, fileOptions);
         } catch (IOException e) {
             throw new EIO(e);
         }

@@ -43,9 +43,9 @@ public class Table extends Relation {
     public void open(Instant maxTime) {
         try {
             Path keyPath = Path.of(schema.root.toString(), name + ".key");
-            keyFile = Files.newByteChannel(keyPath, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
+            keyFile = Files.newByteChannel(keyPath, fileOptions);
             Path dataPath = Path.of(schema.root.toString(), name + ".dat");
-            dataFile = Files.newByteChannel(dataPath, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
+            dataFile = Files.newByteChannel(dataPath, fileOptions);
         } catch (IOException e) {
             throw new EIO(e);
         }

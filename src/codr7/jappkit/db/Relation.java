@@ -1,8 +1,16 @@
 package codr7.jappkit.db;
 
+import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 
 public abstract class Relation implements Comparable<Relation> {
+    public static final StandardOpenOption[] fileOptions = {
+            StandardOpenOption.CREATE,
+            StandardOpenOption.READ,
+            StandardOpenOption.WRITE,
+            StandardOpenOption.SYNC
+    };
+
     public final Schema schema;
     public final String name;
 
