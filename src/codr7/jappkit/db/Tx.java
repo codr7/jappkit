@@ -54,11 +54,6 @@ public class Tx {
         rs.put(key, recordId);
     }
 
-    public boolean containsKey(Index idx, Object[] key) {
-        Map<Object[], Long> rs = indexUpdates.get(idx);
-        return (rs == null) ? false : rs.containsKey(key);
-    }
-
     public Stream<Map.Entry<Object[], Long>> findFirst(Index idx, Object[] key) {
         TreeMap<Object[], Long> rs = indexUpdates.get(idx);
         if (rs == null) { return Stream.empty(); }

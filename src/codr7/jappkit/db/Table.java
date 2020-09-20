@@ -151,8 +151,8 @@ public class Table extends Relation {
 
     public Stream<Record> records(Tx tx) {
         Stream<Record> rs = records.keySet().stream().map((Long id) -> load(id, tx));
-        Stream<Record> txrs = tx.records(this).filter((r) -> records.get(r.get(id)) == null);
-        return Stream.concat(rs, txrs);
+        Stream<Record> txrs = tx.records(this);
+        return Stream.concat(rs, txrs).distinct();
     }
 
     private SeekableByteChannel keyFile;

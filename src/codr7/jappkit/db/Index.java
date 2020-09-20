@@ -91,11 +91,10 @@ public class Index extends Relation {
         Stream<Map.Entry<Object[], Long>> rs = records
                 .subMap(key, true, records.lastKey(), true)
                 .entrySet()
-                .stream()
-                .filter((i) -> !tx.containsKey(this, i.getKey()));
+                .stream();
 
         Stream<Map.Entry<Object[], Long>> txrs = tx.findFirst(this, key);
-        return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey()));
+        return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey())).distinct();
     }
 
     public void commit(Object[] key, long recordId) {
