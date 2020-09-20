@@ -91,12 +91,16 @@ public class Tx {
             for (Map.Entry<Long, Record> j: i.getValue().entrySet()) { i.getKey().commit(j.getValue()); }
         }
 
-        tableUpdates.clear();
 
         for (Map.Entry<Index, TreeMap<Object[], Long>> i: indexUpdates.entrySet()) {
             for (Map.Entry<Object[], Long> j: i.getValue().entrySet()) { i.getKey().commit(j.getKey(), j.getValue()); }
         }
 
+        rollback();
+    }
+
+    public void rollback() {
+        tableUpdates.clear();
         indexUpdates.clear();
     }
 

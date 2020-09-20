@@ -1,5 +1,4 @@
 * add delete test to table/index
-* add tx rollback
 * add BooleanColumn
 * add TimeColumn
   * Instant
