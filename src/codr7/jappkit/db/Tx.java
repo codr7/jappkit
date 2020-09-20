@@ -36,6 +36,19 @@ public class Tx {
         return r;
     }
 
+    public boolean delete(Table table, long recordId) {
+        Map<Long, Record> rs = tableUpdates.get(table);
+        if (rs == null) { return false; }
+        Record pr = rs.put(recordId, Record.DELETED);
+        return pr != null && pr != Record.DELETED;
+    }
+
+    public boolean isDeleted(Table tbl, long recordId) {
+        Map<Long, Record> rs = tableUpdates.get(tbl);
+        if (rs == null) { return false; }
+        return rs.get(recordId) == Record.DELETED;
+    }
+
     public Long get(Index index, Object[] key) {
         Map<Object[], Long> rs = indexUpdates.get(index);
         if (rs == null) { return null; }
@@ -52,6 +65,19 @@ public class Tx {
 
         if (rs.containsKey(key)) { throw new E("Duplicate key in index '%s'", index.name); }
         rs.put(key, recordId);
+    }
+
+    public boolean delete(Index idx, Object[] key) {
+        TreeMap<Object[], Long> rs = indexUpdates.get(idx);
+        if (rs == null) { return false; }
+        Long pid = rs.put(key, -1L);
+        return pid != null && pid != -1L;
+    }
+
+    public boolean isDeleted(Index idx, Object[] key) {
+        TreeMap<Object[], Long> rs = indexUpdates.get(idx);
+        if (rs == null) { return false; }
+        return rs.get(key) == -1L;
     }
 
     public Stream<Map.Entry<Object[], Long>> findFirst(Index idx, Object[] key) {

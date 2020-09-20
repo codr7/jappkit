@@ -149,10 +149,19 @@ public class Table extends Relation {
         for (Index idx: indexes) { idx.add(it, id, tx); }
     }
 
+    public boolean delete(long recordId, Tx tx) {
+        if (tx.delete(this, recordId)) { return true; }
+        return records.remove(recordId) != null;
+    }
+
     public Stream<Record> records(Tx tx) {
-        Stream<Record> rs = records.keySet().stream().map((Long id) -> load(id, tx));
-        Stream<Record> txrs = tx.records(this);
-        return Stream.concat(rs, txrs).distinct();
+        Stream<Record> rs = records
+                .keySet()
+                .stream()
+                .filter((id) -> !tx.isDeleted(this, id))
+                .map((id) -> load(id, tx));
+
+        return Stream.concat(rs, tx.records(this)).distinct();
     }
 
     private SeekableByteChannel keyFile;

@@ -91,7 +91,8 @@ public class Index extends Relation {
         Stream<Map.Entry<Object[], Long>> rs = records
                 .subMap(key, true, records.lastKey(), true)
                 .entrySet()
-                .stream();
+                .stream()
+                .filter((i) -> !tx.isDeleted(this, i.getKey()));
 
         Stream<Map.Entry<Object[], Long>> txrs = tx.findFirst(this, key);
         return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey())).distinct();
@@ -110,7 +111,7 @@ public class Index extends Relation {
     public boolean remove(Record it, Tx tx) {
         Object[] k = key(it);
         if (tx.get(this, k) == null) { return false; }
-        tx.put(this, k, -1);
+        tx.delete(this, k);
         return true;
     }
 
