@@ -11,8 +11,10 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 public class Index extends Relation {
     public Index(Schema schema, String name) {
@@ -85,6 +87,17 @@ public class Index extends Relation {
         return out;
     }
 
+    public Stream<Map.Entry<Object[], Long>> findFirst(Object[] key, Tx tx) {
+        Stream<Map.Entry<Object[], Long>> rs = records
+                .subMap(key, true, records.lastKey(), true)
+                .entrySet()
+                .stream()
+                .filter((i) -> !tx.containsKey(this, i.getKey()));
+
+        Stream<Map.Entry<Object[], Long>> txrs = tx.findFirst(this, key);
+        return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey()));
+    }
+
     public void commit(Object[] key, long recordId) {
         records.put(key, recordId);
     }
@@ -104,5 +117,5 @@ public class Index extends Relation {
 
     private SeekableByteChannel file;
     private final List<Column<?>> columns = new ArrayList<>();
-    private final Map<Object[], Long> records = new ConcurrentSkipListMap<>(this::compareKeys);
+    private final ConcurrentSkipListMap<Object[], Long> records = new ConcurrentSkipListMap<>(this::compareKeys);
 }

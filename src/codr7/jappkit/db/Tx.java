@@ -43,7 +43,7 @@ public class Tx {
     }
 
     public void put(final Index index, Object[]key, long recordId) {
-        Map<Object[], Long> rs = indexUpdates.get(index);
+        TreeMap<Object[], Long> rs = indexUpdates.get(index);
 
         if (rs == null) {
             rs = new TreeMap<>(index::compareKeys);
@@ -54,6 +54,17 @@ public class Tx {
         rs.put(key, recordId);
     }
 
+    public boolean containsKey(Index idx, Object[] key) {
+        Map<Object[], Long> rs = indexUpdates.get(idx);
+        return (rs == null) ? false : rs.containsKey(key);
+    }
+
+    public Stream<Map.Entry<Object[], Long>> findFirst(Index idx, Object[] key) {
+        TreeMap<Object[], Long> rs = indexUpdates.get(idx);
+        if (rs == null) { return Stream.empty(); }
+        return rs.subMap(key, true, rs.lastKey(), true).entrySet().stream();
+    }
+
     public void commit() {
         for (Map.Entry<Table, Map<Long, Record>> i: tableUpdates.entrySet()) {
             for (Map.Entry<Long, Record> j: i.getValue().entrySet()) { i.getKey().commit(j.getValue()); }
@@ -61,13 +72,13 @@ public class Tx {
 
         tableUpdates.clear();
 
-        for (Map.Entry<Index, Map<Object[], Long>> i: indexUpdates.entrySet()) {
+        for (Map.Entry<Index, TreeMap<Object[], Long>> i: indexUpdates.entrySet()) {
             for (Map.Entry<Object[], Long> j: i.getValue().entrySet()) { i.getKey().commit(j.getKey(), j.getValue()); }
         }
 
         indexUpdates.clear();
     }
 
-    private Map<Index, Map<Object[], Long>> indexUpdates = new TreeMap<>();
+    private Map<Index, TreeMap<Object[], Long>> indexUpdates = new TreeMap<>();
     private Map<Table, Map<Long, Record>> tableUpdates = new TreeMap<>();
 }
