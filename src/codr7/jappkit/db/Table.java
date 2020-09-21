@@ -57,12 +57,10 @@ public class Table extends Relation {
                 if (ts.compareTo(maxTime) > 0) { break; }
                 long recordId = Encoding.readLong(keyFile);
                 long pos = Encoding.readLong(keyFile);
-                records.put(recordId, pos);
+                if (pos == -1) { records.remove(recordId); } else { records.put(recordId, pos); }
             }
         } catch (EIO e) {
-            if (e.getCause().getClass() != EOFException.class) {
-                throw e;
-            }
+            if (e.getCause().getClass() != EOFException.class) { throw e; }
         }
     }
 
@@ -83,29 +81,27 @@ public class Table extends Relation {
     public void commit(Record it, long recordId) {
         long pos = -1;
 
-        synchronized(dataFile) {
-            try {
-                pos = dataFile.size();
-                dataFile.position(pos);
-            } catch (IOException e) {
-                throw new EIO(e);
-            }
+        if (it != Record.DELETED) {
+            synchronized (dataFile) {
+                try {
+                    pos = dataFile.size();
+                    dataFile.position(pos);
+                } catch (IOException e) { throw new EIO(e); }
 
-            it.write(dataFile);
+                it.write(dataFile);
+            }
         }
 
         synchronized(keyFile) {
             Encoding.writeTime(Instant.now(), keyFile);
             Encoding.writeLong(recordId, keyFile);
-            Encoding.writeLong(pos, keyFile);
+            Encoding.writeLong((it == Record.DELETED) ? -1L : pos, keyFile);
         }
 
         records.put(recordId, pos);
     }
 
-    public long getNextRecordId() {
-        return nextRecordId.incrementAndGet();
-    }
+    public long getNextRecordId() { return nextRecordId.incrementAndGet(); }
 
     @Override
     public void init(Record it, Column<?>...cols) {
@@ -139,14 +135,9 @@ public class Table extends Relation {
     public Record load(long recordId, Tx tx) {
         Record r = tx.get(this, recordId);
         if (r == null) { return load(recordId); }
-
         final Record lr = new Record();
         lr.set(id, recordId);
-
-        r.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
-            lr.setObject(f.getKey(), f.getValue());
-        });
-
+        r.fields().forEach((Map.Entry<Column<?>, Object> f) -> { lr.setObject(f.getKey(), f.getValue()); });
         return lr;
     }
 
@@ -176,8 +167,7 @@ public class Table extends Relation {
     }
 
     public boolean delete(long recordId, Tx tx) {
-        if (tx.delete(this, recordId)) { return true; }
-        return records.remove(recordId) != null;
+        return tx.delete(this, recordId);
     }
 
     public Stream<Record> records(Tx tx) {
@@ -187,7 +177,11 @@ public class Table extends Relation {
                 .filter((id) -> !tx.isDeleted(this, id))
                 .map((id) -> load(id, tx));
 
-        return Stream.concat(rs, tx.records(this).map((i) -> i.getValue().clone().set(id, i.getKey()))).distinct();
+        Stream<Record> txrs = tx
+                .records(this)
+                .map((i) -> i.getValue().clone().set(id, i.getKey()));
+
+        return Stream.concat(rs, txrs).distinct();
     }
 
     private SeekableByteChannel keyFile;

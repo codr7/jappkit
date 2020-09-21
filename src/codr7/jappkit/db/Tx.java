@@ -15,7 +15,7 @@ public class Tx {
     public Stream<Map.Entry<Long, Record>> records(Table table) {
         Map<Long, Record> rs = tableUpdates.get(table);
         if (rs == null) { return Stream.empty(); }
-        return rs.entrySet().stream();
+        return rs.entrySet().stream().filter((i) -> i.getValue() != Record.DELETED);
     }
 
     public Record set(Table table, long recordId) {

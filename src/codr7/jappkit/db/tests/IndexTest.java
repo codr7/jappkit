@@ -29,11 +29,13 @@ public class IndexTest {
         Tx tx = new Tx();
         tbl.store(r, tx);
         assertEquals(idx.find(k, tx), r.get(tbl.id));
+        idx.records(tx).forEach((i) -> assertEquals(i.getValue(), r.get(tbl.id)));
         tx.commit();
 
         scm.close();
         scm.open(Instant.now());
         assertEquals(idx.find(k, tx), r.get(tbl.id));
+        idx.records(tx).forEach((i) -> assertEquals(i.getValue(), r.get(tbl.id)));
 
         scm.close();
     }
