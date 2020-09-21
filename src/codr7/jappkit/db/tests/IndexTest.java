@@ -14,11 +14,11 @@ public class IndexTest {
     @Test
     public void store() {
         Schema scm = new Schema(Path.of("testdb"));
-        Table tbl = new Table(scm, "index_store");
+        Table tbl = new Table(scm, "table");
         LongColumn col1 = new LongColumn(tbl, "long");
         StringColumn col2 = new StringColumn(tbl, "string");
-        Index idx = new Index(scm, "index_store");
-        tbl.addIndex(idx.addColumn(col1).addColumn(col2));
+        Index idx = new Index(scm, "index", col1, col2);
+        tbl.addIndex(idx);
 
         scm.drop();
         scm.open(Instant.now());
@@ -40,11 +40,11 @@ public class IndexTest {
 
     public void findFirst() {
         Schema scm = new Schema(Path.of("testdb"));
-        Table tbl = new Table(scm, "index_find_first");
+        Table tbl = new Table(scm, "table");
         LongColumn col1 = new LongColumn(tbl, "long");
         StringColumn col2 = new StringColumn(tbl, "string");
-        Index idx = new Index(scm, "index_store");
-        tbl.addIndex(idx.addColumn(col1).addColumn(col2));
+        Index idx = new Index(scm, "index", col1, col2);
+        tbl.addIndex(idx);
 
         scm.drop();
         scm.open(Instant.now());

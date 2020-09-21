@@ -17,9 +17,10 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public class Index extends Relation {
-    public Index(Schema schema, String name) {
+    public Index(Schema schema, String name, Column<?>...cols) {
         super(schema, name);
         schema.addIndex(this);
+        for (Column<?> c: cols) { addColumn(c); }
     }
 
     @Override
