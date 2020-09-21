@@ -55,6 +55,12 @@ public class Tx {
         return rs.get(key);
     }
 
+    public Stream<Map.Entry<Object[], Long>> records(Index idx) {
+        Map<Object[], Long> rs = indexUpdates.get(idx);
+        if (rs == null) { return Stream.empty(); }
+        return rs.entrySet().stream();
+    }
+
     public void put(final Index index, Object[]key, long recordId) {
         TreeMap<Object[], Long> rs = indexUpdates.get(index);
 

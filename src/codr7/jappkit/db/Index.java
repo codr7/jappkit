@@ -122,6 +122,15 @@ public class Index extends Relation {
         return true;
     }
 
+    public Stream<Map.Entry<Object[], Long>> records(Tx tx) {
+        Stream<Map.Entry<Object[], Long>> rs = records
+                .entrySet()
+                .stream()
+                .filter((i) -> !tx.isDeleted(this, i.getKey()));
+
+        return Stream.concat(rs, tx.records(this)).distinct();
+    }
+
     private SeekableByteChannel file;
     private final List<Column<?>> columns = new ArrayList<>();
     private final ConcurrentSkipListMap<Object[], Long> records = new ConcurrentSkipListMap<>(this::compareKeys);

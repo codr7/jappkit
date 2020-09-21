@@ -1,5 +1,4 @@
-* add Index.records() method like Table
-** test
+* add Index.records() test
 * add delete test to table/index
 * add rollback test to table/index
 * add BooleanColumn
