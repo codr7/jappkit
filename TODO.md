@@ -1,5 +1,3 @@
-* finish maxTime support in open()
-** read/write time
 * add Index.records() method like Table
 ** test
 * add delete test to table/index

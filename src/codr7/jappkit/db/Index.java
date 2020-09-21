@@ -33,21 +33,19 @@ public class Index extends Relation {
         try {
             Path dataPath = Path.of(schema.root.toString(), name + ".idx");
             file = Files.newByteChannel(dataPath, fileOptions);
-        } catch (IOException e) {
-            throw new EIO(e);
-        }
+        } catch (IOException e) { throw new EIO(e); }
 
         try {
             for (; ; ) {
+                Instant ts = Encoding.readTime(file);
+                if (ts.compareTo(maxTime) > 0) { break; }
                 Object[] key = new Object[columns.size()];
                 for (int i = 0; i < key.length; i++) { columns.get(i).load(file); }
                 long recordId = Encoding.readLong(file);
                 records.put(key, recordId);
             }
         } catch (EIO e) {
-            if (e.getCause().getClass() != EOFException.class) {
-                throw e;
-            }
+            if (e.getCause().getClass() != EOFException.class) { throw e; }
         }
     }
 
@@ -103,6 +101,7 @@ public class Index extends Relation {
         int i = 0;
 
         synchronized(file) {
+            Encoding.writeTime(Instant.now(), file);
             for (Column<?> c : columns) { c.store(key[i++], file); }
             Encoding.writeLong(recordId, file);
         }

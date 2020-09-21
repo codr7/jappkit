@@ -52,6 +52,8 @@ public class Table extends Relation {
 
         try {
             for (; ; ) {
+                Instant ts = Encoding.readTime(keyFile);
+                if (ts.compareTo(maxTime) > 0) { break; }
                 long recordId = Encoding.readLong(keyFile);
                 long pos = Encoding.readLong(keyFile);
                 records.put(recordId, pos);
@@ -94,6 +96,7 @@ public class Table extends Relation {
         }
 
         synchronized(keyFile) {
+            Encoding.writeTime(Instant.now(), keyFile);
             Encoding.writeLong(id, keyFile);
             Encoding.writeLong(pos, keyFile);
         }
