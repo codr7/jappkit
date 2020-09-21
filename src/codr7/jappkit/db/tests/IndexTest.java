@@ -23,7 +23,7 @@ public class IndexTest {
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record().set(col1, 42L).set(col2, "foo");
+        Record r = new Record().init(tbl).set(col1, 42L).set(col2, "foo");
         Object[]k = new Object[]{42L, "foo"};
 
         Tx tx = new Tx();
@@ -49,9 +49,9 @@ public class IndexTest {
         scm.drop();
         scm.open(Instant.now());
 
-        Record r1 = new Record().set(col1, 21L).set(col2, "foo");
-        Record r2 = new Record().set(col1, 21L).set(col2, "bar");
-        Record r3 = new Record().set(col1, 42L).set(col2, "baz");
+        Record r1 = new Record().init(tbl).set(col1, 21L).set(col2, "foo");
+        Record r2 = new Record().init(tbl).set(col1, 21L).set(col2, "bar");
+        Record r3 = new Record().init(tbl).set(col1, 42L).set(col2, "baz");
 
         Tx tx = new Tx();
         tbl.store(r1, tx);

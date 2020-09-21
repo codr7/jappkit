@@ -27,9 +27,7 @@ public class TableTest {
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record();
-        r.set(stringCol, "foo");
-        r.set(timeCol, Instant.now());
+        Record r = new Record().init(tbl).set(stringCol, "foo").set(timeCol, Instant.now());
         Tx tx = new Tx();
         tbl.store(r, tx);
         assertEquals(r.get(tbl.id), Long.valueOf(1));
@@ -61,10 +59,8 @@ public class TableTest {
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record();
-        List<Long> v = col.init();
-        v.add(42L);
-        r.set(col, v);
+        Record r = new Record().init(tbl);
+        r.get(col).add(42L);
         Tx tx = new Tx();
         tbl.store(r, tx);
         tx.commit();
@@ -83,10 +79,8 @@ public class TableTest {
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record();
-        Map<Long, String> v = col.init();
-        v.put(42L, "foo");
-        r.set(col, v);
+        Record r = new Record().init(tbl);
+        r.get(col).put(42L, "foo");
         Tx tx = new Tx();
         tbl.store(r, tx);
         tx.commit();

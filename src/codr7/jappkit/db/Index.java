@@ -97,6 +97,13 @@ public class Index extends Relation {
         return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey())).distinct();
     }
 
+    @Override
+    public void init(Record it) {
+        for (Column<?> c: columns) {
+            if (!it.contains(c)) { it.setObject(c, c.initObject()); }
+        }
+    }
+
     public void commit(Object[] key, long recordId) {
         int i = 0;
 

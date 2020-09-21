@@ -11,12 +11,14 @@ public class Column<ValueT> {
         this.table = table;
         this.type = type;
         this.name = name;
-        table.addColumn(this);
+
+        if (!name.equals("id")) { table.addColumn(this); }
     }
 
     public Cmp cmp(ValueT x, ValueT y) { return type.cmp(x, y); }
 
     public ValueT init() { return type.init(); }
+    public Object initObject() { return init(); }
 
     public ValueT get(ValueT it) { return type.get(it); }
     public ValueT set(ValueT it) { return type.set(it); }

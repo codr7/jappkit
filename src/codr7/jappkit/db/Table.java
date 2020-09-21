@@ -108,10 +108,18 @@ public class Table extends Relation {
         return nextRecordId.incrementAndGet();
     }
 
+    @Override
+    public void init(Record it) {
+        for (Column<?> c: columns.values()) {
+            if (!it.contains(c)) { it.setObject(c, c.initObject()); }
+        }
+    }
+
     public Record load(long recordId) {
         Long pos = records.get(recordId);
         if (pos == null) { return null; }
         final Record r = new Record();
+        r.set(id, recordId);
 
         synchronized(dataFile) {
             try { dataFile.position(pos); } catch (IOException e) { throw new EIO(e); }
@@ -131,7 +139,9 @@ public class Table extends Relation {
     public Record load(long recordId, Tx tx) {
         Record r = tx.get(this, recordId);
         if (r == null) { return load(recordId); }
+
         final Record lr = new Record();
+        lr.set(id, recordId);
 
         r.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
             lr.setObject(f.getKey(), f.getValue());

@@ -9,6 +9,13 @@ import java.util.stream.Stream;
 public class Record {
     public static final Record DELETED = new Record();
 
+    public Record init(Relation it) {
+        it.init(this);
+        return this;
+    }
+
+    public boolean contains(Column<?> it) { return fields.containsKey(it); }
+
     public Object getObject(Column<?> it) { return fields.get(it); }
     public <ValueT> ValueT get(Column<ValueT> it) {
         return it.get((ValueT) getObject(it));
@@ -29,12 +36,20 @@ public class Record {
 
     public void write(SeekableByteChannel out) {
         int len = fields.size();
+
+        for (Map.Entry<Column<?>, Object> f: fields.entrySet()) {
+            if (f.getKey().name == "id") { len--; }
+        }
+
         Encoding.writeLong(len, out);
 
         for (Map.Entry<Column<?>, Object> f: fields.entrySet()) {
             Column<?> c = f.getKey();
-            Encoding.writeString(c.name, out);
-            c.store(f.getValue(), out);
+
+            if (c.name != "id") {
+                Encoding.writeString(c.name, out);
+                c.store(f.getValue(), out);
+            }
         }
     }
 
