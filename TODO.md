@@ -1,5 +1,6 @@
 * add TimeColumn
   * Instant
+  * getEpochSecond/getNano
   * add Encoding.read/writeTime
 * finish maxTime support in open()
 * add Index.records() method like Table

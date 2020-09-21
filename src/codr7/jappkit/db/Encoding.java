@@ -21,6 +21,7 @@ public final class Encoding {
 
         buf.rewind();
         byte len = buf.get();
+        if (len == 0) { return 0L; }
         buf = ByteBuffer.allocate(len);
 
         try { in.read(buf); }
@@ -35,9 +36,7 @@ public final class Encoding {
     public static String readString(SeekableByteChannel in) {
         long len = readLong(in);
         ByteBuffer buf = ByteBuffer.allocate((int)len);
-
-        try { in.read(buf); }
-        catch (IOException e) { throw new EIO(e); }
+        try { in.read(buf); } catch (IOException e) { throw new EIO(e); }
 
         buf.rewind();
         byte[] bs = new byte[(int)len];
@@ -46,13 +45,19 @@ public final class Encoding {
     }
 
     public static void writeLong(long it, SeekableByteChannel out) {
-        byte[] bs = Long.valueOf(it).toString().getBytes();
+        ByteBuffer buf = null;
 
-        ByteBuffer buf = ByteBuffer.allocate(bs.length + 1);
-        buf.put((byte)bs.length);
-        buf.put(bs);
+        if (it == 0L) {
+            buf = ByteBuffer.allocate(1);
+            buf.put((byte)0);
+        } else {
+            byte[] bs = Long.valueOf(it).toString().getBytes();
+            buf = ByteBuffer.allocate(bs.length + 1);
+            buf.put((byte) bs.length);
+            buf.put(bs);
+        }
+
         buf.rewind();
-
         try { out.write(buf); }
         catch (IOException e) { throw new EIO(e); }
     }
