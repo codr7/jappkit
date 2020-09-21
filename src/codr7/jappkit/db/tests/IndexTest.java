@@ -40,6 +40,35 @@ public class IndexTest {
         scm.close();
     }
 
+    @Test
+    public void remove() {
+        Schema scm = new Schema(Path.of("testdb"));
+        Table tbl = new Table(scm, "table");
+        LongColumn col = new LongColumn(tbl, "column");
+        Index idx = new Index(scm, "index", col);
+        tbl.addIndex(idx);
+
+        scm.drop();
+        scm.open(Instant.now());
+        Tx tx = new Tx();
+
+        Record r = new Record().init(tbl);
+        tbl.store(r.set(col, 21L), tx);
+        tx.commit();
+        tbl.store(r.set(col, 42L), tx);
+
+        assertNull(idx.find(new Object[]{21L}, tx));
+        assertEquals(idx.find(new Object[]{42L}, tx), r.get(tbl.id));
+
+        tx.commit();
+        scm.close();
+        scm.open(Instant.now());
+
+        assertNull(idx.find(new Object[]{21L}, tx));
+        assertEquals(idx.find(new Object[]{42L}, tx), r.get(tbl.id));
+        scm.close();
+    }
+
     public void findFirst() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");

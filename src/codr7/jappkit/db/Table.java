@@ -147,16 +147,15 @@ public class Table extends Relation {
         if (id == null) {
             id = getNextRecordId();
             it.set(Table.this.id, id);
+        } else {
+            Record pr = load(id, tx);
+
+            if (pr != null) {
+                for (Index idx: indexes) { idx.remove(pr, tx); }
+            }
         }
 
-        Record pr = load(id);
-
-        if (pr != null) {
-            for (Index idx: indexes) { idx.remove(pr, tx); }
-        }
-
-        final long idv = id.longValue();
-        final Record txr = tx.set(this, idv);
+        final Record txr = tx.set(this, id);
 
         it.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
             Column<?> c = f.getKey();

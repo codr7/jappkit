@@ -19,6 +19,7 @@ public class Column<ValueT> {
     }
 
     public Cmp cmp(ValueT x, ValueT y) { return type.cmp(x, y); }
+    public Cmp cmpObject(Object x, Object y) { return cmp((ValueT)x, (ValueT)y); }
 
     public ValueT init() { return type.init(); }
     public Object initObject() { return init(); }

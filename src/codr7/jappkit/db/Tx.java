@@ -58,7 +58,7 @@ public class Tx {
     public Stream<Map.Entry<Object[], Long>> records(Index idx) {
         Map<Object[], Long> rs = indexUpdates.get(idx);
         if (rs == null) { return Stream.empty(); }
-        return rs.entrySet().stream();
+        return rs.entrySet().stream().filter((i) -> i.getValue() != -1L);
     }
 
     public void put(final Index index, Object[]key, long recordId) {
@@ -69,27 +69,39 @@ public class Tx {
             indexUpdates.put(index, rs);
         }
 
-        if (rs.containsKey(key)) { throw new E("Duplicate key in index '%s'", index.name); }
+        Long pid = rs.get(key);
+        if (pid != null && pid != -1L) { throw new E("Duplicate key in index '%s'", index.name); }
         rs.put(key, recordId);
     }
 
-    public boolean delete(Index idx, Object[] key) {
+    public boolean remove(Index idx, Object[] key) {
         TreeMap<Object[], Long> rs = indexUpdates.get(idx);
-        if (rs == null) { return false; }
+
+        if (rs == null) {
+            rs = new TreeMap<>(idx::compareKeys);
+            indexUpdates.put(idx, rs);
+        }
+
         Long pid = rs.put(key, -1L);
         return pid != null && pid != -1L;
     }
 
-    public boolean isDeleted(Index idx, Object[] key) {
+    public boolean isRemoved(Index idx, Object[] key) {
         TreeMap<Object[], Long> rs = indexUpdates.get(idx);
         if (rs == null) { return false; }
-        return rs.get(key) == -1L;
+        Long id = rs.get(key);
+        return id != null && id == -1L;
     }
 
     public Stream<Map.Entry<Object[], Long>> findFirst(Index idx, Object[] key) {
         TreeMap<Object[], Long> rs = indexUpdates.get(idx);
         if (rs == null) { return Stream.empty(); }
-        return rs.subMap(key, true, rs.lastKey(), true).entrySet().stream();
+
+        return rs
+                .subMap(key, true, rs.lastKey(), true)
+                .entrySet()
+                .stream()
+                .filter((i) -> i.getValue() != -1L);
     }
 
     public void commit() {

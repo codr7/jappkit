@@ -6,12 +6,10 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.nio.file.Path;
 import java.util.stream.Stream;
@@ -41,9 +39,9 @@ public class Index extends Relation {
                 Instant ts = Encoding.readTime(file);
                 if (ts.compareTo(maxTime) > 0) { break; }
                 Object[] key = new Object[columns.size()];
-                for (int i = 0; i < key.length; i++) { columns.get(i).load(file); }
+                for (int i = 0; i < key.length; i++) { key[i] = columns.get(i).load(file); }
                 long recordId = Encoding.readLong(file);
-                records.put(key, recordId);
+                if (recordId == -1L) { records.remove(key); } else { records.put(key, recordId); }
             }
         } catch (EIO e) {
             if (e.getCause().getClass() != EOFException.class) { throw e; }
@@ -66,8 +64,12 @@ public class Index extends Relation {
             }
 
             if (y.length == i) {
-                return Cmp.GT.asInt;
+                return (x.length == i) ? Cmp.EQ.asInt : Cmp.GT.asInt;
             }
+
+            Cmp result = c.cmpObject(x[i], y[i]);
+            if (result != Cmp.EQ) { return result.asInt; }
+            i++;
         }
 
         return Cmp.EQ.asInt;
@@ -83,7 +85,7 @@ public class Index extends Relation {
 
     public Long find(Object[] key, Tx tx) {
         Long out = tx.get(this, key);
-        if (out == null) { out = records.get(key); }
+        if (out == null) { out = records.get(key); } else if (out == -1L) { out = null; }
         return out;
     }
 
@@ -92,7 +94,7 @@ public class Index extends Relation {
                 .subMap(key, true, records.lastKey(), true)
                 .entrySet()
                 .stream()
-                .filter((i) -> !tx.isDeleted(this, i.getKey()));
+                .filter((i) -> !tx.isRemoved(this, i.getKey()));
 
         Stream<Map.Entry<Object[], Long>> txrs = tx.findFirst(this, key);
         return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey())).distinct();
@@ -106,35 +108,32 @@ public class Index extends Relation {
     }
 
     public void commit(Object[] key, long recordId) {
-        int i = 0;
-
         synchronized(file) {
             Encoding.writeTime(Instant.now(), file);
+
+            int i = 0;
             for (Column<?> c : columns) { c.store(key[i++], file); }
+
             Encoding.writeLong(recordId, file);
         }
 
-        records.put(key, recordId);
+        if (recordId == -1L) { records.remove(key); } else { records.put(key, recordId); }
     }
 
     public void add(Record it, long id, Tx tx) {
         Object[] k = key(it);
-        if (records.containsKey(k) || tx.get(this, k) != null) { throw new E("Duplicate key in index '%s'", name); }
+        Long txr = tx.get(this, k);
+        if ((records.containsKey(k) && (txr == null || txr != -1L)) || (txr != null && txr != -1L)) { throw new E("Duplicate key in index '%s'", name); }
         tx.put(this, k, id);
     }
 
-    public boolean remove(Record it, Tx tx) {
-        Object[] k = key(it);
-        if (tx.get(this, k) == null) { return false; }
-        tx.delete(this, k);
-        return true;
-    }
+    public boolean remove(Record it, Tx tx) { return tx.remove(this, key(it)); }
 
     public Stream<Map.Entry<Object[], Long>> records(Tx tx) {
         Stream<Map.Entry<Object[], Long>> rs = records
                 .entrySet()
                 .stream()
-                .filter((i) -> !tx.isDeleted(this, i.getKey()));
+                .filter((i) -> !tx.isRemoved(this, i.getKey()));
 
         return Stream.concat(rs, tx.records(this)).distinct();
     }
