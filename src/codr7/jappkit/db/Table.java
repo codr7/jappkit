@@ -24,6 +24,7 @@ public class Table extends Relation {
     public Table(Schema schema, String name) {
         super(schema, name);
         id = new LongColumn(this, "id");
+        id.isVirtual = true;
         schema.addTable(this);
     }
 
@@ -79,9 +80,7 @@ public class Table extends Relation {
         nextRecordId.set(0L);
     }
 
-    public void commit(Record it) {
-        Long id = it.get(Table.this.id);
-        if (id == null) { throw new E("Missing id for table: %s", name); }
+    public void commit(Record it, long recordId) {
         long pos = -1;
 
         synchronized(dataFile) {
@@ -97,11 +96,11 @@ public class Table extends Relation {
 
         synchronized(keyFile) {
             Encoding.writeTime(Instant.now(), keyFile);
-            Encoding.writeLong(id, keyFile);
+            Encoding.writeLong(recordId, keyFile);
             Encoding.writeLong(pos, keyFile);
         }
 
-        records.put(id, pos);
+        records.put(recordId, pos);
     }
 
     public long getNextRecordId() {
@@ -111,6 +110,7 @@ public class Table extends Relation {
     @Override
     public void init(Record it) {
         for (Column<?> c: columns.values()) {
+            if (c.isVirtual) { continue; }
             if (!it.contains(c)) { it.setObject(c, c.initObject()); }
         }
     }
@@ -167,7 +167,11 @@ public class Table extends Relation {
         final long idv = id.longValue();
         final Record txr = tx.set(this, idv);
 
-        it.fields().forEach((Map.Entry<Column<?>, Object> f) -> { txr.setObject(f.getKey(), f.getValue()); });
+        it.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
+            Column<?> c = f.getKey();
+            if (!c.isVirtual) { txr.setObject(c, f.getValue()); }
+        });
+
         for (Index idx: indexes) { idx.add(it, id, tx); }
     }
 
@@ -183,7 +187,7 @@ public class Table extends Relation {
                 .filter((id) -> !tx.isDeleted(this, id))
                 .map((id) -> load(id, tx));
 
-        return Stream.concat(rs, tx.records(this)).distinct();
+        return Stream.concat(rs, tx.records(this).map((i) -> i.getValue().clone().set(id, i.getKey()))).distinct();
     }
 
     private SeekableByteChannel keyFile;

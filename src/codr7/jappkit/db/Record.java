@@ -14,6 +14,17 @@ public class Record {
         return this;
     }
 
+    public Record clone() {
+        Record it = new Record();
+
+        for (Map.Entry<Column<?>, Object> i: fields.entrySet()) {
+            Column c = i.getKey();
+            it.setObject(c, c.clone(i.getValue()));
+        }
+
+        return it;
+    }
+
     public boolean contains(Column<?> it) { return fields.containsKey(it); }
 
     public Object getObject(Column<?> it) { return fields.get(it); }
@@ -38,18 +49,15 @@ public class Record {
         int len = fields.size();
 
         for (Map.Entry<Column<?>, Object> f: fields.entrySet()) {
-            if (f.getKey().name == "id") { len--; }
+            if (f.getKey().isVirtual) { len--; }
         }
 
         Encoding.writeLong(len, out);
 
         for (Map.Entry<Column<?>, Object> f: fields.entrySet()) {
             Column<?> c = f.getKey();
-
-            if (c.name != "id") {
-                Encoding.writeString(c.name, out);
-                c.store(f.getValue(), out);
-            }
+            Encoding.writeString(c.name, out);
+            c.store(f.getValue(), out);
         }
     }
 

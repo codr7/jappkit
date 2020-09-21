@@ -12,10 +12,10 @@ public class Tx {
         return rs.get(recordId);
     }
 
-    public Stream<Record> records(Table table) {
+    public Stream<Map.Entry<Long, Record>> records(Table table) {
         Map<Long, Record> rs = tableUpdates.get(table);
         if (rs == null) { return Stream.empty(); }
-        return rs.values().stream();
+        return rs.entrySet().stream();
     }
 
     public Record set(Table table, long recordId) {
@@ -94,7 +94,7 @@ public class Tx {
 
     public void commit() {
         for (Map.Entry<Table, Map<Long, Record>> i: tableUpdates.entrySet()) {
-            for (Map.Entry<Long, Record> j: i.getValue().entrySet()) { i.getKey().commit(j.getValue()); }
+            for (Map.Entry<Long, Record> j: i.getValue().entrySet()) { i.getKey().commit(j.getValue(), j.getKey()); }
         }
 
 
