@@ -1,14 +1,16 @@
 package codr7.jappkit.db;
 
+import codr7.jappkit.Type;
+
 import java.nio.channels.SeekableByteChannel;
 
 public class Column<ValueT> {
     public final Table table;
-    public final ColumnType<ValueT> type;
+    public final Type<ValueT> type;
     public final String name;
     public boolean isVirtual = false;
 
-    public Column(Table table, ColumnType<ValueT> type, String name) {
+    public Column(Table table, Type<ValueT> type, String name) {
         this.table = table;
         this.type = type;
         this.name = name;
