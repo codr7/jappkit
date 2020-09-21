@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SeekableByteChannel;
+import java.time.Instant;
 
 public final class Encoding {
     public static final String charsetName = "UTF-8";
@@ -44,6 +45,8 @@ public final class Encoding {
         return new String(bs);
     }
 
+    public static Instant readTime(SeekableByteChannel in) { return Instant.ofEpochMilli(readLong(in)); }
+
     public static void writeLong(long it, SeekableByteChannel out) {
         ByteBuffer buf = null;
 
@@ -75,6 +78,8 @@ public final class Encoding {
         try { out.write(buf); }
         catch (IOException e) { throw new EIO(e); }
     }
+
+    public static void writeTime(Instant it, SeekableByteChannel out) { writeLong(it.toEpochMilli(), out); }
 
     private Encoding() { }
 }

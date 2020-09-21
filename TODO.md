@@ -1,9 +1,7 @@
-* add TimeColumn
-  * Instant
-  * getEpochSecond/getNano
-  * add Encoding.read/writeTime
 * finish maxTime support in open()
+** read/write time
 * add Index.records() method like Table
+** test
 * add delete test to table/index
 * add rollback test to table/index
 * add BooleanColumn
@@ -11,3 +9,4 @@
 ** add Tx.parent
 *** constructor arg
 *** forward updates on commit if set 
+* add SetColumn

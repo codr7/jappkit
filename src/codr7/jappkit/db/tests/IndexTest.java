@@ -1,5 +1,6 @@
-package codr7.jappkit.db;
+package codr7.jappkit.db.tests;
 
+import codr7.jappkit.db.*;
 import codr7.jappkit.db.columns.LongColumn;
 import codr7.jappkit.db.columns.StringColumn;
 import org.testng.annotations.Test;

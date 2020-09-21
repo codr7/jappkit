@@ -1,9 +1,10 @@
-package codr7.jappkit.db;
+package codr7.jappkit.db.tests;
 
-import codr7.jappkit.db.columns.ListColumn;
-import codr7.jappkit.db.columns.LongColumn;
-import codr7.jappkit.db.columns.MapColumn;
-import codr7.jappkit.db.columns.StringColumn;
+import codr7.jappkit.db.Record;
+import codr7.jappkit.db.Schema;
+import codr7.jappkit.db.Table;
+import codr7.jappkit.db.Tx;
+import codr7.jappkit.db.columns.*;
 import org.testng.annotations.*;
 
 import java.nio.file.Path;
@@ -20,27 +21,31 @@ public class TableTest {
     public void store() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table_store");
-        StringColumn col = new StringColumn(tbl, "string");
+        StringColumn stringCol = new StringColumn(tbl, "string");
+        TimeColumn timeCol = new TimeColumn(tbl, "time");
 
         scm.drop();
         scm.open(Instant.now());
 
         Record r = new Record();
-        r.set(col, "foo");
+        r.set(stringCol, "foo");
+        r.set(timeCol, Instant.now());
         Tx tx = new Tx();
         tbl.store(r, tx);
         assertEquals(r.get(tbl.id), Long.valueOf(1));
 
         Record lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(tbl.id), Long.valueOf(1));
-        assertEquals(lr.get(col), "foo");
+        assertEquals(lr.get(stringCol), r.get(stringCol));
+        assertEquals(lr.get(timeCol), r.get(timeCol));
         assertEquals(tbl.records(tx).count(), 1);
         tbl.records(tx).forEach((Record x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
 
         tx.commit();
         lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(tbl.id), Long.valueOf(1));
-        assertEquals(lr.get(col), "foo");
+        assertEquals(lr.get(stringCol), r.get(stringCol));
+        assertEquals(lr.get(timeCol), r.get(timeCol));
         assertEquals(tbl.records(tx).count(), 1);
         tbl.records(tx).forEach((x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
 

@@ -11,7 +11,7 @@ public class Record {
 
     public Object getObject(Column<?> it) { return fields.get(it); }
     public <ValueT> ValueT get(Column<ValueT> it) {
-        return (ValueT) getObject(it);
+        return it.get((ValueT) getObject(it));
     }
 
     public void setObject(Column<?> column, Object value) {
@@ -19,7 +19,7 @@ public class Record {
     }
 
     public <ValueT> Record set(Column<ValueT> column, ValueT value) {
-        setObject(column, value);
+        setObject(column, column.set(value));
         return this;
     }
 

@@ -18,7 +18,9 @@ public class Column<ValueT> {
 
     public ValueT init() { return type.init(); }
 
-    public Object load(SeekableByteChannel in) { return type.load(in); }
+    public ValueT get(ValueT it) { return type.get(it); }
+    public ValueT set(ValueT it) { return type.set(it); }
 
+    public Object load(SeekableByteChannel in) { return type.load(in); }
     public void store(Object it, SeekableByteChannel out) { type.store(it, out); }
 }
