@@ -28,22 +28,16 @@ public class Record {
     public boolean contains(Column<?> it) { return fields.containsKey(it); }
 
     public Object getObject(Column<?> it) { return fields.get(it); }
-    public <ValueT> ValueT get(Column<ValueT> it) {
-        return it.get((ValueT) getObject(it));
-    }
+    public <ValueT> ValueT get(Column<ValueT> it) { return it.get((ValueT) getObject(it)); }
 
-    public void setObject(Column<?> column, Object value) {
-        fields.put(column, value);
-    }
+    public void setObject(Column<?> column, Object value) { fields.put(column, value); }
 
     public <ValueT> Record set(Column<ValueT> column, ValueT value) {
         setObject(column, column.set(value));
         return this;
     }
 
-    public Stream<Map.Entry<Column<?>, Object>> fields() {
-        return fields.entrySet().stream();
-    }
+    public Stream<Map.Entry<Column<?>, Object>> fields() { return fields.entrySet().stream(); }
 
     public void write(SeekableByteChannel out) {
         int len = fields.size();
