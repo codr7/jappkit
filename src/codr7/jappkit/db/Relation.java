@@ -17,7 +17,7 @@ public abstract class Relation implements Comparable<Relation> {
     public abstract Relation addColumn(Column<?> it);
     public abstract void open(Instant maxTime);
     public abstract void close();
-    public abstract void init(Record it);
+    public abstract void init(Record it, Column<?>...cols);
 
     protected Relation(Schema schema, String name) {
         this.schema = schema;

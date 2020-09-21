@@ -98,8 +98,8 @@ public class Index extends Relation {
     }
 
     @Override
-    public void init(Record it) {
-        for (Column<?> c: columns) {
+    public void init(Record it, Column<?>...cols) {
+        for (Column<?> c: (cols.length == 0) ? columns.toArray(cols) : cols) {
             if (!it.contains(c)) { it.setObject(c, c.initObject()); }
         }
     }
