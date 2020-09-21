@@ -6,6 +6,11 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 public class Tx {
+    public final Tx parent;
+
+    public Tx(Tx parent) { this.parent = parent; }
+    public Tx() { this(null); }
+
     public ConstRecord get(Table table, long recordId) {
         Map<Long, ConstRecord> rs = tableUpdates.get(table);
         if (rs == null) { return null; }
@@ -105,13 +110,22 @@ public class Tx {
     }
 
     public void commit() {
-        for (Map.Entry<Table, Map<Long, ConstRecord>> i: tableUpdates.entrySet()) {
-            for (Map.Entry<Long, ConstRecord> j: i.getValue().entrySet()) { i.getKey().commit(j.getValue(), j.getKey()); }
-        }
+        if (parent == null) {
+            for (Map.Entry<Table, Map<Long, ConstRecord>> i : tableUpdates.entrySet()) {
+                for (Map.Entry<Long, ConstRecord> j : i.getValue().entrySet()) {
+                    i.getKey().commit(j.getValue(), j.getKey());
+                }
+            }
 
 
-        for (Map.Entry<Index, TreeMap<Object[], Long>> i: indexUpdates.entrySet()) {
-            for (Map.Entry<Object[], Long> j: i.getValue().entrySet()) { i.getKey().commit(j.getKey(), j.getValue()); }
+            for (Map.Entry<Index, TreeMap<Object[], Long>> i : indexUpdates.entrySet()) {
+                for (Map.Entry<Object[], Long> j : i.getValue().entrySet()) {
+                    i.getKey().commit(j.getKey(), j.getValue());
+                }
+            }
+        } else {
+            parent.tableUpdates.putAll(tableUpdates);
+            parent.indexUpdates.putAll(indexUpdates);
         }
 
         rollback();
