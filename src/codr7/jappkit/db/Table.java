@@ -78,7 +78,7 @@ public class Table extends Relation {
         nextRecordId.set(0L);
     }
 
-    public void commit(Record it, long recordId) {
+    public void commit(ConstRecord it, long recordId) {
         long pos = -1;
 
         if (it != Record.DELETED) {
@@ -133,7 +133,7 @@ public class Table extends Relation {
     }
 
     public Record load(long recordId, Tx tx) {
-        Record r = tx.get(this, recordId);
+        ConstRecord r = tx.get(this, recordId);
         if (r == null) { return load(recordId); }
         final Record lr = new Record();
         lr.set(id, recordId);

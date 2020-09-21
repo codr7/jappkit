@@ -6,27 +6,27 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 public class Tx {
-    public Record get(Table table, long recordId) {
-        Map<Long, Record> rs = tableUpdates.get(table);
+    public ConstRecord get(Table table, long recordId) {
+        Map<Long, ConstRecord> rs = tableUpdates.get(table);
         if (rs == null) { return null; }
         return rs.get(recordId);
     }
 
-    public Stream<Map.Entry<Long, Record>> records(Table table) {
-        Map<Long, Record> rs = tableUpdates.get(table);
+    public Stream<Map.Entry<Long, ConstRecord>> records(Table table) {
+        Map<Long, ConstRecord> rs = tableUpdates.get(table);
         if (rs == null) { return Stream.empty(); }
         return rs.entrySet().stream().filter((i) -> i.getValue() != Record.DELETED);
     }
 
     public Record set(Table table, long recordId) {
-        Map<Long, Record> rs = tableUpdates.get(table);
+        Map<Long, ConstRecord> rs = tableUpdates.get(table);
 
         if (rs == null) {
             rs = new TreeMap<>();
             tableUpdates.put(table, rs);
         }
 
-        Record r = rs.get(recordId);
+        Record r = (Record)rs.get(recordId);
 
         if (r == null || r == Record.DELETED) {
             r = new Record();
@@ -37,14 +37,14 @@ public class Tx {
     }
 
     public boolean delete(Table table, long recordId) {
-        Map<Long, Record> rs = tableUpdates.get(table);
+        Map<Long, ConstRecord> rs = tableUpdates.get(table);
         if (rs == null) { return false; }
-        Record pr = rs.put(recordId, Record.DELETED);
+        ConstRecord pr = rs.put(recordId, Record.DELETED);
         return pr != null && pr != Record.DELETED;
     }
 
     public boolean isDeleted(Table tbl, long recordId) {
-        Map<Long, Record> rs = tableUpdates.get(tbl);
+        Map<Long, ConstRecord> rs = tableUpdates.get(tbl);
         if (rs == null) { return false; }
         return rs.get(recordId) == Record.DELETED;
     }
@@ -93,8 +93,8 @@ public class Tx {
     }
 
     public void commit() {
-        for (Map.Entry<Table, Map<Long, Record>> i: tableUpdates.entrySet()) {
-            for (Map.Entry<Long, Record> j: i.getValue().entrySet()) { i.getKey().commit(j.getValue(), j.getKey()); }
+        for (Map.Entry<Table, Map<Long, ConstRecord>> i: tableUpdates.entrySet()) {
+            for (Map.Entry<Long, ConstRecord> j: i.getValue().entrySet()) { i.getKey().commit(j.getValue(), j.getKey()); }
         }
 
 
@@ -111,5 +111,5 @@ public class Tx {
     }
 
     private Map<Index, TreeMap<Object[], Long>> indexUpdates = new TreeMap<>();
-    private Map<Table, Map<Long, Record>> tableUpdates = new TreeMap<>();
+    private Map<Table, Map<Long, ConstRecord>> tableUpdates = new TreeMap<>();
 }

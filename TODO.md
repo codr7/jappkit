@@ -1,5 +1,3 @@
-* add index delete test
-** copy table
 * add rollback test to table/index
 * add BooleanColumn
 * implement List/MapColumn clone
