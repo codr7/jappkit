@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 public class Index extends Relation {
     public Index(Schema schema, String name) {
         super(schema, name);
+        schema.addIndex(this);
     }
 
     @Override
@@ -99,6 +100,13 @@ public class Index extends Relation {
     }
 
     public void commit(Object[] key, long recordId) {
+        int i = 0;
+
+        synchronized(file) {
+            for (Column<?> c : columns) { c.store(key[i++], file); }
+            Encoding.writeLong(recordId, file);
+        }
+
         records.put(key, recordId);
     }
 

@@ -82,14 +82,22 @@ public class Table extends Relation {
         if (id == null) { throw new E("Missing id for table: %s", name); }
         long pos = -1;
 
-        try {
-            pos = dataFile.size();
-            dataFile.position(pos);
-        } catch (IOException e) { throw new EIO(e); }
+        synchronized(dataFile) {
+            try {
+                pos = dataFile.size();
+                dataFile.position(pos);
+            } catch (IOException e) {
+                throw new EIO(e);
+            }
 
-        it.write(dataFile);
-        Encoding.writeLong(id, keyFile);
-        Encoding.writeLong(pos, keyFile);
+            it.write(dataFile);
+        }
+
+        synchronized(keyFile) {
+            Encoding.writeLong(id, keyFile);
+            Encoding.writeLong(pos, keyFile);
+        }
+
         records.put(id, pos);
     }
 
@@ -100,17 +108,18 @@ public class Table extends Relation {
     public Record load(long recordId) {
         Long pos = records.get(recordId);
         if (pos == null) { return null; }
-        try { dataFile.position(pos); }
-        catch (IOException e) { throw new EIO(e); }
-
         final Record r = new Record();
-        long len = Encoding.readLong(dataFile);
 
-        for (long i = 0; i < len; i++) {
-            String cn = Encoding.readString(dataFile);
-            Column<?> c = columns.get(cn);
-            if (c == null) { throw new E("Unknown column: %s", cn); }
-            r.setObject(c, c.load(dataFile));
+        synchronized(dataFile) {
+            try { dataFile.position(pos); } catch (IOException e) { throw new EIO(e); }
+            long len = Encoding.readLong(dataFile);
+
+            for (long i = 0; i < len; i++) {
+                String cn = Encoding.readString(dataFile);
+                Column<?> c = columns.get(cn);
+                if (c == null) { throw new E("Unknown column: %s", cn); }
+                r.setObject(c, c.load(dataFile));
+            }
         }
 
         return r;
