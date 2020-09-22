@@ -2,9 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/BooleanColumn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/BooleanType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Tx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Tx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/LongColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/StringColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/TimeColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/TimeColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/tests/TableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/tests/TableTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/LongType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/LongType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/StringType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/StringType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/TimeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/TimeType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,22 +190,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="843" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600707636795" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600731463172">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600733280538">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600731463172" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600731463170">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600733280538" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600733280537">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600731463170" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600731463170">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600733280537" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600733280537">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600731463170" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600731463171">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600733280537" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600733280538">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600731463171" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600733280538" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600702854597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

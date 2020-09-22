@@ -7,7 +7,9 @@ import codr7.jappkit.db.Encoding;
 import java.nio.channels.SeekableByteChannel;
 
 public class StringType extends Type<String> {
-    public StringType() { super("String"); }
+    public static StringType it = new StringType("String");
+
+    public StringType(String name) { super(name); }
 
     @Override
     public String init() { return ""; }

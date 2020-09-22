@@ -12,22 +12,24 @@ import java.time.Instant;
 public final class Encoding {
     public static final String charsetName = "UTF-8";
 
-    public static long readLong(SeekableByteChannel in) {
+    public static boolean readBoolean(SeekableByteChannel in) { return readByte(in) == 1; }
+
+    public static byte readByte(SeekableByteChannel in) {
         ByteBuffer buf = ByteBuffer.allocate(1);
 
         try {
             if (in.read(buf) == -1) { throw new EIO(new EOFException()); }
-        }
-        catch (IOException e){ throw new EIO(e); }
+        } catch (IOException e){ throw new EIO(e); }
 
         buf.rewind();
-        byte len = buf.get();
+        return buf.get();
+    }
+
+    public static long readLong(SeekableByteChannel in) {
+        byte len = readByte(in);
         if (len == 0) { return 0L; }
-        buf = ByteBuffer.allocate(len);
-
-        try { in.read(buf); }
-        catch (IOException e){ throw new EIO(e); }
-
+        ByteBuffer buf = ByteBuffer.allocate(len);
+        try { in.read(buf); } catch (IOException e){ throw new EIO(e); }
         buf.rewind();
         byte[] bs = new byte[len];
         buf.get(bs);
@@ -38,7 +40,6 @@ public final class Encoding {
         long len = readLong(in);
         ByteBuffer buf = ByteBuffer.allocate((int)len);
         try { in.read(buf); } catch (IOException e) { throw new EIO(e); }
-
         buf.rewind();
         byte[] bs = new byte[(int)len];
         buf.get(bs);
@@ -47,22 +48,28 @@ public final class Encoding {
 
     public static Instant readTime(SeekableByteChannel in) { return Instant.ofEpochMilli(readLong(in)); }
 
-    public static void writeLong(long it, SeekableByteChannel out) {
-        ByteBuffer buf = null;
+    public static void writeBoolean(boolean it, SeekableByteChannel out) { writeByte((byte)(it ? 1 : 0), out); }
 
+    public static void writeByte(byte it, SeekableByteChannel out) {
+        ByteBuffer buf = ByteBuffer.allocate(1);
+        buf.put(it);
+        buf.rewind();
+
+        try { out.write(buf); } catch (IOException e) { throw new EIO(e); }
+    }
+
+    public static void writeLong(long it, SeekableByteChannel out) {
         if (it == 0L) {
-            buf = ByteBuffer.allocate(1);
-            buf.put((byte)0);
+            writeByte((byte)0, out);
         } else {
             byte[] bs = Long.valueOf(it).toString().getBytes();
-            buf = ByteBuffer.allocate(bs.length + 1);
+            ByteBuffer buf = ByteBuffer.allocate(bs.length + 1);
             buf.put((byte) bs.length);
             buf.put(bs);
-        }
+            buf.rewind();
 
-        buf.rewind();
-        try { out.write(buf); }
-        catch (IOException e) { throw new EIO(e); }
+            try { out.write(buf); } catch (IOException e) { throw new EIO(e); }
+        }
     }
 
     public static void writeString(String it, SeekableByteChannel out) {
@@ -75,8 +82,7 @@ public final class Encoding {
         buf.put(bs);
         buf.rewind();
 
-        try { out.write(buf); }
-        catch (IOException e) { throw new EIO(e); }
+        try { out.write(buf); } catch (IOException e) { throw new EIO(e); }
     }
 
     public static void writeTime(Instant it, SeekableByteChannel out) { writeLong(it.toEpochMilli(), out); }

@@ -7,9 +7,7 @@ import codr7.jappkit.types.TimeType;
 import java.time.Instant;
 
 public class TimeColumn extends Column<Instant> {
-    public static final Type<Instant> type = new TimeType();
-
     public TimeColumn(Table table, String name) {
-        super(table, type, name);
+        super(table, TimeType.it, name);
     }
 }

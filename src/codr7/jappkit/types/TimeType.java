@@ -8,7 +8,9 @@ import java.nio.channels.SeekableByteChannel;
 import java.time.Instant;
 
 public class TimeType extends Type<Instant> {
-    public TimeType() { super("Time"); }
+    public static TimeType it = new TimeType("Time");
+
+    public TimeType(String name) { super(name); }
 
     @Override
     public Instant init() { return Instant.ofEpochMilli(0L); }

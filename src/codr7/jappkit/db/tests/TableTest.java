@@ -5,6 +5,8 @@ import codr7.jappkit.db.Schema;
 import codr7.jappkit.db.Table;
 import codr7.jappkit.db.Tx;
 import codr7.jappkit.db.columns.*;
+import codr7.jappkit.types.LongType;
+import codr7.jappkit.types.StringType;
 import org.testng.annotations.*;
 
 import java.nio.file.Path;
@@ -21,20 +23,22 @@ public class TableTest {
     public void store() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
+        BooleanColumn booleanCol = new BooleanColumn(tbl, "boolean");
         StringColumn stringCol = new StringColumn(tbl, "string");
         TimeColumn timeCol = new TimeColumn(tbl, "time");
 
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record().init(tbl).set(stringCol, "foo").set(timeCol, Instant.now());
+        Record r = new Record().init(tbl).set(booleanCol, true).set(stringCol, "foo").set(timeCol, Instant.now());
         Tx tx = new Tx();
         tbl.store(r, tx);
         assertEquals(r.get(tbl.id), Long.valueOf(1));
 
         Record lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(tbl.id), Long.valueOf(1));
-        assertEquals(lr.get(stringCol), r.get(stringCol));
+        assertTrue(lr.get(booleanCol));
+        assertEquals(lr.get(stringCol), "foo");
         assertEquals(lr.get(timeCol), r.get(timeCol));
         assertEquals(tbl.records(tx).count(), 1);
         tbl.records(tx).forEach((Record x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
@@ -42,7 +46,8 @@ public class TableTest {
         tx.commit();
         lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(tbl.id), Long.valueOf(1));
-        assertEquals(lr.get(stringCol), r.get(stringCol));
+        assertTrue(lr.get(booleanCol));
+        assertEquals(lr.get(stringCol), "foo");
         assertEquals(lr.get(timeCol), r.get(timeCol));
         assertEquals(tbl.records(tx).count(), 1);
         tbl.records(tx).forEach((x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
@@ -80,7 +85,7 @@ public class TableTest {
     public void list() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
-        ListColumn<Long> col = new ListColumn<>(tbl, "column", ArrayList.class, LongColumn.type);
+        ListColumn<Long> col = new ListColumn<>(tbl, "column", ArrayList.class, LongType.it);
 
         scm.drop();
         scm.open(Instant.now());
@@ -102,7 +107,7 @@ public class TableTest {
         Table tbl = new Table(scm, "table");
 
         MapColumn<Long, String> col =
-                new MapColumn<>(tbl, "column", HashMap.class, LongColumn.type, StringColumn.type);
+                new MapColumn<>(tbl, "column", HashMap.class, LongType.it, StringType.it);
 
         scm.drop();
         scm.open(Instant.now());

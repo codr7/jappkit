@@ -7,7 +7,9 @@ import codr7.jappkit.db.Encoding;
 import java.nio.channels.SeekableByteChannel;
 
 public class LongType extends Type<Long> {
-    public LongType() { super("Long"); }
+    public static LongType it = new LongType("Long");
+
+    public LongType(String name) { super(name); }
 
     @Override
     public Long init() { return 0L; }
