@@ -1,2 +1,4 @@
-* add SetColumn
-* add rollback test to table/index
+* db
+  * add SetColumn
+* lang
+  * add liblg ops
