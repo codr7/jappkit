@@ -2,6 +2,7 @@ package codr7.jappkit.types;
 
 import codr7.jappkit.db.Cmp;
 import codr7.jappkit.Type;
+import codr7.jappkit.db.Column;
 import codr7.jappkit.db.E;
 import codr7.jappkit.db.Encoding;
 
@@ -28,6 +29,17 @@ public final class MapType<KeyT, ValueT> extends Type<Map<KeyT, ValueT>> {
                 InstantiationException |
                 InvocationTargetException |
                 NoSuchMethodException e) {  throw new E(e); }
+    }
+
+    @Override
+    public Map<KeyT, ValueT> clone(Map<KeyT, ValueT> it) {
+        Map<KeyT, ValueT> out = init();
+
+        for (Map.Entry<KeyT, ValueT> i: it.entrySet()) {
+            out.put(keyType.clone(i.getKey()), valueType.clone(i.getValue()));
+        }
+
+        return out;
     }
 
     @Override

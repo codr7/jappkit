@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.channels.SeekableByteChannel;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public final class ListType<ItemT> extends Type<List<ItemT>> {
     public final Class listClass;
@@ -27,6 +28,13 @@ public final class ListType<ItemT> extends Type<List<ItemT>> {
                 InstantiationException |
                 InvocationTargetException |
                 NoSuchMethodException e) {  throw new E(e); }
+    }
+
+    @Override
+    public List<ItemT> clone(List<ItemT> it) {
+        List<ItemT> out = init();
+        for (ItemT i: it) { out.add(itemType.clone(i)); }
+        return out;
     }
 
     @Override
