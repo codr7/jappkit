@@ -6,12 +6,21 @@ import codr7.jappkit.Val;
 import java.util.ArrayList;
 
 public class Stack {
+    public void drop(int i, int n) {
+        i = items.size() - i - 1;
+        while (n-- > 0) { items.remove(i); }
+    }
+
     public Val push(Val it) {
         items.add(it);
         return it;
     }
 
-    public <ValT> Val push(Type<ValT> type, ValT data) { return push(Val.make(type, data)); }
+    public <ValT> Val push(Type<ValT> type, ValT...datas) {
+        Val v = null;
+        for (ValT d: datas) { push((v = Val.make(type, d))); }
+        return v;
+    }
 
     public Val peek(int offs) { return items.get(items.size() - offs - 1); }
 

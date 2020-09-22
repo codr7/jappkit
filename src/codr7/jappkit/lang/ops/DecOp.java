@@ -6,16 +6,14 @@ import codr7.jappkit.lang.*;
 import codr7.jappkit.types.LongType;
 
 public class DecOp extends Op {
-    public int offs = 0;
+    public int stackOffs = 0;
     public long delta = 1;
 
-    public DecOp(Target target) {
-        super(target);
-        target.emit(this);
-    }
+    public DecOp(Target target) { super(target); }
 
+    @Override
     public int eval(VM vm, CallStack calls, Stack stack) {
-        Val it = stack.peek(offs);
+        Val it = stack.peek(stackOffs);
         it.data = it.as(LongType.it) - delta;
         return pc+1;
     }

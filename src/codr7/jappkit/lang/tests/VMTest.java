@@ -16,7 +16,7 @@ public class VMTest {
     public void eval() {
         VM vm = new VM();
         Target main = new Target();
-        new PushOp(main, LongType.it, 42L);
+        new PushOp(main).val(LongType.it, 42L);
         new StopOp(main);
 
         Stack stack = new Stack();
@@ -31,22 +31,53 @@ public class VMTest {
         VM vm = new VM();
         Target main = new Target();
 
-        BranchLessOp skip = new BranchLessOp(main, 2);
+        BranchOp skip = new BranchLessOp(main).cond(2);
         new DecOp(main);
         new CpOp(main);
-        new CallOp(main, 0);
+        new CallOp(main).targetPc(0);
         new SwapOp(main);
         new DecOp(main);
-        new CallOp(main, 0);
+        new CallOp(main).targetPc(0);
         new AddOp(main);
-        skip.mark(main);
+        skip.targetPc(main);
         new RetOp(main);
 
         Stack stack = new Stack();
         stack.push(LongType.it, 20L);
 
         int startPc = main.nops();
-        new CallOp(main, 0);
+        new CallOp(main).targetPc(0);
+        new StopOp(main);
+
+        main.eval(vm, new CallStack(), stack, startPc);
+        assertEquals(stack.pop(LongType.it).longValue(), 6765L);
+    }
+
+    @Test
+    public void fibtail() {
+        VM vm = new VM();
+        Target main = new Target();
+
+        BranchOp exit0 = new BranchEqualOp(main).cond(0).offs(2);
+        BranchOp exit1 = new BranchEqualOp(main).cond(1).offs(2);
+        new DecOp(main).stackOffs = 2;
+        new SwapOp(main);
+        new CpOp(main).offs = 1;
+        new AddOp(main);
+        new JmpOp(main).targetPc(0);
+
+        exit0.targetPc(main);
+        new SwapOp(main);
+
+        exit1.targetPc(main);
+        new DropOp(main).offs(2).nitems(2);
+        new RetOp(main);
+
+        Stack stack = new Stack();
+        stack.push(LongType.it, 20L, 0L, 1L);
+
+        int startPc = main.nops();
+        new CallOp(main).targetPc(0);
         new StopOp(main);
 
         main.eval(vm, new CallStack(), stack, startPc);

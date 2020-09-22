@@ -4,10 +4,8 @@ import codr7.jappkit.Stack;
 import codr7.jappkit.lang.*;
 
 public class StopOp extends Op {
-    public StopOp(Target target) {
-        super(target);
-        target.emit(this);
-    }
+    public StopOp(Target target) { super(target); }
 
+    @Override
     public int eval(VM vm, CallStack calls, Stack stack) { return -1; }
 }

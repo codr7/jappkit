@@ -4,14 +4,16 @@ import codr7.jappkit.Stack;
 import codr7.jappkit.lang.*;
 
 public class CallOp extends Op {
-    public int targetPc;
+    public int targetPc = -1;
 
-    public CallOp(Target target, int targetPc) {
-        super(target);
-        this.targetPc = targetPc;
-        target.emit(this);
+    public CallOp(Target target) { super(target); }
+
+    public CallOp targetPc(int it) {
+        targetPc = it;
+        return this;
     }
 
+    @Override
     public int eval(VM vm, CallStack calls, Stack stack) {
         calls.push(pc+1);
         return targetPc;

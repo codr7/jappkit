@@ -5,7 +5,7 @@ import codr7.jappkit.Stack;
 import java.util.ArrayList;
 
 public class Target {
-    public <OpT extends Op> OpT emit(OpT op) {
+    public Op emit(Op op) {
         ops.add(op);
         return op;
     }

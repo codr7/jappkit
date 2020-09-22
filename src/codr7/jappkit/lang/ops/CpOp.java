@@ -6,11 +6,9 @@ import codr7.jappkit.lang.*;
 public class CpOp extends Op {
     public int offs = 0;
 
-    public CpOp(Target target) {
-        super(target);
-        target.emit(this);
-    }
+    public CpOp(Target target) { super(target); }
 
+    @Override
     public int eval(VM vm, CallStack calls, Stack stack) {
         stack.push(stack.peek(offs).cp());
         return pc+1;
