@@ -8,6 +8,8 @@ public abstract class Type<ValueT> {
     public Type(String name) { this.name = name; }
     public abstract ValueT init();
 
+    public boolean isa(Type parent) { return parent == this; }
+
     public ValueT clone(ValueT it) { return it; }
     public Object cloneObject(Object it) { return clone((ValueT) it); }
 

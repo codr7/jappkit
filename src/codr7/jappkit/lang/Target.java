@@ -1,7 +1,8 @@
 package codr7.jappkit.lang;
 
+import codr7.jappkit.Stack;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class Target {
     public <OpT extends Op> OpT emit(OpT op) {
@@ -9,8 +10,8 @@ public class Target {
         return op;
     }
 
-    public void eval(VM vm, Stack stack, int pc) {
-        for (int i = pc; pc != -1; pc = ops.get(pc).eval(vm, stack));
+    public void eval(VM vm, CallStack calls, Stack stack, int pc) {
+        while ((pc = ops.get(pc).eval(vm, calls, stack)) != -1);
     }
 
     public int nops() { return ops.size(); }
