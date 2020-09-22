@@ -14,10 +14,10 @@ public abstract class Relation implements Comparable<Relation> {
     public final Schema schema;
     public final String name;
 
-    public abstract Relation addColumn(Column<?> it);
+    public abstract Relation addCol(Col<?> it);
     public abstract void open(Instant maxTime);
     public abstract void close();
-    public abstract void init(Record it, Column<?>...cols);
+    public abstract void init(Rec it, Col<?>...cols);
 
     protected Relation(Schema schema, String name) {
         this.schema = schema;

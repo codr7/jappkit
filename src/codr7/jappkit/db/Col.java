@@ -5,18 +5,18 @@ import codr7.jappkit.Type;
 
 import java.nio.channels.SeekableByteChannel;
 
-public class Column<ValueT> {
+public class Col<ValueT> {
     public final Table table;
     public final Type<ValueT> type;
     public final String name;
     public boolean isVirtual = false;
 
-    public Column(Table table, Type<ValueT> type, String name) {
+    public Col(Table table, Type<ValueT> type, String name) {
         this.table = table;
         this.type = type;
         this.name = name;
 
-        table.addColumn(this);
+        table.addCol(this);
     }
 
     public Cmp cmp(ValueT x, ValueT y) { return type.cmp(x, y); }

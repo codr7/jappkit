@@ -16,15 +16,15 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 public class Index extends Relation {
-    public Index(Schema schema, String name, Column<?>...cols) {
+    public Index(Schema schema, String name, Col<?>...cols) {
         super(schema, name);
         schema.addIndex(this);
-        for (Column<?> c: cols) { addColumn(c); }
+        for (Col<?> c: cols) { addCol(c); }
     }
 
     @Override
-    public Index addColumn(Column<?> it) {
-        columns.add(it);
+    public Index addCol(Col<?> it) {
+        cols.add(it);
         return this;
     }
 
@@ -39,10 +39,10 @@ public class Index extends Relation {
             for (; ; ) {
                 Instant ts = Encoding.readTime(file);
                 if (ts.compareTo(maxTime) > 0) { break; }
-                Object[] key = new Object[columns.size()];
-                for (int i = 0; i < key.length; i++) { key[i] = columns.get(i).load(file); }
+                Object[] key = new Object[cols.size()];
+                for (int i = 0; i < key.length; i++) { key[i] = cols.get(i).load(file); }
                 long recordId = Encoding.readLong(file);
-                if (recordId == -1L) { records.remove(key); } else { records.put(key, recordId); }
+                if (recordId == -1L) { recs.remove(key); } else { recs.put(key, recordId); }
             }
         } catch (EOF e) { }
     }
@@ -51,13 +51,13 @@ public class Index extends Relation {
     public void close() {
         try { file.close(); } catch (IOException e) { throw new E(e); }
         file = null;
-        records.clear();
+        recs.clear();
     }
 
     public int compareKeys(Object[] x, Object[] y) {
         int i = 0;
 
-        for (Column<?> c: columns) {
+        for (Col<?> c: cols) {
             if (x.length == i && y.length != i) {
                 return Cmp.LT.asInt;
             }
@@ -74,29 +74,29 @@ public class Index extends Relation {
         return Cmp.EQ.asInt;
     }
 
-    public Object[] key(Record it) {
-        Object[] out = new Object[columns.size()];
+    public Object[] key(Rec it) {
+        Object[] out = new Object[cols.size()];
         int i = 0;
 
-        for (Column<?> c: columns) { out[i++] = it.getObject(c); }
+        for (Col<?> c: cols) { out[i++] = it.getObject(c); }
         return out;
     }
 
-    public <ValueT> ValueT key(Object[] key, Column<ValueT> col) {
-        int i = columns.indexOf(col);
+    public <ValueT> ValueT key(Object[] key, Col<ValueT> col) {
+        int i = cols.indexOf(col);
         if (i == -1) { throw new E("Invalid key column: %s", col.name); }
         return (ValueT)key[i];
     }
 
     public Long find(Object[] key, Tx tx) {
         Long out = tx.get(this, key);
-        if (out == null) { out = records.get(key); } else if (out == -1L) { out = null; }
+        if (out == null) { out = recs.get(key); } else if (out == -1L) { out = null; }
         return out;
     }
 
     public Stream<Map.Entry<Object[], Long>> findFirst(Object[] key, Tx tx) {
-        Stream<Map.Entry<Object[], Long>> rs = records
-                .subMap(key, true, records.lastKey(), true)
+        Stream<Map.Entry<Object[], Long>> rs = recs
+                .subMap(key, true, recs.lastKey(), true)
                 .entrySet()
                 .stream()
                 .filter((i) -> !tx.isRemoved(this, i.getKey()));
@@ -106,36 +106,36 @@ public class Index extends Relation {
     }
 
     @Override
-    public void init(Record it, Column<?>...cols) {
-        for (Column<?> c: (cols.length == 0) ? columns.toArray(cols) : cols) {
+    public void init(Rec it, Col<?>...cols) {
+        for (Col<?> c: (cols.length == 0) ? this.cols.toArray(cols) : cols) {
             if (!it.contains(c)) { it.setObject(c, c.initObject()); }
         }
     }
 
-    public void commit(Object[] key, long recordId) {
+    public void commit(Object[] key, long recId) {
         synchronized(file) {
             Encoding.writeTime(Instant.now(), file);
 
             int i = 0;
-            for (Column<?> c : columns) { c.store(key[i++], file); }
+            for (Col<?> c : cols) { c.store(key[i++], file); }
 
-            Encoding.writeLong(recordId, file);
+            Encoding.writeLong(recId, file);
         }
 
-        if (recordId == -1L) { records.remove(key); } else { records.put(key, recordId); }
+        if (recId == -1L) { recs.remove(key); } else { recs.put(key, recId); }
     }
 
-    public void add(Record it, long id, Tx tx) {
+    public void add(Rec it, long id, Tx tx) {
         Object[] k = key(it);
         Long txr = tx.get(this, k);
-        if ((records.containsKey(k) && (txr == null || txr != -1L)) || (txr != null && txr != -1L)) { throw new E("Duplicate key in index '%s'", name); }
+        if ((recs.containsKey(k) && (txr == null || txr != -1L)) || (txr != null && txr != -1L)) { throw new E("Duplicate key in index '%s'", name); }
         tx.put(this, k, id);
     }
 
-    public boolean remove(Record it, Tx tx) { return tx.remove(this, key(it)); }
+    public boolean remove(Rec it, Tx tx) { return tx.remove(this, key(it)); }
 
     public Stream<Map.Entry<Object[], Long>> records(Tx tx) {
-        Stream<Map.Entry<Object[], Long>> rs = records
+        Stream<Map.Entry<Object[], Long>> rs = recs
                 .entrySet()
                 .stream()
                 .filter((i) -> !tx.isRemoved(this, i.getKey()));
@@ -144,6 +144,6 @@ public class Index extends Relation {
     }
 
     private SeekableByteChannel file;
-    private final List<Column<?>> columns = new ArrayList<>();
-    private final ConcurrentSkipListMap<Object[], Long> records = new ConcurrentSkipListMap<>(this::compareKeys);
+    private final List<Col<?>> cols = new ArrayList<>();
+    private final ConcurrentSkipListMap<Object[], Long> recs = new ConcurrentSkipListMap<>(this::compareKeys);
 }

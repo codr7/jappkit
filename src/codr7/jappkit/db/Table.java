@@ -1,7 +1,7 @@
 package codr7.jappkit.db;
 
 import codr7.jappkit.E;
-import codr7.jappkit.db.columns.LongColumn;
+import codr7.jappkit.db.columns.LongCol;
 import codr7.jappkit.errors.EOF;
 
 import java.io.IOException;
@@ -18,19 +18,19 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 public class Table extends Relation {
-    public final Column<Long> id;
+    public final Col<Long> id;
 
     public Table(Schema schema, String name) {
         super(schema, name);
-        id = new LongColumn(this, "id");
+        id = new LongCol(this, "id");
         id.isVirtual = true;
         schema.addTable(this);
     }
 
     @Override
-    public Table addColumn(Column<?> it) {
-        if (columns.containsKey(it.name)) { throw new E("Duplicate column: %v", it.name); }
-        columns.put(it.name, it);
+    public Table addCol(Col<?> it) {
+        if (cols.containsKey(it.name)) { throw new E("Duplicate col: %v", it.name); }
+        cols.put(it.name, it);
         return this;
     }
 
@@ -54,7 +54,7 @@ public class Table extends Relation {
                 if (ts.compareTo(maxTime) > 0) { break; }
                 long recordId = Encoding.readLong(keyFile);
                 long pos = Encoding.readLong(keyFile);
-                if (pos == -1) { records.remove(recordId); } else { records.put(recordId, pos); }
+                if (pos == -1) { recs.remove(recordId); } else { recs.put(recordId, pos); }
             }
         } catch (EOF e) { }
     }
@@ -69,14 +69,14 @@ public class Table extends Relation {
             dataFile = null;
         } catch (IOException e) { throw new E(e); }
 
-        records.clear();
-        nextRecordId.set(0L);
+        recs.clear();
+        nextRecId.set(0L);
     }
 
-    public void commit(ConstRecord it, long recordId) {
+    public void commit(ConstRec it, long recordId) {
         long pos = -1;
 
-        if (it != Record.DELETED) {
+        if (it != Rec.DELETED) {
             synchronized (dataFile) {
                 try {
                     pos = dataFile.size();
@@ -90,27 +90,27 @@ public class Table extends Relation {
         synchronized(keyFile) {
             Encoding.writeTime(Instant.now(), keyFile);
             Encoding.writeLong(recordId, keyFile);
-            Encoding.writeLong((it == Record.DELETED) ? -1L : pos, keyFile);
+            Encoding.writeLong((it == Rec.DELETED) ? -1L : pos, keyFile);
         }
 
-        records.put(recordId, pos);
+        recs.put(recordId, pos);
     }
 
-    public long getNextRecordId() { return nextRecordId.incrementAndGet(); }
+    public long getNextRecId() { return nextRecId.incrementAndGet(); }
 
     @Override
-    public void init(Record it, Column<?>...cols) {
-        for (Column<?> c: (cols.length == 0) ? columns.values().toArray(cols) : cols) {
+    public void init(Rec it, Col<?>...cols) {
+        for (Col<?> c: (cols.length == 0) ? this.cols.values().toArray(cols) : cols) {
             if (c.isVirtual) { continue; }
             if (!it.contains(c)) { it.setObject(c, c.initObject()); }
         }
     }
 
-    public Record load(long recordId) {
-        Long pos = records.get(recordId);
+    public Rec load(long recId) {
+        Long pos = recs.get(recId);
         if (pos == null) { return null; }
-        final Record r = new Record();
-        r.set(id, recordId);
+        final Rec r = new Rec();
+        r.set(id, recId);
 
         synchronized(dataFile) {
             try { dataFile.position(pos); } catch (IOException e) { throw new E(e); }
@@ -118,7 +118,7 @@ public class Table extends Relation {
 
             for (long i = 0; i < len; i++) {
                 String cn = Encoding.readString(dataFile);
-                Column<?> c = columns.get(cn);
+                Col<?> c = cols.get(cn);
                 if (c == null) { throw new E("Unknown column: %s", cn); }
                 r.setObject(c, c.load(dataFile));
             }
@@ -127,33 +127,33 @@ public class Table extends Relation {
         return r;
     }
 
-    public Record load(long recordId, Tx tx) {
-        ConstRecord r = tx.get(this, recordId);
-        if (r == null) { return load(recordId); }
-        final Record lr = new Record();
-        lr.set(id, recordId);
-        r.fields().forEach((Map.Entry<Column<?>, Object> f) -> { lr.setObject(f.getKey(), f.getValue()); });
+    public Rec load(long recId, Tx tx) {
+        ConstRec r = tx.get(this, recId);
+        if (r == null) { return load(recId); }
+        final Rec lr = new Rec();
+        lr.set(id, recId);
+        r.fields().forEach((Map.Entry<Col<?>, Object> f) -> { lr.setObject(f.getKey(), f.getValue()); });
         return lr;
     }
 
-    public void store(Record it, Tx tx) {
+    public void store(Rec it, Tx tx) {
         Long id = it.get(Table.this.id);
 
         if (id == null) {
-            id = getNextRecordId();
+            id = getNextRecId();
             it.set(Table.this.id, id);
         } else {
-            Record pr = load(id, tx);
+            Rec pr = load(id, tx);
 
             if (pr != null) {
                 for (Index idx: indexes) { idx.remove(pr, tx); }
             }
         }
 
-        final Record txr = tx.set(this, id);
+        final Rec txr = tx.set(this, id);
 
-        it.fields().forEach((Map.Entry<Column<?>, Object> f) -> {
-            Column<?> c = f.getKey();
+        it.fields().forEach((Map.Entry<Col<?>, Object> f) -> {
+            Col<?> c = f.getKey();
             if (!c.isVirtual) { txr.setObject(c, f.getValue()); }
         });
 
@@ -164,14 +164,14 @@ public class Table extends Relation {
         return tx.delete(this, recordId);
     }
 
-    public Stream<Record> records(Tx tx) {
-        Stream<Record> rs = records
+    public Stream<Rec> recs(Tx tx) {
+        Stream<Rec> rs = recs
                 .keySet()
                 .stream()
                 .filter((id) -> !tx.isDeleted(this, id))
                 .map((id) -> load(id, tx));
 
-        Stream<Record> txrs = tx
+        Stream<Rec> txrs = tx
                 .records(this)
                 .map((i) -> i.getValue().clone().set(id, i.getKey()));
 
@@ -180,8 +180,8 @@ public class Table extends Relation {
 
     private SeekableByteChannel keyFile;
     private SeekableByteChannel dataFile;
-    private final Map<String, Column<?>> columns = new HashMap<>();
+    private final Map<String, Col<?>> cols = new HashMap<>();
     private final List<Index> indexes = new ArrayList<>();
-    private final Map<Long, Long> records = new ConcurrentSkipListMap<>();
-    private final AtomicLong nextRecordId = new AtomicLong(0);
+    private final Map<Long, Long> recs = new ConcurrentSkipListMap<>();
+    private final AtomicLong nextRecId = new AtomicLong(0);
 }

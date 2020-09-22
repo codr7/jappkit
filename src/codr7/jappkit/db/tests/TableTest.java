@@ -1,6 +1,6 @@
 package codr7.jappkit.db.tests;
 
-import codr7.jappkit.db.Record;
+import codr7.jappkit.db.Rec;
 import codr7.jappkit.db.Schema;
 import codr7.jappkit.db.Table;
 import codr7.jappkit.db.Tx;
@@ -13,8 +13,6 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.testng.Assert.*;
 
@@ -23,25 +21,25 @@ public class TableTest {
     public void store() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
-        BooleanColumn booleanCol = new BooleanColumn(tbl, "boolean");
-        StringColumn stringCol = new StringColumn(tbl, "string");
-        TimeColumn timeCol = new TimeColumn(tbl, "time");
+        BooleanCol booleanCol = new BooleanCol(tbl, "boolean");
+        StringCol stringCol = new StringCol(tbl, "string");
+        TimeCol timeCol = new TimeCol(tbl, "time");
 
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record().init(tbl).set(booleanCol, true).set(stringCol, "foo").set(timeCol, Instant.now());
+        Rec r = new Rec().init(tbl).set(booleanCol, true).set(stringCol, "foo").set(timeCol, Instant.now());
         Tx tx = new Tx();
         tbl.store(r, tx);
         assertEquals(r.get(tbl.id), Long.valueOf(1));
 
-        Record lr = tbl.load(r.get(tbl.id), tx);
+        Rec lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(tbl.id), Long.valueOf(1));
         assertTrue(lr.get(booleanCol));
         assertEquals(lr.get(stringCol), "foo");
         assertEquals(lr.get(timeCol), r.get(timeCol));
-        assertEquals(tbl.records(tx).count(), 1);
-        tbl.records(tx).forEach((Record x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
+        assertEquals(tbl.recs(tx).count(), 1);
+        tbl.recs(tx).forEach((Rec x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
 
         tx.commit();
         lr = tbl.load(r.get(tbl.id), tx);
@@ -49,8 +47,8 @@ public class TableTest {
         assertTrue(lr.get(booleanCol));
         assertEquals(lr.get(stringCol), "foo");
         assertEquals(lr.get(timeCol), r.get(timeCol));
-        assertEquals(tbl.records(tx).count(), 1);
-        tbl.records(tx).forEach((x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
+        assertEquals(tbl.recs(tx).count(), 1);
+        tbl.recs(tx).forEach((x) -> assertEquals(x.get(tbl.id), r.get(tbl.id)));
 
         scm.close();
     }
@@ -59,24 +57,24 @@ public class TableTest {
     public void delete() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
-        LongColumn col = new LongColumn(tbl, "column");
+        LongCol col = new LongCol(tbl, "column");
 
         scm.drop();
         scm.open(Instant.now());
         Tx tx = new Tx();
 
-        Record r1 = new Record().init(tbl).set(col, 21L);
+        Rec r1 = new Rec().init(tbl).set(col, 21L);
         tbl.store(r1, tx);
-        Record r2 = new Record().init(tbl).set(col, 42L);
+        Rec r2 = new Rec().init(tbl).set(col, 42L);
         tbl.store(r2, tx);
         tbl.delete(r1.get(tbl.id), tx);
-        tbl.records(tx).forEach((Record x) -> assertEquals(x.get(col), r2.get(col)));
+        tbl.recs(tx).forEach((Rec x) -> assertEquals(x.get(col), r2.get(col)));
 
         tx.commit();
         scm.close();
         scm.open(Instant.now());
 
-        tbl.records(tx).forEach((x) -> assertEquals(x.get(col), r2.get(col)));
+        tbl.recs(tx).forEach((x) -> assertEquals(x.get(col), r2.get(col)));
 
         scm.close();
     }
@@ -85,18 +83,18 @@ public class TableTest {
     public void list() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
-        ListColumn<Long> col = new ListColumn<>(tbl, "column", ArrayList.class, LongType.it);
+        ListCol<Long> col = new ListCol<>(tbl, "column", ArrayList.class, LongType.it);
 
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record().init(tbl);
+        Rec r = new Rec().init(tbl);
         r.get(col).add(42L);
         Tx tx = new Tx();
         tbl.store(r, tx);
         tx.commit();
 
-        Record lr = tbl.load(r.get(tbl.id), tx);
+        Rec lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(col).iterator().next().longValue(), 42);
         scm.close();
     }
@@ -106,19 +104,19 @@ public class TableTest {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
 
-        MapColumn<Long, String> col =
-                new MapColumn<>(tbl, "column", HashMap.class, LongType.it, StringType.it);
+        MapCol<Long, String> col =
+                new MapCol<>(tbl, "column", HashMap.class, LongType.it, StringType.it);
 
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record().init(tbl);
+        Rec r = new Rec().init(tbl);
         r.get(col).put(42L, "foo");
         Tx tx = new Tx();
         tbl.store(r, tx);
         tx.commit();
 
-        Record lr = tbl.load(r.get(tbl.id), tx);
+        Rec lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(col).get(42L), "foo");
         scm.close();
     }

@@ -1,8 +1,8 @@
 package codr7.jappkit.db.tests;
 
 import codr7.jappkit.db.*;
-import codr7.jappkit.db.columns.LongColumn;
-import codr7.jappkit.db.columns.StringColumn;
+import codr7.jappkit.db.columns.LongCol;
+import codr7.jappkit.db.columns.StringCol;
 import org.testng.annotations.Test;
 
 import java.nio.file.Path;
@@ -15,15 +15,15 @@ public class IndexTest {
     public void store() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
-        LongColumn col1 = new LongColumn(tbl, "long");
-        StringColumn col2 = new StringColumn(tbl, "string");
+        LongCol col1 = new LongCol(tbl, "long");
+        StringCol col2 = new StringCol(tbl, "string");
         Index idx = new Index(scm, "index", col1, col2);
         tbl.addIndex(idx);
 
         scm.drop();
         scm.open(Instant.now());
 
-        Record r = new Record().init(tbl).set(col1, 42L).set(col2, "foo");
+        Rec r = new Rec().init(tbl).set(col1, 42L).set(col2, "foo");
         Object[]k = new Object[]{42L, "foo"};
 
         Tx tx = new Tx();
@@ -44,7 +44,7 @@ public class IndexTest {
     public void remove() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
-        LongColumn col = new LongColumn(tbl, "column");
+        LongCol col = new LongCol(tbl, "column");
         Index idx = new Index(scm, "index", col);
         tbl.addIndex(idx);
 
@@ -52,7 +52,7 @@ public class IndexTest {
         scm.open(Instant.now());
         Tx tx = new Tx();
 
-        Record r = new Record().init(tbl);
+        Rec r = new Rec().init(tbl);
         tbl.store(r.set(col, 21L), tx);
         tx.commit();
         tbl.store(r.set(col, 42L), tx);
@@ -72,17 +72,17 @@ public class IndexTest {
     public void findFirst() {
         Schema scm = new Schema(Path.of("testdb"));
         Table tbl = new Table(scm, "table");
-        LongColumn col1 = new LongColumn(tbl, "long");
-        StringColumn col2 = new StringColumn(tbl, "string");
+        LongCol col1 = new LongCol(tbl, "long");
+        StringCol col2 = new StringCol(tbl, "string");
         Index idx = new Index(scm, "index", col1, col2);
         tbl.addIndex(idx);
 
         scm.drop();
         scm.open(Instant.now());
 
-        Record r1 = new Record().init(tbl).set(col1, 21L).set(col2, "foo");
-        Record r2 = new Record().init(tbl).set(col1, 21L).set(col2, "bar");
-        Record r3 = new Record().init(tbl).set(col1, 42L).set(col2, "baz");
+        Rec r1 = new Rec().init(tbl).set(col1, 21L).set(col2, "foo");
+        Rec r2 = new Rec().init(tbl).set(col1, 21L).set(col2, "bar");
+        Rec r3 = new Rec().init(tbl).set(col1, 42L).set(col2, "baz");
 
         Tx tx = new Tx();
         tbl.store(r1, tx);
