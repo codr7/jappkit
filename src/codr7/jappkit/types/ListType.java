@@ -1,15 +1,14 @@
 package codr7.jappkit.types;
 
-import codr7.jappkit.db.Cmp;
+import codr7.jappkit.Cmp;
 import codr7.jappkit.Type;
-import codr7.jappkit.db.E;
+import codr7.jappkit.E;
 import codr7.jappkit.db.Encoding;
 
 import java.lang.reflect.InvocationTargetException;
 import java.nio.channels.SeekableByteChannel;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public final class ListType<ItemT> extends Type<List<ItemT>> {
     public final Class listClass;

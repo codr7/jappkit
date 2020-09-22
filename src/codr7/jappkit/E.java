@@ -1,4 +1,4 @@
-package codr7.jappkit.db;
+package codr7.jappkit;
 
 public class E extends RuntimeException {
     public E(String msg, Object...args) { super(String.format(msg, args)); }

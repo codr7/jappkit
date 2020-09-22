@@ -1,6 +1,4 @@
-package codr7.jappkit.lang;
-
-import codr7.jappkit.Type;
+package codr7.jappkit;
 
 public class Val {
     public final Type<?> type;

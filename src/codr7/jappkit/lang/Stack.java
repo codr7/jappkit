@@ -1,5 +1,7 @@
 package codr7.jappkit.lang;
 
+import codr7.jappkit.Val;
+
 import java.util.ArrayList;
 
 public class Stack {

@@ -1,18 +1,18 @@
-package codr7.jappkit.db;
+package codr7.jappkit;
 
 import java.io.File;
 import java.nio.file.Path;
 
 public final class Utils {
-    static void mkdir(Path path) {
+    public static void mkdir(Path path) {
         new File(path.toString()).mkdirs();
     }
 
-    static boolean rmdir(Path path) {
+    public static boolean rmdir(Path path) {
         return rmdir(new File(path.toString()));
     }
 
-    static boolean rmdir(File it) {
+    public static boolean rmdir(File it) {
         File[] fs = it.listFiles();
 
         if (fs != null) {

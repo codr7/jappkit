@@ -10,7 +10,7 @@ public class Target {
     }
 
     public void eval(VM vm, Stack stack, int pc) {
-        for (int i = pc; pc < ops.size(); pc = ops.get(pc).eval(vm, stack));
+        for (int i = pc; pc != -1; pc = ops.get(pc).eval(vm, stack));
     }
 
     public int nops() { return ops.size(); }

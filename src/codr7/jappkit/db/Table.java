@@ -1,14 +1,13 @@
 package codr7.jappkit.db;
 
+import codr7.jappkit.E;
 import codr7.jappkit.db.columns.LongColumn;
-import codr7.jappkit.db.errors.EIO;
+import codr7.jappkit.errors.EOF;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,9 +46,7 @@ public class Table extends Relation {
             keyFile = Files.newByteChannel(keyPath, fileOptions);
             Path dataPath = Path.of(schema.root.toString(), name + ".dat");
             dataFile = Files.newByteChannel(dataPath, fileOptions);
-        } catch (IOException e) {
-            throw new EIO(e);
-        }
+        } catch (IOException e) { throw new E(e); }
 
         try {
             for (; ; ) {
@@ -59,9 +56,7 @@ public class Table extends Relation {
                 long pos = Encoding.readLong(keyFile);
                 if (pos == -1) { records.remove(recordId); } else { records.put(recordId, pos); }
             }
-        } catch (EIO e) {
-            if (e.getCause().getClass() != EOFException.class) { throw e; }
-        }
+        } catch (EOF e) { }
     }
 
     @Override
@@ -72,7 +67,7 @@ public class Table extends Relation {
 
             dataFile.close();
             dataFile = null;
-        } catch (IOException e) { throw new EIO(e); }
+        } catch (IOException e) { throw new E(e); }
 
         records.clear();
         nextRecordId.set(0L);
@@ -86,7 +81,7 @@ public class Table extends Relation {
                 try {
                     pos = dataFile.size();
                     dataFile.position(pos);
-                } catch (IOException e) { throw new EIO(e); }
+                } catch (IOException e) { throw new E(e); }
 
                 it.write(dataFile);
             }
@@ -118,7 +113,7 @@ public class Table extends Relation {
         r.set(id, recordId);
 
         synchronized(dataFile) {
-            try { dataFile.position(pos); } catch (IOException e) { throw new EIO(e); }
+            try { dataFile.position(pos); } catch (IOException e) { throw new E(e); }
             long len = Encoding.readLong(dataFile);
 
             for (long i = 0; i < len; i++) {

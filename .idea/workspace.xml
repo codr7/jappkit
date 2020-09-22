@@ -2,16 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/Op.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/Stack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/Target.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/VM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/Val.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/PushOp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/tests/VMTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/errors/EOF.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/StopOp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Cmp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/Cmp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Column.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/E.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/E.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Index.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Schema.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Tx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Tx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/errors/EIO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/Stack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/Stack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/Target.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/Target.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/Val.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/Val.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/PushOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/PushOp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/tests/VMTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/tests/VMTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/BooleanType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/BooleanType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/ListType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/ListType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/LongType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/LongType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/MapType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/MapType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/StringType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/StringType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/TimeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/TimeType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +37,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="TestNG Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -79,7 +95,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.codr7.jappkit.lang">
+  <component name="RunManager" selected="TestNG.codr7.jappkit">
     <configuration name="&lt;default&gt; (1)" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="jappkit" />
       <option name="PACKAGE_NAME" value="" />
@@ -150,8 +166,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="TestNG.codr7.jappkit.lang" />
         <item itemvalue="TestNG.codr7.jappkit" />
+        <item itemvalue="TestNG.codr7.jappkit.lang" />
         <item itemvalue="TestNG.codr7.jappkit.db" />
         <item itemvalue="TestNG.&lt;default&gt; (1)" />
         <item itemvalue="TestNG.&lt;default&gt;" />
@@ -195,10 +211,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="827" y="445" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600660092974" />
-    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1600660353009">
+    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1600744652584">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1600660353009" />
+    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1600744652584" />
+    <state x="756" y="426" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1600744582881">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="756" y="426" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1920.1040@0.0.1920.1040" timestamp="1600744582881" />
     <state x="753" y="356" key="#com.intellij.refactoring.move.moveInner.MoveInnerDialog" timestamp="1600660105673">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -207,22 +227,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="843" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600707636795" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600740571985">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1600744722049">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600740571985" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600740571984">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600744722049" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1600744722049">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600740571984" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600740571984">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600744722049" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1600744722049">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600740571984" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600740571985">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600744722049" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1600744722049">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600740571985" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600744722049" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600702854597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

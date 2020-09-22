@@ -3,8 +3,9 @@ package codr7.jappkit.lang.tests;
 import codr7.jappkit.lang.Stack;
 import codr7.jappkit.lang.Target;
 import codr7.jappkit.lang.VM;
-import codr7.jappkit.lang.Val;
+import codr7.jappkit.Val;
 import codr7.jappkit.lang.ops.PushOp;
+import codr7.jappkit.lang.ops.StopOp;
 import codr7.jappkit.types.LongType;
 import org.testng.annotations.Test;
 
@@ -17,6 +18,7 @@ public class VMTest {
         vm.debug = true;
         Target main = new Target();
         new PushOp(main, LongType.it, 42L);
+        new StopOp(main);
         Stack stack = new Stack();
         main.eval(vm, stack, 0);
         Val val = stack.pop();

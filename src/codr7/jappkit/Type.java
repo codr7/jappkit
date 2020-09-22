@@ -1,7 +1,5 @@
 package codr7.jappkit;
 
-import codr7.jappkit.db.Cmp;
-
 import java.nio.channels.SeekableByteChannel;
 
 public abstract class Type<ValueT> {

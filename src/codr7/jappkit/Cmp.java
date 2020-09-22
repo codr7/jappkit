@@ -1,4 +1,4 @@
-package codr7.jappkit.db;
+package codr7.jappkit;
 
 public enum Cmp {LT(-1), EQ(0), GT(1);
     public static Cmp valueOf(int it) {

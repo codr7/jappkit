@@ -1,8 +1,9 @@
 package codr7.jappkit.db;
 
-import codr7.jappkit.db.errors.EIO;
+import codr7.jappkit.Cmp;
+import codr7.jappkit.E;
+import codr7.jappkit.errors.EOF;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
@@ -32,7 +33,7 @@ public class Index extends Relation {
         try {
             Path dataPath = Path.of(schema.root.toString(), name + ".idx");
             file = Files.newByteChannel(dataPath, fileOptions);
-        } catch (IOException e) { throw new EIO(e); }
+        } catch (IOException e) { throw new E(e); }
 
         try {
             for (; ; ) {
@@ -43,14 +44,12 @@ public class Index extends Relation {
                 long recordId = Encoding.readLong(file);
                 if (recordId == -1L) { records.remove(key); } else { records.put(key, recordId); }
             }
-        } catch (EIO e) {
-            if (e.getCause().getClass() != EOFException.class) { throw e; }
-        }
+        } catch (EOF e) { }
     }
 
     @Override
     public void close() {
-        try { file.close(); } catch (IOException e) { throw new EIO(e); }
+        try { file.close(); } catch (IOException e) { throw new E(e); }
         file = null;
         records.clear();
     }

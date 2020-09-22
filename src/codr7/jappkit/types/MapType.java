@@ -1,9 +1,8 @@
 package codr7.jappkit.types;
 
-import codr7.jappkit.db.Cmp;
+import codr7.jappkit.Cmp;
 import codr7.jappkit.Type;
-import codr7.jappkit.db.Column;
-import codr7.jappkit.db.E;
+import codr7.jappkit.E;
 import codr7.jappkit.db.Encoding;
 
 import java.lang.reflect.InvocationTargetException;

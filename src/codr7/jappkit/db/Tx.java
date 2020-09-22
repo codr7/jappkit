@@ -1,6 +1,7 @@
 package codr7.jappkit.db;
 
-import java.util.Comparator;
+import codr7.jappkit.E;
+
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
