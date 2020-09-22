@@ -83,6 +83,12 @@ public class Index extends Relation {
         return out;
     }
 
+    public <ValueT> ValueT key(Object[] key, Column<ValueT> col) {
+        int i = columns.indexOf(col);
+        if (i == -1) { throw new E("Invalid key column: %s", col.name); }
+        return (ValueT)key[i];
+    }
+
     public Long find(Object[] key, Tx tx) {
         Long out = tx.get(this, key);
         if (out == null) { out = records.get(key); } else if (out == -1L) { out = null; }
