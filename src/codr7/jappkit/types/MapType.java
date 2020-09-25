@@ -15,7 +15,7 @@ public final class MapType<KeyT, ValueT> extends Type<Map<KeyT, ValueT>> {
     public final Type<ValueT> valueType;
 
     public MapType(Class mapClass, Type<KeyT> keyType, Type<ValueT> valueType) {
-        super("Map");
+        super(String.format("Map<%s, %s>", keyType.name, valueType.name));
         this.mapClass = mapClass;
         this.keyType = keyType;
         this.valueType = valueType;

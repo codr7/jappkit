@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static org.testng.Assert.*;
 
@@ -95,6 +96,28 @@ public class TableTest {
         tx.commit();
 
         Rec lr = tbl.load(r.get(tbl.id), tx);
+        assertEquals(lr.get(col).size(), 1);
+        assertEquals(lr.get(col).iterator().next().longValue(), 42);
+        scm.close();
+    }
+
+    @Test
+    public void set() {
+        Schema scm = new Schema(Path.of("testdb"));
+        Table tbl = new Table(scm, "table");
+        SetCol<Long> col = new SetCol<>(tbl, "column", HashSet.class, LongType.it);
+
+        scm.drop();
+        scm.open(Instant.now());
+
+        Rec r = new Rec().init(tbl);
+        r.get(col).add(42L);
+        Tx tx = new Tx();
+        tbl.store(r, tx);
+        tx.commit();
+
+        Rec lr = tbl.load(r.get(tbl.id), tx);
+        assertEquals(lr.get(col).size(), 1);
         assertEquals(lr.get(col).iterator().next().longValue(), 42);
         scm.close();
     }
@@ -117,6 +140,7 @@ public class TableTest {
         tx.commit();
 
         Rec lr = tbl.load(r.get(tbl.id), tx);
+        assertEquals(lr.get(col).size(), 1);
         assertEquals(lr.get(col).get(42L), "foo");
         scm.close();
     }

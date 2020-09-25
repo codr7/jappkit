@@ -1,5 +1,4 @@
 * db
-  * add SetColumn
+  * add bookr demo
 * lang
-  * add fibiter test
   * add assembler

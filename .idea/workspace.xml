@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/BranchGtOp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/columns/SetCol.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/SetType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/BranchEqualOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/BranchEqOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/BranchLessOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/BranchLtOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/BranchOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/BranchOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/CpOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/CpOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/DecOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/ops/DecOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/tests/VMTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/tests/VMTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/tests/TableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/tests/TableTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/ListType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/ListType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/types/MapType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/types/MapType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +76,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.codr7.jappkit.lang">
+  <component name="RunManager" selected="TestNG.codr7.jappkit">
     <configuration name="&lt;default&gt; (1)" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="jappkit" />
       <option name="PACKAGE_NAME" value="" />
@@ -149,8 +147,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="TestNG.codr7.jappkit.lang" />
         <item itemvalue="TestNG.codr7.jappkit" />
+        <item itemvalue="TestNG.codr7.jappkit.lang" />
         <item itemvalue="TestNG.codr7.jappkit.db" />
         <item itemvalue="TestNG.&lt;default&gt; (1)" />
         <item itemvalue="TestNG.&lt;default&gt;" />
@@ -210,22 +208,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="843" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600815691209" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1601043140546">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1601043839810">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601043140546" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1601043140544">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601043839810" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1601043839810">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601043140544" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1601043140543">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601043839810" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1601043839809">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601043140543" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1601043140546">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601043839809" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1601043839810">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601043140546" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601043839810" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600702854597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
