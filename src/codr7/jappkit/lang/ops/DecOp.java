@@ -11,6 +11,16 @@ public class DecOp extends Op {
 
     public DecOp(Target target) { super(target); }
 
+    public DecOp stackOffs(int it) {
+        stackOffs = it;
+        return this;
+    }
+
+    public DecOp delta(long it) {
+        delta = it;
+        return this;
+    }
+
     @Override
     public int eval(VM vm, CallStack calls, Stack stack) {
         Val it = stack.peek(stackOffs);

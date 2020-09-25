@@ -8,6 +8,11 @@ public class CpOp extends Op {
 
     public CpOp(Target target) { super(target); }
 
+    public CpOp offs(int it) {
+        offs = it;
+        return this;
+    }
+
     @Override
     public int eval(VM vm, CallStack calls, Stack stack) {
         stack.push(stack.peek(offs).cp());

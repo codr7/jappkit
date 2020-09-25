@@ -31,7 +31,7 @@ public class VMTest {
         VM vm = new VM();
         Target main = new Target();
 
-        BranchOp skip = new BranchLessOp(main).cond(2);
+        BranchOp skip = new BranchLtOp(main).cond(2);
         new DecOp(main);
         new CpOp(main);
         new CallOp(main).targetPc(0);
@@ -58,8 +58,8 @@ public class VMTest {
         VM vm = new VM();
         Target main = new Target();
 
-        BranchOp exit0 = new BranchEqualOp(main).cond(0).offs(2);
-        BranchOp exit1 = new BranchEqualOp(main).cond(1).offs(2);
+        BranchOp exit0 = new BranchEqOp(main).cond(0).stackOffs(2);
+        BranchOp exit1 = new BranchEqOp(main).cond(1).stackOffs(2);
         new DecOp(main).stackOffs = 2;
         new SwapOp(main);
         new CpOp(main).offs = 1;
@@ -75,6 +75,36 @@ public class VMTest {
 
         Stack stack = new Stack();
         stack.push(LongType.it, 20L, 0L, 1L);
+
+        int startPc = main.nops();
+        new CallOp(main).targetPc(0);
+        new StopOp(main);
+
+        main.eval(vm, new CallStack(), stack, startPc);
+        assertEquals(stack.pop(LongType.it).longValue(), 6765L);
+    }
+
+    @Test
+    public void fibiter() {
+        VM vm = new VM();
+        Target main = new Target();
+
+        new PushOp(main).val(LongType.it, 0L);
+        new PushOp(main).val(LongType.it, 1L);
+
+        int loopPc = main.nops();
+        new SwapOp(main);
+        new CpOp(main).offs(1);
+        new AddOp(main);
+        new DecOp(main).stackOffs(2);
+        new BranchGtOp(main).stackOffs(2).cond(0).targetPc(loopPc);
+
+        new SwapOp(main);
+        new DropOp(main).offs(2).nitems(2);
+        new RetOp(main);
+
+        Stack stack = new Stack();
+        stack.push(LongType.it, 20L);
 
         int startPc = main.nops();
         new CallOp(main).targetPc(0);

@@ -6,11 +6,11 @@ import codr7.jappkit.lang.Target;
 import codr7.jappkit.lang.VM;
 import codr7.jappkit.types.LongType;
 
-public class BranchEqualOp extends BranchOp {
-    public BranchEqualOp(Target target) { super(target); }
+public class BranchEqOp extends BranchOp {
+    public BranchEqOp(Target target) { super(target); }
 
     @Override
     public int eval(VM vm, CallStack calls, Stack stack) {
-        return (stack.peek(offs, LongType.it) == cond) ? targetPc : pc+1;
+        return (stack.peek(stackOffs, LongType.it) == cond) ? targetPc : pc+1;
     }
 }
