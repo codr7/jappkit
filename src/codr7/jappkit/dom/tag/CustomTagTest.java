@@ -12,8 +12,14 @@ public class CustomTagTest {
     @Test
     public void empty() {
         OutputStream buf = new ByteArrayOutputStream();
-        new CustomTag("foo").set("bar", 42).set("baz").write(new PrintStream(buf));
+        new CustomTag("foo").set("bar", 42).set("baz").write(buf);
         assertEquals(buf.toString(), "<foo bar=\"42\" baz/>\n");
     }
 
+    @Test
+    public void body() {
+        OutputStream buf = new ByteArrayOutputStream();
+        new CustomTag("foo").append("bar").write(buf);
+        assertEquals(buf.toString(), "<foo>\nbar</foo>\n");
+    }
 }
