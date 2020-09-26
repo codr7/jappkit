@@ -23,6 +23,8 @@ public class CustomTag implements Node {
         return this;
     }
 
+    public CustomTag set(String attr) { return set(attr, null); }
+
     @Override
     public Stream<Map.Entry<String, Object>> attrs() { return attrs.isEmpty() ? null : attrs.entrySet().stream(); }
 

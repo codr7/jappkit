@@ -14,7 +14,15 @@ public interface Node {
         String t = tag();
         out.printf("<%s", t);
         Stream<Map.Entry<String, Object>> as = attrs();
-        if (as != null) { as.forEach((a) -> out.printf(" %s=\"%s\"", a.getKey(), a.getValue())); }
+
+        if (as != null) {
+            as.forEach((a) -> {
+                out.printf(" %s", a.getKey());
+                Object v = a.getValue();
+                if (v != null) { out.printf("=\"%s\"", a.getValue()); }
+            });
+        }
+
         Stream<Node> cns = childNodes();
 
         if (cns == null) { out.print("/>\n"); } else {
