@@ -2,7 +2,7 @@ package codr7.jappkit.db;
 
 import codr7.jappkit.Cmp;
 import codr7.jappkit.E;
-import codr7.jappkit.errors.EOF;
+import codr7.jappkit.error.EOF;
 
 import java.io.IOException;
 import java.nio.channels.SeekableByteChannel;
