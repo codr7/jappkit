@@ -1,7 +1,4 @@
-package codr7.jappkit.dom.tag;
-
-import codr7.jappkit.dom.Node;
-import codr7.jappkit.dom.TextNode;
+package codr7.jappkit.dom;
 
 import java.util.ArrayList;
 import java.util.List;

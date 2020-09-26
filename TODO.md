@@ -1,5 +1,6 @@
 * dom
-  * add table/row/data nodes
+  * add onclick event
+    * add script support
 * db
   * test nested tx
   * test parallel tx

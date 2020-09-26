@@ -1,4 +1,4 @@
-package codr7.jappkit.dom.tag;
+package codr7.jappkit.dom;
 
 import codr7.jappkit.dom.Node;
 

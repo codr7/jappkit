@@ -1,10 +1,9 @@
-package codr7.jappkit.dom.tag;
+package codr7.jappkit.dom;
 
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
 
 import static org.testng.Assert.*;
 
