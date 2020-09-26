@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/html/HTMLTag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/html/HTMLTagTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/html/Table.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/html/Doc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/html/DocTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/dom/tag/CustomTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/CustomTag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/dom/tag/CustomTagTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/CustomTagTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/dom/tag/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/Tag.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,22 +215,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="843" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600815691209" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1601155591739">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1601162818830">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601155591739" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1601155591738">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601162818830" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1601162818830">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601155591738" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1601155591738">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601162818830" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1601162818829">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601155591738" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1601155591738">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601162818829" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1601162818830">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601155591738" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601162818830" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600702854597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -248,10 +243,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="665" y="413" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1920.1040@0.0.1920.1040" timestamp="1600017819568" />
-    <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1601155099217">
+    <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1601162512624">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1601155099217" />
+    <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1601162512624" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1600697311743">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
