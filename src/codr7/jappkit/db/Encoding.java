@@ -19,7 +19,7 @@ public final class Encoding {
 
         try {
             if (in.read(buf) == -1) { throw new EOF(); }
-        } catch (IOException e){ throw new E(e); }
+        } catch (IOException e) { throw new E(e); }
 
         buf.rewind();
         return buf.get();
@@ -29,7 +29,7 @@ public final class Encoding {
         byte len = readByte(in);
         if (len == 0) { return 0L; }
         ByteBuffer buf = ByteBuffer.allocate(len);
-        try { in.read(buf); } catch (IOException e){ throw new E(e); }
+        try { in.read(buf); } catch (IOException e) { throw new E(e); }
         buf.rewind();
         byte[] bs = new byte[len];
         buf.get(bs);

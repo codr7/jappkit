@@ -1,5 +1,7 @@
 package codr7.jappkit.db;
 
+import codr7.jappkit.E;
+
 import java.nio.channels.SeekableByteChannel;
 import java.util.Comparator;
 import java.util.Map;

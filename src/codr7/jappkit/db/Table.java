@@ -34,6 +34,8 @@ public class Table extends Relation {
         return this;
     }
 
+    public Col<?> findCol(String name) { return cols.get(name); }
+
     public Table addIndex(Index it) {
         indexes.add(it);
         return this;
@@ -114,14 +116,7 @@ public class Table extends Relation {
 
         synchronized(dataFile) {
             try { dataFile.position(pos); } catch (IOException e) { throw new E(e); }
-            long len = Encoding.readLong(dataFile);
-
-            for (long i = 0; i < len; i++) {
-                String cn = Encoding.readString(dataFile);
-                Col<?> c = cols.get(cn);
-                if (c == null) { throw new E("Unknown column: %s", cn); }
-                r.setObject(c, c.load(dataFile));
-            }
+            r.load(dataFile, this);
         }
 
         return r;

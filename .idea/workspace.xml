@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/html/Doc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/dom/html/DocTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/RecProxy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/column/RecCol.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/type/RecType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/ConstRec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/ConstRec.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Encoding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Rec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Rec.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +21,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="TestNG Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -64,11 +70,11 @@
       <recent name="jappkit.codr7" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="codr7.jappkit.db.type" />
       <recent name="codr7.jappkit.dom" />
       <recent name="codr7.jappkit.dom.tags" />
       <recent name="codr7.jappkit" />
       <recent name="codr7.jappkit.db.tests" />
-      <recent name="codr7.jappkit.db" />
     </key>
     <key name="MoveInnerDialog.RECENTS_KEY">
       <recent name="codr7.jappkit.types" />
@@ -199,10 +205,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="827" y="445" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600660092974" />
-    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1601154726845">
+    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1601179571564">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1601154726845" />
+    <state x="756" y="405" width="408" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1601179571564" />
     <state x="756" y="426" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1600744582881">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -215,22 +221,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="843" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600815691209" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1601162818830">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1601178059698">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601162818830" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1601162818830">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601178059698" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1601178059697">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601162818830" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1601162818829">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601178059697" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1601178059696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601162818829" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1601162818830">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601178059696" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1601178059697">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601162818830" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601178059697" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600702854597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
