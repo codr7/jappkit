@@ -14,7 +14,7 @@ public class DocTest {
         d.body.a("http://bar.baz");
         OutputStream buf = new ByteArrayOutputStream();
         d.write(buf);
-        assertEquals(buf.toString(), "<html>\n<head>\n<title>\nfoo</title>\n</head>\n<body>\n<a href=\"http://bar.baz\"/>\n</body>\n</html>\n");
+        assertEquals(buf.toString(), "<html><head><title>foo</title></head><body><a href=\"http://bar.baz\"/></body></html>");
     }
 
 }

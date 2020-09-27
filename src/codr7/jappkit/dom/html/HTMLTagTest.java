@@ -14,6 +14,6 @@ public class HTMLTagTest {
         t.appendTag("body").a("http://foo.bar");
         OutputStream buf = new ByteArrayOutputStream();
         t.write(buf);
-        assertEquals(buf.toString(), "<html>\n<body>\n<a href=\"http://foo.bar\"/>\n</body>\n</html>\n");
+        assertEquals(buf.toString(), "<html><body><a href=\"http://foo.bar\"/></body></html>");
     }
 }

@@ -12,13 +12,13 @@ public class CustomTagTest {
     public void empty() {
         OutputStream buf = new ByteArrayOutputStream();
         new CustomTag("foo").set("bar", 42).set("baz").write(buf);
-        assertEquals(buf.toString(), "<foo bar=\"42\" baz/>\n");
+        assertEquals(buf.toString(), "<foo bar=\"42\" baz/>");
     }
 
     @Test
     public void body() {
         OutputStream buf = new ByteArrayOutputStream();
-        new CustomTag("foo").append("bar").write(buf);
-        assertEquals(buf.toString(), "<foo>\nbar</foo>\n");
+        new CustomTag("foo").append("bar").write(buf, Node.WriteOpt.Pretty.as_int);
+        assertEquals(buf.toString(), "<foo>\n  bar</foo>\n");
     }
 }
