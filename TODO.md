@@ -3,8 +3,6 @@
   * add script support
   * add bookr demo
 * db
-  * add Mod
-    * reflect on col name
   * add Ref<ModT>
     * id & ref like RecProxy
     * add RefCol

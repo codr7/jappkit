@@ -2,6 +2,7 @@ package codr7.jappkit.db;
 
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
+import java.util.stream.Stream;
 
 public abstract class Relation implements Comparable<Relation> {
     public static final StandardOpenOption[] fileOptions = {
@@ -15,6 +16,7 @@ public abstract class Relation implements Comparable<Relation> {
     public final String name;
 
     public abstract Relation addCol(Col<?> it);
+    public abstract Stream<Col<?>> cols();
     public abstract void open(Instant maxTime);
     public abstract void close();
     public abstract void init(Rec it, Col<?>...cols);

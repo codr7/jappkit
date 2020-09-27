@@ -29,6 +29,9 @@ public class Index extends Relation {
     }
 
     @Override
+    public Stream<Col<?>> cols() { return cols.stream(); }
+
+    @Override
     public void open(Instant maxTime) {
         try {
             Path dataPath = Path.of(schema.root.toString(), name + ".idx");

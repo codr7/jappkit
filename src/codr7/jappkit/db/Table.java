@@ -36,6 +36,9 @@ public class Table extends Relation {
 
     public Col<?> findCol(String name) { return cols.get(name); }
 
+    @Override
+    public Stream<Col<?>> cols() { return cols.values().stream(); }
+
     public Table addIndex(Index it) {
         indexes.add(it);
         return this;

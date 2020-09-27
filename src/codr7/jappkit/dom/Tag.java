@@ -16,9 +16,6 @@ public interface Tag extends Node {
     default void write(PrintStream out, int opts, int depth) {
         String t = tag();
         boolean pretty = (opts & WriteOpt.Pretty.as_int) != 0;
-
-        System.out.println("pretty: " + pretty + " depth: " + depth);
-
         out.printf("<%s", t);
         Stream<Map.Entry<String, Object>> as = attrs();
 
