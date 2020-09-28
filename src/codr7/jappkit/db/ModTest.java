@@ -10,19 +10,12 @@ import static org.testng.Assert.assertEquals;
 
 public class ModTest {
     private static class DB extends Schema{
-        public final Table account;
-        public final Table charge;
-        public final RefCol<Account> from;
-        public final RefCol<Account> to;
+        public final Table account =  new Table(this, "account");
+        public final Table charge = new Table(this, "charge");
+        public final RefCol<Account> chargeFrom = new RefCol<>(charge, "from", account, Account.make(this));
+        public final RefCol<Account> chargeTo = new RefCol<>(charge, "to", account, Account.make(this));
 
-        public DB(Path root) {
-            super(root);
-
-            account = new Table(this, "account");
-            charge = new Table(this, "charge");
-            from = new RefCol<>(charge, "from", account, Account.make(this));
-            to = new RefCol<>(charge, "to", account, Account.make(this));
-        }
+        public DB(Path root) { super(root); }
     }
 
     private static class Account extends Mod {
@@ -39,8 +32,8 @@ public class ModTest {
 
         public Charge(DB db, Account from, Account to) {
             super(db.charge);
-            this.from = db.from.ref(from);
-            this.to = db.to.ref(to);
+            this.from = db.chargeFrom.ref(from);
+            this.to = db.chargeTo.ref(to);
         }
 
         public Account from(Tx tx) { return from.deref(tx); }
