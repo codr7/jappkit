@@ -13,9 +13,8 @@ public interface Tag extends Node {
     Stream<Node> childNodes();
 
     @Override
-    default void write(PrintStream out, int opts, int depth) {
+    default void write(PrintStream out, boolean pretty, int depth) {
         String t = tag();
-        boolean pretty = (opts & WriteOpt.Pretty.as_int) != 0;
         out.printf("<%s", t);
         Stream<Map.Entry<String, Object>> as = attrs();
 
@@ -43,7 +42,7 @@ public interface Tag extends Node {
                     for (int i = 0; i < cd; i++) { out.print("  "); }
                 }
 
-                cn.write(out, opts, cd);
+                cn.write(out, pretty, cd);
             });
 
             out.printf("</%s>", t);

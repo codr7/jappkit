@@ -18,7 +18,7 @@ public class CustomTagTest {
     @Test
     public void body() {
         OutputStream buf = new ByteArrayOutputStream();
-        new CustomTag("foo").append("bar").write(buf, Node.WriteOpt.Pretty.as_int);
+        new CustomTag("foo").append("bar").write(buf, true);
         assertEquals(buf.toString(), "<foo>\n  bar</foo>\n");
     }
 }

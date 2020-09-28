@@ -8,5 +8,5 @@ public class TextNode implements Node {
     public TextNode(String text) { this.text = text; }
 
     @Override
-    public void write(PrintStream out, int opts, int depth) { out.print(text); }
+    public void write(PrintStream out, boolean pretty, int depth) { out.print(text); }
 }
