@@ -9,7 +9,6 @@ public class Col<ValueT> {
     public final Table table;
     public final Type<ValueT> type;
     public final String name;
-    public boolean isVirtual = false;
 
     public Col(Table table, Type<ValueT> type, String name) {
         this.table = table;

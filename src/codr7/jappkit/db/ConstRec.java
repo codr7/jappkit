@@ -25,17 +25,13 @@ public class ConstRec {
     public boolean contains(Col<?> it) { return fields.containsKey(it); }
 
     public Object getObject(Col<?> it) { return fields.get(it); }
+
     public <ValueT> ValueT get(Col<ValueT> it) { return it.get((ValueT) getObject(it)); }
 
     public Stream<Map.Entry<Col<?>, Object>> fields() { return fields.entrySet().stream(); }
 
     public void write(SeekableByteChannel out) {
         int len = fields.size();
-
-        for (Map.Entry<Col<?>, Object> f: fields.entrySet()) {
-            if (f.getKey().isVirtual) { len--; }
-        }
-
         Encoding.writeLong(len, out);
 
         for (Map.Entry<Col<?>, Object> f: fields.entrySet()) {

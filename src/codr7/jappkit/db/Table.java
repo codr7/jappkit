@@ -9,10 +9,7 @@ import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
@@ -23,7 +20,6 @@ public class Table extends Relation {
     public Table(Schema schema, String name) {
         super(schema, name);
         id = new LongCol(this, "id");
-        id.isVirtual = true;
         schema.addTable(this);
     }
 
@@ -105,10 +101,11 @@ public class Table extends Relation {
 
     @Override
     public void init(Rec it, Col<?>...cols) {
-        for (Col<?> c: (cols.length == 0) ? this.cols.values().toArray(cols) : cols) {
-            if (c.isVirtual) { continue; }
+        Stream<Col<?>> cs = (cols.length == 0) ? cols() : Arrays.stream(cols);
+
+        cs.forEach((c) -> {
             if (!it.contains(c)) { it.setObject(c, c.initObject()); }
-        }
+        });
     }
 
     public Rec load(long recId) {
@@ -152,7 +149,7 @@ public class Table extends Relation {
 
         it.fields().forEach((Map.Entry<Col<?>, Object> f) -> {
             Col<?> c = f.getKey();
-            if (!c.isVirtual) { txr.setObject(c, f.getValue()); }
+            txr.setObject(c, f.getValue());
         });
 
         for (Index idx: indexes) { idx.add(it, id, tx); }
