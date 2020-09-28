@@ -37,7 +37,7 @@ public class Table extends Relation {
     public Col<?> findCol(String name) { return cols.get(name); }
 
     @Override
-    public Stream<Col<?>> cols() { return cols.values().stream(); }
+    public Stream<Col<?>> cols() { return cols.values().stream().filter((c) -> c != id); }
 
     public Table addIndex(Index it) {
         indexes.add(it);

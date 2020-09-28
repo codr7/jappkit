@@ -5,35 +5,55 @@ import codr7.jappkit.E;
 import java.lang.reflect.Field;
 
 public abstract class Mod {
+    public interface Make<T> {
+        T call(Rec rec);
+    }
+
+    public final Table table;
     public final long id;
 
-    public Mod(long id) { this.id = id; }
+    public static Field getField(Class<?> owner, String name) {
+        while (true) {
+            try {
+                Field f = owner.getDeclaredField(name);
+                f.setAccessible(true);
+                return f;
+            } catch (NoSuchFieldException e) {
+                if (owner == Object.class) { throw new E(e); }
+                owner = owner.getSuperclass();
+            }
+        }
+    }
 
-    public Mod(Rec in) {
-        Table t = table();
-        this.id = in.get(t.id);
+    public Mod(Table table) {
+        this.table = table;
+        this.id = table.getNextRecId();
 
-        t.cols().forEach((c) -> {
-            Field f = null;
-            try { f = getClass().getDeclaredField(c.name); } catch (NoSuchFieldException e) { throw new E(e); }
-            f.setAccessible(true);
-            try { f.set(this, in.get(c)); } catch (IllegalAccessException e) { throw new E(e); }
+        table.cols().forEach((c) -> {
+            Field f = getField(getClass(), c.name);
+            try { f.set(this, c.init()); } catch (IllegalAccessException e) { throw new E(e); }
         });
     }
 
-    public abstract Table table();
+    public Mod(Table table, Rec in) {
+        this.table = table;
+        this.id = in.get(table.id);
 
-    public void store(Tx tx) { table().store(toRec(), tx); }
+        table.cols().forEach((c) -> {
+            Field f = getField(getClass(), c.name);
+            Object v = in.get(c);
+            try { f.set(this, (v == null) ? c.init(): v); } catch (IllegalAccessException e) { throw new E(e); }
+        });
+    }
+
+    public void store(Tx tx) { table.store(toRec(), tx); }
 
     public Rec toRec() {
-        Table t = table();
         Rec out = new Rec();
-        out.set(t.id, id);
+        out.set(table.id, id);
 
-        t.cols().forEach((c) -> {
-            Field f = null;
-            try { f = getClass().getDeclaredField(c.name); } catch (NoSuchFieldException e) { throw new E(e); }
-            f.setAccessible(true);
+        table.cols().forEach((c) -> {
+            Field f = getField(getClass(), c.name);
             try { out.setObject(c, f.get(this)); } catch (IllegalAccessException e) { throw new E(e); }
         });
 

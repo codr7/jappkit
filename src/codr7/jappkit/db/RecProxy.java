@@ -1,10 +1,10 @@
 package codr7.jappkit.db;
 
-public class Prec {
+public class RecProxy {
     public Table refTable;
     public final long id;
 
-    public Prec(Table refTable, long id) {
+    public RecProxy(Table refTable, long id) {
         this.refTable = refTable;
         this.id = id;
     }

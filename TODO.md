@@ -3,9 +3,8 @@
   * add script support
   * add bookr demo
 * db
-  * add Ref<ModT>
-    * id & ref like RecProxy
-    * add RefCol
+  * add ModTest Account balance
+  * add ModTest Charge amount
   * test nested tx
   * test parallel tx
   * add bookr demo
