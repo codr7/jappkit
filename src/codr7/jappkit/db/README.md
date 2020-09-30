@@ -11,7 +11,7 @@ in the process.
 * Table keys and indexes must be loaded into memory before use, though it's possible to
 control loading per table/index; the actual data contained in the table records is loaded 
 from disk on request. 
-* No query languages included, the database is designed to be accessed from its java API. 
+* Query language not included, the database is designed to be accessed from it's Java API. 
 
 ### example: account transfers
 The following example implements the bare minimum needed to simulate account transfers.
@@ -55,7 +55,7 @@ It contains two tables, one for accounts and one for charges/transfers.
 
         @Override
         public void store(Tx tx) {
-            Account a = from(tx);
+            var a = from(tx);
             a.balance -= amount;
             a.store(tx);
 
@@ -78,20 +78,20 @@ And that's it, but before we can actually use the model it needs a root director
 ```
     @Test
     public void store() {
-        DB db = new DB(Path.of("testdb"));
+        var db = new DB(Path.of("testdb"));
         db.drop();
         db.open(Instant.now());
-        Tx tx = new Tx();
+        var tx = new Tx();
 
-        Account a1 = new Account(db);
+        var a1 = new Account(db);
         a1.balance = 1000L;
         a1.store(tx);
 
-        Account a2 = new Account(db);
+        var a2 = new Account(db);
         a2.balance = 0L;
         a2.store(tx);
 
-        Charge c = new Charge(db, a1, a2, 300L);
+        var c = new Charge(db, a1, a2, 300L);
         c.store(tx);
         tx.commit();
 

@@ -13,20 +13,20 @@ import static org.testng.Assert.*;
 public class IndexTest {
     @Test
     public void store() {
-        Schema scm = new Schema(Path.of("testdb"));
-        Table tbl = new Table(scm, "table");
-        LongCol col1 = new LongCol(tbl, "long");
-        StringCol col2 = new StringCol(tbl, "string");
-        Index idx = new Index(scm, "index", col1, col2);
+        var scm = new Schema(Path.of("testdb"));
+        var tbl = new Table(scm, "table");
+        var col1 = new LongCol(tbl, "long");
+        var col2 = new StringCol(tbl, "string");
+        var idx = new Index(scm, "index", col1, col2);
         tbl.addIndex(idx);
 
         scm.drop();
         scm.open(Instant.now());
 
-        Rec r = new Rec().init(tbl).set(col1, 42L).set(col2, "foo");
+        var r = new Rec().init(tbl).set(col1, 42L).set(col2, "foo");
         Object[]k = new Object[]{42L, "foo"};
 
-        Tx tx = new Tx();
+        var tx = new Tx();
         tbl.store(r, tx);
         assertEquals(idx.find(k, tx), r.get(tbl.id));
         idx.records(tx).forEach((i) -> assertEquals(i.getValue(), r.get(tbl.id)));
@@ -42,17 +42,17 @@ public class IndexTest {
 
     @Test
     public void remove() {
-        Schema scm = new Schema(Path.of("testdb"));
-        Table tbl = new Table(scm, "table");
-        LongCol col = new LongCol(tbl, "column");
-        Index idx = new Index(scm, "index", col);
+        var scm = new Schema(Path.of("testdb"));
+        var tbl = new Table(scm, "table");
+        var col = new LongCol(tbl, "column");
+        var idx = new Index(scm, "index", col);
         tbl.addIndex(idx);
 
         scm.drop();
         scm.open(Instant.now());
-        Tx tx = new Tx();
+        var tx = new Tx();
 
-        Rec r = new Rec().init(tbl);
+        var r = new Rec().init(tbl);
         tbl.store(r.set(col, 21L), tx);
         tx.commit();
         tbl.store(r.set(col, 42L), tx);
@@ -70,21 +70,21 @@ public class IndexTest {
     }
 
     public void findFirst() {
-        Schema scm = new Schema(Path.of("testdb"));
-        Table tbl = new Table(scm, "table");
-        LongCol col1 = new LongCol(tbl, "long");
-        StringCol col2 = new StringCol(tbl, "string");
-        Index idx = new Index(scm, "index", col1, col2);
+        var scm = new Schema(Path.of("testdb"));
+        var tbl = new Table(scm, "table");
+        var col1 = new LongCol(tbl, "long");
+        var col2 = new StringCol(tbl, "string");
+        var idx = new Index(scm, "index", col1, col2);
         tbl.addIndex(idx);
 
         scm.drop();
         scm.open(Instant.now());
 
-        Rec r1 = new Rec().init(tbl).set(col1, 21L).set(col2, "foo");
-        Rec r2 = new Rec().init(tbl).set(col1, 21L).set(col2, "bar");
-        Rec r3 = new Rec().init(tbl).set(col1, 42L).set(col2, "baz");
+        var r1 = new Rec().init(tbl).set(col1, 21L).set(col2, "foo");
+        var r2 = new Rec().init(tbl).set(col1, 21L).set(col2, "bar");
+        var r3 = new Rec().init(tbl).set(col1, 42L).set(col2, "baz");
 
-        Tx tx = new Tx();
+        var tx = new Tx();
         tbl.store(r1, tx);
         tbl.store(r2, tx);
         tbl.store(r3, tx);

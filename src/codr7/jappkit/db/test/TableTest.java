@@ -124,22 +124,20 @@ public class TableTest {
 
     @Test
     public void map() {
-        Schema scm = new Schema(Path.of("testdb"));
-        Table tbl = new Table(scm, "table");
-
-        MapCol<Long, String> col =
-                new MapCol<>(tbl, "column", HashMap.class, LongType.it, StringType.it);
+        var scm = new Schema(Path.of("testdb"));
+        var tbl = new Table(scm, "table");
+        var col = new MapCol<>(tbl, "column", HashMap.class, LongType.it, StringType.it);
 
         scm.drop();
         scm.open(Instant.now());
 
-        Rec r = new Rec().init(tbl);
+        var r = new Rec().init(tbl);
         r.get(col).put(42L, "foo");
-        Tx tx = new Tx();
+        var tx = new Tx();
         tbl.store(r, tx);
         tx.commit();
 
-        Rec lr = tbl.load(r.get(tbl.id), tx);
+        var lr = tbl.load(r.get(tbl.id), tx);
         assertEquals(lr.get(col).size(), 1);
         assertEquals(lr.get(col).get(42L), "foo");
         scm.close();

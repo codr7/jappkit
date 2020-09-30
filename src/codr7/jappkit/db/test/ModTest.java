@@ -48,7 +48,7 @@ public class ModTest {
 
         @Override
         public void store(Tx tx) {
-            Account a = from(tx);
+            var a = from(tx);
             a.balance -= amount;
             a.store(tx);
 
@@ -71,17 +71,17 @@ public class ModTest {
         db.open(Instant.now());
         Tx tx = new Tx();
 
-        Account a1 = new Account(db);
+        var a1 = new Account(db);
         a1.balance = 1000L;
         a1.store(tx);
 
         a1.reload(tx);
         assertEquals(a1.balance, 1000L);
 
-        Account a2 = new Account(db);
+        var a2 = new Account(db);
         a2.balance = 0L;
         a2.store(tx);
-        Charge c = new Charge(db, a1, a2, 300L);
+        var c = new Charge(db, a1, a2, 300L);
         c.store(tx);
 
         assertEquals(c.from(tx).id, a1.id);
