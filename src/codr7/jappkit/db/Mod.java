@@ -38,13 +38,18 @@ public abstract class Mod {
     public Mod(Table table, Rec in) {
         this.table = table;
         this.id = in.get(table.id);
+        load(in);
+    }
 
+    public void load(Rec in) {
         table.cols().forEach((c) -> {
             Field f = getField(getClass(), c.name);
             Object v = in.get(c);
             try { f.set(this, (v == null) ? c.init(): v); } catch (IllegalAccessException e) { throw new E(e); }
         });
     }
+
+    public void reload(Tx tx) { load(table.load(id, tx)); }
 
     public void store(Tx tx) { table.store(toRec(), tx); }
 
@@ -59,4 +64,7 @@ public abstract class Mod {
 
         return out;
     }
+
+    @Override
+    public String toString() { return toRec().toString(); }
 }

@@ -30,6 +30,8 @@ public class Col<ValueT> {
     public ValueT get(ValueT it) { return type.get(it); }
     public ValueT set(ValueT it) { return type.set(it); }
 
+    public String toString(Object val) { return val.toString(); }
+
     public Object load(SeekableByteChannel in) { return type.load(in); }
     public void store(Object it, SeekableByteChannel out) { type.store(it, out); }
 }

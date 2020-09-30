@@ -124,7 +124,7 @@ public class Table extends Relation {
 
     public Rec load(long recId, Tx tx) {
         ConstRec r = tx.get(this, recId);
-        if (r == null) { return load(recId); }
+        if (r == null && (r = load(recId)) == null) { return null; }
         final Rec lr = new Rec();
         lr.set(id, recId);
         r.fields().forEach((Map.Entry<Col<?>, Object> f) -> { lr.setObject(f.getKey(), f.getValue()); });
