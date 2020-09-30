@@ -10,5 +10,7 @@ public abstract class Op {
         target.emit(this);
     }
 
-    public abstract int eval(VM vm, CallStack calls, Stack stack);
+    public void compile(VM vm, Env env, Target out) { out.emit(this); }
+
+    public int eval(VM vm, CallStack calls, Stack stack) { return pc+1; }
 }

@@ -8,6 +8,13 @@ public class Val {
         return new Val(type, data);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!Val.class.isAssignableFrom(other.getClass())) { return false; }
+        Val ov = (Val)other;
+        return type == ov.type && data.equals(ov.data);
+    }
+
     public Val cp() { return new Val(type, data); }
 
     public Val clone() { return new Val(type, type.cloneObject(data)); }

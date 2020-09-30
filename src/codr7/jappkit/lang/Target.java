@@ -16,5 +16,11 @@ public class Target {
 
     public int nops() { return ops.size(); }
 
+    public void compile(VM vm, Env env) {
+        ArrayList<Op> in = ops;
+        ops = new ArrayList<>();
+        for (Op op: in) { op.compile(vm, env,this); }
+    }
+
     private ArrayList<Op> ops = new ArrayList<>();
 }

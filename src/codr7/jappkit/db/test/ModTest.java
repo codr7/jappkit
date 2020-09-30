@@ -1,5 +1,6 @@
-package codr7.jappkit.db;
+package codr7.jappkit.db.test;
 
+import codr7.jappkit.db.*;
 import codr7.jappkit.db.column.RefCol;
 import org.testng.annotations.Test;
 
@@ -9,7 +10,7 @@ import java.time.Instant;
 import static org.testng.Assert.assertEquals;
 
 public class ModTest {
-    private static class DB extends Schema{
+    private static class DB extends Schema {
         public final Table account =  new Table(this, "account");
         public final Table charge = new Table(this, "charge");
         public final RefCol<Account> chargeFrom = new RefCol<>(charge, "from", account, Account.make(this));

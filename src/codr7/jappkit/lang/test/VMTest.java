@@ -2,6 +2,7 @@ package codr7.jappkit.lang.test;
 
 import codr7.jappkit.lang.CallStack;
 import codr7.jappkit.Stack;
+import codr7.jappkit.lang.Env;
 import codr7.jappkit.lang.Target;
 import codr7.jappkit.lang.VM;
 import codr7.jappkit.Val;
@@ -24,6 +25,22 @@ public class VMTest {
         Val val = stack.pop();
         assertEquals(val.type, LongType.it);
         assertEquals(val.data, 42L);
+    }
+
+    @Test
+    public void compile() {
+        VM vm = new VM();
+        Target main = new Target();
+        Val val = Val.make(LongType.it, 42L);
+
+        new DefConstOp(main).key("foo").val(val);
+        new GetConstOp(main).key("foo");
+        new StopOp(main);
+        main.compile(vm, new Env());
+
+        Stack stack = new Stack();
+        main.eval(vm, new CallStack(), stack, 0);
+        assertEquals(stack.pop(), val);
     }
 
     @Test
