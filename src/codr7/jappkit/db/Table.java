@@ -43,18 +43,18 @@ public class Table extends Relation {
     @Override
     public void open(Instant maxTime) {
         try {
-            Path keyPath = Path.of(schema.root.toString(), name + ".key");
+            var keyPath = Path.of(schema.root.toString(), name + ".key");
             keyFile = Files.newByteChannel(keyPath, fileOptions);
-            Path dataPath = Path.of(schema.root.toString(), name + ".dat");
+            var dataPath = Path.of(schema.root.toString(), name + ".dat");
             dataFile = Files.newByteChannel(dataPath, fileOptions);
         } catch (IOException e) { throw new E(e); }
 
         try {
             for (; ; ) {
-                Instant ts = Encoding.readTime(keyFile);
+                var ts = Encoding.readTime(keyFile);
                 if (ts.compareTo(maxTime) > 0) { break; }
-                long recordId = Encoding.readLong(keyFile);
-                long pos = Encoding.readLong(keyFile);
+                var recordId = Encoding.readLong(keyFile);
+                var pos = Encoding.readLong(keyFile);
                 if (pos == -1) { recs.remove(recordId); } else { recs.put(recordId, pos); }
             }
         } catch (EOF e) { }
@@ -101,7 +101,7 @@ public class Table extends Relation {
 
     @Override
     public void init(Rec it, Col<?>...cols) {
-        Stream<Col<?>> cs = (cols.length == 0) ? cols() : Arrays.stream(cols);
+        var cs = (cols.length == 0) ? cols() : Arrays.stream(cols);
 
         cs.forEach((c) -> {
             if (!it.contains(c)) { it.setObject(c, c.initObject()); }
@@ -109,9 +109,9 @@ public class Table extends Relation {
     }
 
     public Rec load(long recId) {
-        Long pos = recs.get(recId);
+        var pos = recs.get(recId);
         if (pos == null) { return null; }
-        final Rec r = new Rec();
+        final var r = new Rec();
         r.set(id, recId);
 
         synchronized(dataFile) {
@@ -123,36 +123,36 @@ public class Table extends Relation {
     }
 
     public Rec load(long recId, Tx tx) {
-        ConstRec r = tx.get(this, recId);
+        var r = tx.get(this, recId);
         if (r == null && (r = load(recId)) == null) { return null; }
         final Rec lr = new Rec();
         lr.set(id, recId);
-        r.fields().forEach((Map.Entry<Col<?>, Object> f) -> { lr.setObject(f.getKey(), f.getValue()); });
+        r.fields().forEach((f) -> { lr.setObject(f.getKey(), f.getValue()); });
         return lr;
     }
 
     public void store(Rec it, Tx tx) {
-        Long id = it.get(Table.this.id);
+        var id = it.get(Table.this.id);
 
         if (id == null) {
             id = getNextRecId();
             it.set(Table.this.id, id);
         } else {
-            Rec pr = load(id, tx);
+            var pr = load(id, tx);
 
             if (pr != null) {
-                for (Index idx: indexes) { idx.remove(pr, tx); }
+                for (var idx: indexes) { idx.remove(pr, tx); }
             }
         }
 
-        final Rec txr = tx.set(this, id);
+        final var txr = tx.set(this, id);
 
-        it.fields().forEach((Map.Entry<Col<?>, Object> f) -> {
-            Col<?> c = f.getKey();
+        it.fields().forEach((f) -> {
+            var c = f.getKey();
             txr.setObject(c, f.getValue());
         });
 
-        for (Index idx: indexes) { idx.add(it, id, tx); }
+        for (var idx: indexes) { idx.add(it, id, tx); }
     }
 
     public boolean delete(long recordId, Tx tx) {
@@ -160,13 +160,13 @@ public class Table extends Relation {
     }
 
     public Stream<Rec> recs(Tx tx) {
-        Stream<Rec> rs = recs
+        var rs = recs
                 .keySet()
                 .stream()
                 .filter((id) -> !tx.isDeleted(this, id))
                 .map((id) -> load(id, tx));
 
-        Stream<Rec> txrs = tx
+        var txrs = tx
                 .records(this)
                 .map((i) -> i.getValue().clone().set(id, i.getKey()));
 

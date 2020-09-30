@@ -23,7 +23,7 @@ public class ModTest {
     }
 
     private static class Account extends Mod {
-        public static final Make<Account> make(DB db) { return (rec) -> { return new Account(db, rec); }; }
+        public static Make<Account> make(DB db) { return (rec) -> { return new Account(db, rec); }; }
 
         public long balance;
 
@@ -32,7 +32,7 @@ public class ModTest {
     }
 
     private static class Charge extends Mod {
-        public static final Make<Charge> make(DB db) { return (rec) -> new Charge(db, rec); }
+        public static Make<Charge> make(DB db) { return (rec) -> new Charge(db, rec); }
 
         public Charge(DB db, Rec rec) { super(db.charge, rec); }
 

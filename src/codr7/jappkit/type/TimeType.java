@@ -16,7 +16,7 @@ public class TimeType extends Type<Instant> {
     public Instant init() { return Instant.ofEpochMilli(0L); }
 
     @Override
-    public Instant set(Instant it) { return Instant.ofEpochMilli(it.toEpochMilli()); }
+    public Instant set(Instant it) { return Instant.ofEpochSecond(it.getEpochSecond()); }
 
     @Override
     public Object load(SeekableByteChannel in) { return Encoding.readTime(in); }

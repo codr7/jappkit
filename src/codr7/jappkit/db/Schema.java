@@ -3,7 +3,10 @@ package codr7.jappkit.db;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static codr7.jappkit.Utils.*;
 
 public class Schema {
@@ -19,7 +22,10 @@ public class Schema {
 
     public void addTable(Table it) {
         tables.add(it);
+        tableLookup.put(it.name, it);
     }
+
+    public Table findTable(String name) { return tableLookup.get(name); }
 
     public void drop() {
         rmdir(root);
@@ -37,5 +43,6 @@ public class Schema {
     }
 
     private final List<Table> tables = new ArrayList<>();
+    private final Map<String, Table> tableLookup = new HashMap<>();
     private final List<Index> indexes = new ArrayList<>();
 }

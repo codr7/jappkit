@@ -13,6 +13,14 @@ control loading per table/index; the actual data contained in the table records 
 from disk on request. 
 * Query language not included, the database is designed to be accessed from it's Java API. 
 
+### concepts
+* Record ids are of type `long`, unique per table and atomically auto incremented.
+* Tables are sorted mappings from record ids to file offsets.
+* Records are sorted mappings from columns to values.
+* Columns are typed identifiers.
+* Indexes are sorted mappings from field values to record ids.
+* Transactions batch operations and overlay local changes on reads.
+
 ### example: account transfers
 The following example implements the bare minimum needed to simulate account transfers.
 It contains two tables, one for accounts and one for charges/transfers.
@@ -30,7 +38,7 @@ It contains two tables, one for accounts and one for charges/transfers.
     }
 
     private static class Account extends Mod {
-        public static final Make<Account> make(DB db) { return (rec) -> { return new Account(db, rec); }; }
+        public static Make<Account> make(DB db) { return (rec) -> { return new Account(db, rec); }; }
 
         public long balance;
 
@@ -39,7 +47,7 @@ It contains two tables, one for accounts and one for charges/transfers.
     }
 
     private static class Charge extends Mod {
-        public static final Make<Charge> make(DB db) { return (rec) -> new Charge(db, rec); }
+        public static Make<Charge> make(DB db) { return (rec) -> new Charge(db, rec); }
 
         public Charge(DB db, Rec rec) { super(db.charge, rec); }
 

@@ -1,6 +1,7 @@
 package codr7.jappkit.db;
 
 import codr7.jappkit.E;
+import codr7.jappkit.demo.bookr.DB;
 
 import java.lang.reflect.Field;
 

@@ -42,8 +42,8 @@ public class Index extends Relation {
             for (; ; ) {
                 Instant ts = Encoding.readTime(file);
                 if (ts.compareTo(maxTime) > 0) { break; }
-                Object[] key = new Object[cols.size()];
-                for (int i = 0; i < key.length; i++) { key[i] = cols.get(i).load(file); }
+                Object[] key = new Object[cols.size()+1];
+                for (int i = 0; i < key.length-1; i++) { key[i] = cols.get(i).load(file); }
                 long recordId = Encoding.readLong(file);
                 if (recordId == -1L) { recs.remove(key); } else { recs.put(key, recordId); }
             }
@@ -58,9 +58,7 @@ public class Index extends Relation {
     }
 
     public int compareKeys(Object[] x, Object[] y) {
-        int i = 0;
-
-        for (Col<?> c: cols) {
+        for (int i = 0; i < cols.size(); i++) {
             if (x.length == i && y.length != i) {
                 return Cmp.LT.asInt;
             }
@@ -69,19 +67,18 @@ public class Index extends Relation {
                 return (x.length == i) ? Cmp.EQ.asInt : Cmp.GT.asInt;
             }
 
-            Cmp result = c.cmpObject(x[i], y[i]);
+            var c = cols.get(i);
+            var result = c.cmpObject(x[i], y[i]);
             if (result != Cmp.EQ) { return result.asInt; }
-            i++;
         }
 
         return Cmp.EQ.asInt;
     }
 
     public Object[] key(Rec it) {
-        Object[] out = new Object[cols.size()];
+        var out = new Object[cols.size()];
         int i = 0;
-
-        for (Col<?> c: cols) { out[i++] = it.getObject(c); }
+        for (var c: cols) { out[i++] = it.getObject(c); }
         return out;
     }
 
@@ -92,25 +89,25 @@ public class Index extends Relation {
     }
 
     public Long find(Object[] key, Tx tx) {
-        Long out = tx.get(this, key);
+        var out = tx.get(this, key);
         if (out == null) { out = recs.get(key); } else if (out == -1L) { out = null; }
         return out;
     }
 
     public Stream<Map.Entry<Object[], Long>> findFirst(Object[] key, Tx tx) {
-        Stream<Map.Entry<Object[], Long>> rs = recs
+        var rs = recs
                 .subMap(key, true, recs.lastKey(), true)
                 .entrySet()
                 .stream()
                 .filter((i) -> !tx.isRemoved(this, i.getKey()));
 
-        Stream<Map.Entry<Object[], Long>> txrs = tx.findFirst(this, key);
+        var txrs = tx.findFirst(this, key);
         return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey())).distinct();
     }
 
     @Override
     public void init(Rec it, Col<?>...cols) {
-        for (Col<?> c: (cols.length == 0) ? this.cols.toArray(cols) : cols) {
+        for (var c: (cols.length == 0) ? this.cols.toArray(cols) : cols) {
             if (!it.contains(c)) { it.setObject(c, c.initObject()); }
         }
     }
@@ -118,10 +115,7 @@ public class Index extends Relation {
     public void commit(Object[] key, long recId) {
         synchronized(file) {
             Encoding.writeTime(Instant.now(), file);
-
-            int i = 0;
-            for (Col<?> c : cols) { c.store(key[i++], file); }
-
+            for (int i = 0; i < cols.size(); i++) { cols.get(i).store(key[i], file); }
             Encoding.writeLong(recId, file);
         }
 
@@ -129,8 +123,8 @@ public class Index extends Relation {
     }
 
     public void add(Rec it, long id, Tx tx) {
-        Object[] k = key(it);
-        Long txr = tx.get(this, k);
+        var k = key(it);
+        var txr = tx.get(this, k);
         if ((recs.containsKey(k) && (txr == null || txr != -1L)) || (txr != null && txr != -1L)) { throw new E("Duplicate key in index '%s'", name); }
         tx.put(this, k, id);
     }
@@ -138,7 +132,7 @@ public class Index extends Relation {
     public boolean remove(Rec it, Tx tx) { return tx.remove(this, key(it)); }
 
     public Stream<Map.Entry<Object[], Long>> records(Tx tx) {
-        Stream<Map.Entry<Object[], Long>> rs = recs
+        var rs = recs
                 .entrySet()
                 .stream()
                 .filter((i) -> !tx.isRemoved(this, i.getKey()));
