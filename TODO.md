@@ -4,7 +4,10 @@
   * add bookr demo
 * db
   * bookr
-    * add item
+    * add charge/account from ModTest
+      * add product
+      * add Item.product/price
+    * add formula language for price/charge
   * test nested tx
   * test parallel tx
 * lang

@@ -7,7 +7,6 @@ import codr7.jappkit.db.Ref;
 import codr7.jappkit.db.Tx;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Quantity extends Mod {
@@ -15,7 +14,7 @@ public class Quantity extends Mod {
 
     public static long get(DB db, Resource resource, Instant start, Instant end, Tx tx) {
         return db.quantityIndex
-                .findFirst(new Object[]{db.quantityResource.ref(resource), start}, tx)
+                .findFirst(new Object[]{db.quantityResource.ref(resource), start.plusSeconds(1)}, tx)
                 .takeWhile((e) -> db.quantityIndex.key(e.getKey(), db.quantityStart).compareTo(end) < 0)
                 .map((e) -> { return new Quantity(db, db.quantity.load(e.getValue(), tx)); })
                 .map((q) -> q.total-q.used)
@@ -25,22 +24,18 @@ public class Quantity extends Mod {
 
     public static void update(DB db, Resource resource, Instant start, Instant end, long total, long used, Tx tx) {
         db.quantityIndex
-                .findFirst(new Object[]{db.quantityResource.ref(resource), start}, tx)
+                .findFirst(new Object[]{db.quantityResource.ref(resource), start.plusSeconds(1)}, tx)
+                .takeWhile((e) -> db.quantityIndex.key(e.getKey(), db.quantityStart).compareTo(end) < 0)
                 .map((e) -> { return new Quantity(db, db.quantity.load(e.getValue(), tx)); })
-                .takeWhile((q) -> q.start.compareTo(end) < 0)
                 .forEach((q) -> {
                     if (q.start.compareTo(start) < 0) {
-                        var pq = q;
-                        q = new Quantity(db, resource, q.start, start, q.total, q.used);
-                        pq.end = start;
-                        pq.store(tx);
+                        new Quantity(db, resource, q.start, start, q.total, q.used).store(tx);
+                        q.start = start;
                     }
 
                     if (q.end.compareTo(end) > 0) {
-                        var pq = q;
-                        q = new Quantity(db, resource, end, q.end, q.total, q.used);
-                        pq.end = end;
-                        pq.store(tx);
+                        new Quantity(db, resource, end, q.end, q.total, q.used).store(tx);
+                        q.end = end;
                     }
 
                     q.total += total;

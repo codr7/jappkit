@@ -22,7 +22,13 @@ public class DB extends Schema {
     public final TimeCol quantityEnd = new TimeCol(quantity, "end");
     public final LongCol quantityTotal = new LongCol(quantity, "total");
     public final LongCol quantityUsed = new LongCol(quantity, "used");
-    public final Index quantityIndex = new Index(this, "quantity", quantityResource, quantityStart);
+    public final Index quantityIndex = new Index(this, "quantity", quantityResource, quantityEnd, quantityStart);
+
+    public final Table item =  new Table(this, "item");
+    public final RefCol<Resource> itemResource = new RefCol<Resource>(item, "resource", resource, Resource.make(this));
+    public final TimeCol itemStart = new TimeCol(item, "start");
+    public final TimeCol itemEnd = new TimeCol(item, "end");
+    public final LongCol itemQuantity = new LongCol(item, "quantity");
 
     public DB(Path root) {
         super(root);

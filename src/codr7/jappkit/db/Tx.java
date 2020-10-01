@@ -101,7 +101,8 @@ public class Tx {
 
     public Stream<Map.Entry<Object[], Long>> findFirst(Index idx, Object[] key) {
         TreeMap<Object[], Long> rs = indexUpdates.get(idx);
-        if (rs == null) { return Stream.empty(); }
+        if (rs == null || rs.isEmpty() || idx.compareKeys(key, rs.lastKey()) > 0) { return Stream.empty(); }
+        if (idx.compareKeys(key, rs.firstKey()) < 0) { key = rs.firstKey(); }
 
         return rs
                 .subMap(key, true, rs.lastKey(), true)

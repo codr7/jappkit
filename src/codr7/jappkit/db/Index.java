@@ -96,15 +96,20 @@ public class Index extends Relation {
     }
 
     public Stream<Map.Entry<Object[], Long>> findFirst(Object[] key, Tx tx) {
-        Stream<Map.Entry<Object[], Long>> rs =
-                (recs.isEmpty() || compareKeys(key, recs.firstKey()) < 0 || compareKeys(key, recs.lastKey()) > 0)
-                    ? Stream.empty()
-                    : recs
+        Stream<Map.Entry<Object[], Long>> rs = Stream.empty();
+
+        if (!recs.isEmpty() && compareKeys(key, recs.lastKey()) <= 0) {
+            if (compareKeys(key, recs.firstKey()) < 0) {
+                rs = recs.entrySet().stream();
+            } else {
+                rs = recs
                         .subMap(key, true, recs.lastKey(), true)
                         .entrySet()
-                        .stream()
-                        .filter((i) -> !tx.isRemoved(this, i.getKey()));
+                        .stream();
+            }
+        }
 
+        rs = rs.filter((i) -> !tx.isRemoved(this, i.getKey()));
         var txrs = tx.findFirst(this, key);
         return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey())).distinct();
     }
