@@ -21,11 +21,14 @@ public class QuantityTest {
 
         Resource r = new Resource(db);
         r.name = "foo";
-        r.quantity = 10;
+        r.quantity = 10L;
+        r.store(tx);
+        assertEquals(Quantity.get(db, r, Instant.MIN, Instant.MAX, tx), 10L);
+
+        r.quantity = 5L;
         r.store(tx);
         tx.commit();
-
-        assertEquals(Quantity.get(db, r, Instant.MIN, Instant.MAX, tx), 10L);
+        assertEquals(Quantity.get(db, r, Instant.MIN, Instant.MAX, tx), 5L);
         db.close();
     }
 }

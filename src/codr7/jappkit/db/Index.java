@@ -9,6 +9,7 @@ import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -95,11 +96,14 @@ public class Index extends Relation {
     }
 
     public Stream<Map.Entry<Object[], Long>> findFirst(Object[] key, Tx tx) {
-        var rs = recs
-                .subMap(key, true, recs.lastKey(), true)
-                .entrySet()
-                .stream()
-                .filter((i) -> !tx.isRemoved(this, i.getKey()));
+        Stream<Map.Entry<Object[], Long>> rs =
+                (recs.isEmpty() || compareKeys(key, recs.firstKey()) < 0 || compareKeys(key, recs.lastKey()) > 0)
+                    ? Stream.empty()
+                    : recs
+                        .subMap(key, true, recs.lastKey(), true)
+                        .entrySet()
+                        .stream()
+                        .filter((i) -> !tx.isRemoved(this, i.getKey()));
 
         var txrs = tx.findFirst(this, key);
         return Stream.concat(rs, txrs).sorted((x, y) -> compareKeys(x.getKey(), y.getKey())).distinct();

@@ -25,7 +25,13 @@ public class Resource extends Mod {
 
     @Override
     public void store(Tx tx) {
-        new Quantity(db, this, Instant.MIN, Instant.MAX).store(tx);
+        var pr = table.load(id, tx);
+
+        if (pr == null) { new Quantity(db, this, Instant.MIN, Instant.MAX, quantity, 0).store(tx); }
+        else if (quantity != pr.get(db.resourceQuantity)) {
+            Quantity.update(db, this, Instant.MIN, Instant.MAX, quantity - pr.get(db.resourceQuantity), 0, tx);
+        }
+
         super.store(tx);
     }
 }

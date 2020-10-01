@@ -4,8 +4,7 @@
   * add bookr demo
 * db
   * bookr
-  ** add item
-  ** add Quantity.update()
+    * add item
   * test nested tx
   * test parallel tx
 * lang
