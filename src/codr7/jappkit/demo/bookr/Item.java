@@ -13,8 +13,10 @@ public class Item extends Mod {
 
     public final DB db;
     public Ref<Resource> resource;
+    public Ref<Product> product;
     public Instant start, end;
     public long quantity;
+    public long price;
 
     public Item(DB db, Rec rec) {
         super(db.item, rec);
@@ -36,6 +38,11 @@ public class Item extends Mod {
 
     public Resource resource(Tx tx) { return resource.deref(tx); }
 
+    public void setResource(Resource resource, Tx tx) {
+        this.resource = db.itemResource.ref(resource);
+        this.product = db.itemProduct.ref(resource.product);
+    }
+
     @Override
     public void store(Tx tx) {
         var pir = table.load(id, tx);
@@ -47,7 +54,7 @@ public class Item extends Mod {
             if (updateQuantity) { Quantity.update(db, pi.resource(tx), pi.start, pi.end, 0, -pi.quantity, tx); }
         }
 
-        if (updateQuantity) { Quantity.update(db, resource(tx), start, end, 0, quantity, tx); }
+        if (updateQuantity && quantity != 0L) { Quantity.update(db, resource(tx), start, end, 0, quantity, tx); }
         super.store(tx);
     }
 }

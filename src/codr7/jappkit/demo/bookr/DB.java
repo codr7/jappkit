@@ -11,9 +11,18 @@ import codr7.jappkit.db.column.TimeCol;
 import java.nio.file.Path;
 
 public class DB extends Schema {
+    public final Table account =  new Table(this, "account");
+    public final StringCol accountName = new StringCol(account, "name");
+    public final Index accountNameIndex = new Index(this, "account_name", accountName);
+
+    public final Table product =  new Table(this, "product");
+    public final StringCol productName = new StringCol(product, "name");
+    public final Index productNameIndex = new Index(this, "product_name", productName);
+
     public final Table resource =  new Table(this, "resource");
     public final StringCol resourceName = new StringCol(resource, "name");
     public final LongCol resourceQuantity = new LongCol(resource, "quantity");
+    public final RefCol<Product> resourceProduct = new RefCol<Product>(resource, "product", product, Product.make(this));
     public final Index resourceNameIndex = new Index(this, "resource_name", resourceName);
 
     public final Table quantity =  new Table(this, "quantity");
@@ -26,12 +35,16 @@ public class DB extends Schema {
 
     public final Table item =  new Table(this, "item");
     public final RefCol<Resource> itemResource = new RefCol<Resource>(item, "resource", resource, Resource.make(this));
+    public final RefCol<Product> itemProduct = new RefCol<Product>(item, "product", product, Product.make(this));
     public final TimeCol itemStart = new TimeCol(item, "start");
     public final TimeCol itemEnd = new TimeCol(item, "end");
     public final LongCol itemQuantity = new LongCol(item, "quantity");
+    public final LongCol itemPrice = new LongCol(item, "price");
 
     public DB(Path root) {
         super(root);
+        account.addIndex(accountNameIndex);
+        product.addIndex(productNameIndex);
         resource.addIndex(resourceNameIndex);
         quantity.addIndex(quantityIndex);
     }

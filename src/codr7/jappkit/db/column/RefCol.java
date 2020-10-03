@@ -17,4 +17,6 @@ public class RefCol <T extends Mod> extends Col<Ref<T>> {
     }
 
     public Ref<T> ref(T it) { return new Ref<T>(refTable, it.id, make); }
+
+    public Ref<T> ref(Ref<T> it) { return new Ref<T>(refTable, it.id, make); }
 }

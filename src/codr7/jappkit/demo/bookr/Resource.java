@@ -2,6 +2,7 @@ package codr7.jappkit.demo.bookr;
 
 import codr7.jappkit.db.Mod;
 import codr7.jappkit.db.Rec;
+import codr7.jappkit.db.Ref;
 import codr7.jappkit.db.Tx;
 
 import java.time.Instant;
@@ -12,6 +13,7 @@ public class Resource extends Mod {
     public final DB db;
     public String name;
     public long quantity;
+    public Ref<Product> product;
 
     public Resource(DB db, Rec rec) {
         super(db.resource, rec);
@@ -22,6 +24,10 @@ public class Resource extends Mod {
         super(db.resource);
         this.db = db;
     }
+
+    public Product product(Tx tx)  { return product.deref(tx); }
+
+    public void setProduct(Product product) { this.product = db.resourceProduct.ref(product); }
 
     @Override
     public void store(Tx tx) {
