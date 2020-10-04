@@ -58,6 +58,21 @@ public class ItemTest {
         p.name = "foo";
         p.store(tx);
 
+        Account a1 = new Account(db);
+        a1.name = "a1";
+        a1.store(tx);
+
+        Account a2 = new Account(db);
+        a2.name = "a2";
+        a2.store(tx);
+
+        ChargeRule cr = new ChargeRule(db);
+        cr.setProduct(p);
+        cr.setFrom(a1);
+        cr.setTo(a2);
+        cr.body = "? * 0.25";
+        cr.store(tx);
+
         Resource r = new Resource(db);
         r.name = "foo";
         r.quantity = 10;

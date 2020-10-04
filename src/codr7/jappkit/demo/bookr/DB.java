@@ -19,6 +19,15 @@ public class DB extends Schema {
     public final StringCol productName = new StringCol(product, "name");
     public final Index productNameIndex = new Index(this, "product_name", productName);
 
+    public final Table chargeRule = new Table(this, "charge_rule");
+    public final RefCol<Product> chargeRuleProduct = new RefCol<>(chargeRule, "product", product, Product.make(this));
+    public final TimeCol chargeRuleStart = new TimeCol(chargeRule, "start");
+    public final TimeCol chargeRuleEnd = new TimeCol(chargeRule, "end");
+    public final RefCol<Account> chargeRuleFrom = new RefCol<>(chargeRule, "from", account, Account.make(this));
+    public final RefCol<Account> chargeRuleTo = new RefCol<>(chargeRule, "to", account, Account.make(this));
+    public final StringCol chargeRuleBody = new StringCol(chargeRule, "body");
+
+
     public final Table resource =  new Table(this, "resource");
     public final StringCol resourceName = new StringCol(resource, "name");
     public final LongCol resourceQuantity = new LongCol(resource, "quantity");
