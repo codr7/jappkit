@@ -1,5 +1,6 @@
 package codr7.jappkit.demo.bookr.test;
 
+import codr7.jappkit.Fix;
 import codr7.jappkit.Time;
 import codr7.jappkit.db.Tx;
 import codr7.jappkit.demo.bookr.*;
@@ -21,7 +22,7 @@ public class ItemTest {
 
         Resource r = new Resource(db);
         r.name = "foo";
-        r.quantity = 10L;
+        r.quantity = 10;
         r.store(tx);
 
         Item i = new Item(db);
@@ -59,7 +60,7 @@ public class ItemTest {
 
         Resource r = new Resource(db);
         r.name = "foo";
-        r.quantity = 10L;
+        r.quantity = 10;
         r.setProduct(p);
         r.store(tx);
 
@@ -67,7 +68,7 @@ public class ItemTest {
         i.setResource(r, tx);
         i.setLength(2 * Time.DAY);
         i.quantity = 2;
-        i.price = Amount.make(1000);
+        i.price = Fix.make(1000);
         i.store(tx);
 
         assertEquals(i.product.id, p.id);

@@ -11,9 +11,9 @@ import java.time.Instant;
 
 import static org.testng.Assert.*;
 
-public class QuantityTest {
+public class ResourceTest {
     @Test
-    public void init() {
+    public void quantity() {
         DB db = new DB(Path.of("testdb"));
         db.drop();
         db.open(Instant.now());
