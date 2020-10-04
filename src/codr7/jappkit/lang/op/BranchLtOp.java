@@ -5,7 +5,7 @@ import codr7.jappkit.lang.*;
 import codr7.jappkit.type.LongType;
 
 public class BranchLtOp extends BranchOp {
-    public BranchLtOp(Target target) { super(target); }
+    public BranchLtOp(VM vm) { super(vm); }
 
     @Override
     public int eval(VM vm, CallStack calls, Stack stack) {

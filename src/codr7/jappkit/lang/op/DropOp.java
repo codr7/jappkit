@@ -3,13 +3,12 @@ package codr7.jappkit.lang.op;
 import codr7.jappkit.Stack;
 import codr7.jappkit.lang.CallStack;
 import codr7.jappkit.lang.Op;
-import codr7.jappkit.lang.Target;
 import codr7.jappkit.lang.VM;
 
 public class DropOp extends Op {
     public int offs = 0, nitems = 1;
 
-    public DropOp(Target target) { super(target); }
+    public DropOp(VM vm) { super(vm); }
 
     public DropOp offs(int it) {
         offs = it;

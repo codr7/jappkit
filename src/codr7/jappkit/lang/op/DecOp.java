@@ -9,7 +9,7 @@ public class DecOp extends Op {
     public int stackOffs = 0;
     public long delta = 1;
 
-    public DecOp(Target target) { super(target); }
+    public DecOp(VM vm) { super(vm); }
 
     public DecOp stackOffs(int it) {
         stackOffs = it;

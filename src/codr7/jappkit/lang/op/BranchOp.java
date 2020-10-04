@@ -1,14 +1,14 @@
 package codr7.jappkit.lang.op;
 
 import codr7.jappkit.lang.Op;
-import codr7.jappkit.lang.Target;
+import codr7.jappkit.lang.VM;
 
 public abstract class BranchOp extends Op {
     public long cond = 0;
     public int stackOffs = 0;
     public int targetPc = -1;
 
-    public BranchOp(Target target) { super(target); }
+    public BranchOp(VM vm) { super(vm); }
 
     public BranchOp cond(long it) {
         cond = it;
@@ -21,6 +21,4 @@ public abstract class BranchOp extends Op {
     }
 
     public void targetPc(int it) { targetPc = it; }
-
-    public void targetPc(Target it) { targetPc(it.nops()); }
 }

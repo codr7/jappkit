@@ -8,7 +8,7 @@ import codr7.jappkit.lang.*;
 public class PushOp extends Op {
     public Val val = null;
 
-    public PushOp(Target target) { super(target); }
+    public PushOp(VM vm) { super(vm); }
 
     public PushOp val(Val it) {
         val = it;

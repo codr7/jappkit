@@ -7,7 +7,7 @@ import codr7.jappkit.type.LongType;
 import codr7.jappkit.type.NumType;
 
 public class AddOp extends Op {
-    public AddOp(Target target) { super(target); }
+    public AddOp(VM vm) { super(vm); }
 
     @Override
     public int eval(VM vm, CallStack calls, Stack stack) {

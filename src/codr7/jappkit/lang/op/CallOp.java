@@ -6,7 +6,7 @@ import codr7.jappkit.lang.*;
 public class CallOp extends Op {
     public int targetPc = -1;
 
-    public CallOp(Target target) { super(target); }
+    public CallOp(VM vm) { super(vm); }
 
     public CallOp targetPc(int it) {
         targetPc = it;

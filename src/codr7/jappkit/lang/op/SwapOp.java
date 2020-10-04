@@ -6,7 +6,7 @@ import codr7.jappkit.lang.*;
 public class SwapOp extends Op {
     public int offs1 = 1, offs2 = 0;
 
-    public SwapOp(Target target) { super(target); }
+    public SwapOp(VM vm) { super(vm); }
 
     public SwapOp offs1(int it) {
         offs1 = it;

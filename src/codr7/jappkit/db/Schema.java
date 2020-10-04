@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static codr7.jappkit.Utils.*;
+import static codr7.jappkit.Util.*;
 
 public class Schema {
     public final Path root;

@@ -3,7 +3,7 @@ package codr7.jappkit;
 import java.io.File;
 import java.nio.file.Path;
 
-public final class Utils {
+public final class Util {
     public static void mkdir(Path path) {
         new File(path.toString()).mkdirs();
     }
@@ -22,5 +22,5 @@ public final class Utils {
         return it.delete();
     }
 
-    private Utils() { }
+    private Util() { }
 }

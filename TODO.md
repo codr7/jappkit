@@ -4,14 +4,19 @@
   * add bookr ui
 * db
   * bookr
-    * add calc lang
-      * parse numbers as fix
-      * 1 + 2.0 * 3 + 4 * H
-        * eval recursive descent
-          * check next operator
+    * calc improvements
+      * add grouping with parens
+      * check expr right prio like left
+      * add decimal support to readNum
+      * add mixed mode
+        * long +* fix = fix
+      * add div
+        * long / long = fix
     * add charge from ModTest
       * add product field
     * finish item charge test
+    * add product.price
+      * copy to item.price
     * add resource/product/item.label
       * add Item.label()
       *  generate on request when not set

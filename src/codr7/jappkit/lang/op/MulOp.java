@@ -4,12 +4,11 @@ import codr7.jappkit.Stack;
 import codr7.jappkit.Val;
 import codr7.jappkit.lang.CallStack;
 import codr7.jappkit.lang.Op;
-import codr7.jappkit.lang.Target;
 import codr7.jappkit.lang.VM;
 import codr7.jappkit.type.NumType;
 
 public class MulOp extends Op {
-    public MulOp(Target target) { super(target); }
+    public MulOp(VM vm) { super(vm); }
 
     @Override
     public int eval(VM vm, CallStack calls, Stack stack) {
