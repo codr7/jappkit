@@ -2,37 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdc27e2e-1d44-466c-9cb5-901935344158" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/Calc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/CalcTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/Form.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/forms/ExprForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/forms/IdForm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/forms/NumForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/Reader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.md" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/db/Schema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/db/Schema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/Op.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/Op.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/Target.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/VM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/VM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/AddOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/AddOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/BranchEqOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/BranchEqOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/BranchGtOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/BranchGtOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/BranchLtOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/BranchLtOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/BranchOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/BranchOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/CallOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/CallOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/CpOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/CpOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/DecOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/DecOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/DefConstOp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/DropOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/DropOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/GetConstOp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/JmpOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/JmpOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/MulOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/MulOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/PushOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/PushOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/RetOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/RetOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/StopOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/StopOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/SwapOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/op/SwapOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/lang/test/VMTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/lang/test/VMTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/calc/Calc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/Calc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/codr7/jappkit/calc/CalcTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/codr7/jappkit/calc/CalcTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -231,22 +204,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="843" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600815691209" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1601833717508">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1601836297038">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601833717508" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1601833717508">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1601836297038" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1601836297037">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601833717508" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1601833717508">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1601836297037" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1601836297037">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601833717508" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1601833717508">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1601836297037" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1601836297037">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601833717508" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1601836297037" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1600702854597">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
