@@ -8,8 +8,6 @@
       * finish item charge test
       * add grouping with parens
       * check expr right prio like left
-      * add mixed mode
-        * long +* fix = fix
       * add div/sub
         * long / long = fix
     * add charge from ModTest

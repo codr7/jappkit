@@ -18,6 +18,6 @@ public class CalcTest {
     public void decimals() {
         var c = new Calc();
         c.set("?", LongType.it, 21L);
-        assertEquals(c.eval(new Reader("? + 3.5 * 6")).data, Fix.make(42));
+        assertEquals(c.eval(new Reader("? + 1.75 * 12")).data, Fix.make(42));
     }
 }
