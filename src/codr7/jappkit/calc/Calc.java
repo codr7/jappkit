@@ -17,6 +17,7 @@ public class Calc extends VM {
     public <ValT> Calc set(String key, NumType<ValT> type, ValT data) { return set(key, Val.make(type, data)); }
 
     public Val eval(Reader in) {
+        clear();
         var startPc = nops();
         in.read().compile(this, env);
         new StopOp(this);

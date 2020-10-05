@@ -18,5 +18,7 @@ public class VM {
 
     public int nops() { return ops.size(); }
 
+    public void clear() { ops.clear(); }
+
     private ArrayList<Op> ops = new ArrayList<>();
 }
