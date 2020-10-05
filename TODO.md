@@ -6,10 +6,10 @@
   * bookr
     * calc improvements
       * finish item charge test
-      * add grouping with parens
-      * check expr right prio like left
       * add div/sub
         * long / long = fix
+      * check expr right prio like left
+      * add grouping with parens
     * add charge from ModTest
       * add product field
     * finish item charge test

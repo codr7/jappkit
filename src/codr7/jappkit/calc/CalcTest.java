@@ -20,4 +20,9 @@ public class CalcTest {
         c.set("?", LongType.it, 21L);
         assertEquals(c.eval(new Reader("? + 1.75 * 12")).data, Fix.make(42));
     }
+
+    @Test
+    public void negate() {
+        assertEquals(new Calc().eval(new Reader("-42")).data, -42L);
+    }
 }
