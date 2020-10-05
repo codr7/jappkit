@@ -1,10 +1,12 @@
 package codr7.jappkit.calc;
 
 import codr7.jappkit.E;
+import codr7.jappkit.Fix;
 import codr7.jappkit.Val;
 import codr7.jappkit.calc.forms.ExprForm;
 import codr7.jappkit.calc.forms.IdForm;
 import codr7.jappkit.calc.forms.NumForm;
+import codr7.jappkit.type.FixType;
 import codr7.jappkit.type.LongType;
 
 import java.io.*;
@@ -123,6 +125,7 @@ public class Reader {
 
             while (true) {
                 c = in.read();
+                if (c == '.') { return readFix(out, base); }
                 if (c == -1) { break; }
                 var v = charToInt(c, base);
 
@@ -139,6 +142,32 @@ public class Reader {
         catch (IOException e) { throw new E(e); }
 
         return Val.make(LongType.it, out);
+    }
+
+    public Val readFix(long val, int base) {
+        long out = 0;
+        int scale = 1;
+
+        try {
+            while (true) {
+                var c = in.read();
+                if (c == -1) { break; }
+                var v = charToInt(c, base);
+
+                if (v == -1) {
+                    in.unread(c);
+                    break;
+                }
+
+                out *= base;
+                out += v;
+                scale *= base;
+            }
+        }
+        catch (EOFException e) {}
+        catch (IOException e) { throw new E(e); }
+
+        return Val.make(FixType.it, Fix.make(val) + out * Fix.SCALE / scale);
     }
 
     private final PushbackInputStream in;

@@ -1,6 +1,8 @@
 package codr7.jappkit.type;
 
 import codr7.jappkit.Cmp;
+import codr7.jappkit.E;
+import codr7.jappkit.Fix;
 import codr7.jappkit.Val;
 import codr7.jappkit.db.Encoding;
 
@@ -22,14 +24,26 @@ public class LongType extends NumType<Long> {
 
     @Override
     public void add(Val src, Val dst) {
-        assert dst.type == src.type;
-        dst.data = (Long)dst.data + (Long)src.data;
+        if (src.type == FixType.it) {
+            dst.type = FixType.it;
+            dst.data = Fix.make((Long) dst.data) + (Long) src.data;
+        } else if (src.type == LongType.it) {
+            dst.data = (Long) dst.data + (Long) src.data;
+        } else {
+            throw new E("Add not supported: %s", src.type.name);
+        }
     }
 
     @Override
     public void mul(Val src, Val dst) {
-        assert dst.type == src.type;
-        dst.data = (Long)dst.data * (Long)src.data;
+        if (src.type == FixType.it) {
+            dst.type = FixType.it;
+            dst.data = (Long) dst.data * (Long) src.data;
+        } else if (src.type == LongType.it) {
+            dst.data = (Long) dst.data * (Long) src.data;
+        } else {
+            throw new E("Mul not supported: %s", src.type.name);
+        }
     }
 
     @Override

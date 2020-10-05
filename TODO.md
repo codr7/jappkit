@@ -5,12 +5,12 @@
 * db
   * bookr
     * calc improvements
+      * finish item charge test
       * add grouping with parens
       * check expr right prio like left
-      * add decimal support to readNum
       * add mixed mode
         * long +* fix = fix
-      * add div
+      * add div/sub
         * long / long = fix
     * add charge from ModTest
       * add product field
