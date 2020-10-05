@@ -65,9 +65,17 @@ public class Reader {
             if (c == -1) { return null; }
 
             if (c == '-') {
-                var n = readNum();
-                n.data = -(Long)n.data;
-                return new NumForm(n);
+                c = in.read();
+                if (c == -1) { return null; }
+                in.unread(c);
+
+                if (Character.isDigit(c)) {
+                    var n = readNum();
+                    n.data = -(Long) n.data;
+                    return new NumForm(n);
+                } else {
+                    in.unread('-');
+                }
             } else if (Character.isDigit(c)) {
                 in.unread(c);
                 return new NumForm(readNum());
