@@ -5,7 +5,6 @@
 * db
   * bookr
     * calc improvements
-      * finish item charge test
       * add div/sub
         * long / long = fix
       * check expr right prio like left

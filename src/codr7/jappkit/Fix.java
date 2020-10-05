@@ -5,5 +5,7 @@ public class Fix {
 
     public static long make(long in) { return in * SCALE; }
 
+    public static long longValue(long in) { return in / SCALE; }
+
     private Fix() {}
 }

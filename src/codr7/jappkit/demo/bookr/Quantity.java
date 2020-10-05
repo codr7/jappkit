@@ -8,42 +8,43 @@ import codr7.jappkit.db.Tx;
 
 import java.time.Instant;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 public class Quantity extends Mod {
     public static Make<Quantity> make(DB db) { return (rec) -> new Quantity(db, rec); }
 
-    public static long get(DB db, Resource resource, Instant start, Instant end, Tx tx) {
+    public static Stream<Quantity> stream(DB db, Resource resource, Instant start, Instant end, Tx tx) {
         return db.quantityIndex
                 .findFirst(new Object[]{db.quantityResource.ref(resource), start.plusSeconds(1)}, tx)
                 .takeWhile((e) -> db.quantityIndex.key(e.getKey(), db.quantityStart).compareTo(end) < 0)
-                .map((e) -> { return new Quantity(db, db.quantity.load(e.getValue(), tx)); })
+                .map((e) -> { return new Quantity(db, db.quantity.load(e.getValue(), tx)); });
+    }
+
+    public static long get(DB db, Resource resource, Instant start, Instant end, Tx tx) {
+        return stream(db, resource, start, end, tx)
                 .map((q) -> q.total-q.used)
                 .min(Comparator.naturalOrder())
                 .orElse(0L);
     }
 
     public static void update(DB db, Resource resource, Instant start, Instant end, long total, long used, Tx tx) {
-        db.quantityIndex
-                .findFirst(new Object[]{db.quantityResource.ref(resource), start.plusSeconds(1)}, tx)
-                .takeWhile((e) -> db.quantityIndex.key(e.getKey(), db.quantityStart).compareTo(end) < 0)
-                .map((e) -> { return new Quantity(db, db.quantity.load(e.getValue(), tx)); })
-                .forEach((q) -> {
-                    if (q.start.compareTo(start) < 0) {
-                        new Quantity(db, resource, q.start, start, q.total, q.used).store(tx);
-                        q.start = start;
-                    }
+        stream(db, resource, start, end, tx).forEach((q) -> {
+            if (q.start.compareTo(start) < 0) {
+                new Quantity(db, resource, q.start, start, q.total, q.used).store(tx);
+                q.start = start;
+            }
 
-                    if (q.end.compareTo(end) > 0) {
-                        new Quantity(db, resource, end, q.end, q.total, q.used).store(tx);
-                        q.end = end;
-                    }
+            if (q.end.compareTo(end) > 0) {
+                new Quantity(db, resource, end, q.end, q.total, q.used).store(tx);
+                q.end = end;
+            }
 
-                    q.total += total;
-                    q.used += used;
+            q.total += total;
+            q.used += used;
 
-                    if (q.used > q.total) { throw new E("Overbook"); }
-                    q.store(tx);
-                });
+            if (q.used > q.total) { throw new E("Overbook"); }
+            q.store(tx);
+        });
     }
 
     public Instant start, end;

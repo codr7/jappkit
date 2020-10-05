@@ -1,14 +1,14 @@
 package codr7.jappkit.demo.bookr;
 
 import codr7.jappkit.db.Index;
+import codr7.jappkit.db.Ref;
 import codr7.jappkit.db.Schema;
 import codr7.jappkit.db.Table;
-import codr7.jappkit.db.column.LongCol;
-import codr7.jappkit.db.column.RefCol;
-import codr7.jappkit.db.column.StringCol;
-import codr7.jappkit.db.column.TimeCol;
+import codr7.jappkit.db.column.*;
+import codr7.jappkit.db.type.RefType;
 
 import java.nio.file.Path;
+import java.util.TreeSet;
 
 public class DB extends Schema {
     public final Table account =  new Table(this, "account");
@@ -26,7 +26,13 @@ public class DB extends Schema {
     public final RefCol<Account> chargeRuleFrom = new RefCol<>(chargeRule, "from", account, Account.make(this));
     public final RefCol<Account> chargeRuleTo = new RefCol<>(chargeRule, "to", account, Account.make(this));
     public final StringCol chargeRuleBody = new StringCol(chargeRule, "body");
+    public final Index chargeRuleIndex = new Index(this, "charge_rule", chargeRuleProduct, chargeRuleEnd, chargeRuleStart);
 
+    public final Table charge = new Table(this, "charge");
+    public final RefCol<Product> chargeProduct = new RefCol<>(charge, "product", product, Product.make(this));
+    public final RefCol<Account> chargeFrom = new RefCol<>(charge, "from", account, Account.make(this));
+    public final RefCol<Account> chargeTo = new RefCol<>(charge, "to", account, Account.make(this));
+    public final FixCol chargeAmount = new FixCol(charge, "amount");
 
     public final Table resource =  new Table(this, "resource");
     public final StringCol resourceName = new StringCol(resource, "name");
@@ -49,11 +55,13 @@ public class DB extends Schema {
     public final TimeCol itemEnd = new TimeCol(item, "end");
     public final LongCol itemQuantity = new LongCol(item, "quantity");
     public final LongCol itemPrice = new LongCol(item, "price");
+    public final SetCol<Ref<Charge>> itemCharges = new SetCol(item, "charges", TreeSet.class, new RefType<Charge>(charge, Charge.make(this)));
 
     public DB(Path root) {
         super(root);
         account.addIndex(accountNameIndex);
         product.addIndex(productNameIndex);
+        chargeRule.addIndex(chargeRuleIndex);
         resource.addIndex(resourceNameIndex);
         quantity.addIndex(quantityIndex);
     }

@@ -89,6 +89,14 @@ public class ItemTest {
         assertEquals(i.product.id, p.id);
 
         tx.commit();
+        i.reload(tx);
+
+        assertEquals(i.charges(tx).count(), 1);
+        Charge c = i.charges(tx).iterator().next();
+        assertEquals(c.product.id, p.id);
+        assertEquals(c.from.id, a1.id);
+        assertEquals(c.to.id, a2.id);
+        assertEquals(c.amount, Fix.make(250));
 
         db.close();
     }

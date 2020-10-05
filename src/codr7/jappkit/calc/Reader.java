@@ -130,7 +130,6 @@ public class Reader {
                         base = 16;
                         break;
                     default:
-                        in.unread('0');
                         if (c != -1) { in.unread(c); }
                 }
             } else { in.unread(c); }
