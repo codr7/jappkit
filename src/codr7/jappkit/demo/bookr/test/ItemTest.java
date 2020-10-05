@@ -49,37 +49,37 @@ public class ItemTest {
 
     @Test
     public void charge() {
-        DB db = new DB(Path.of("testdb"));
+        var db = new DB(Path.of("testdb"));
         db.drop();
         db.open(Instant.now());
-        Tx tx = new Tx();
+        var tx = new Tx();
 
-        Product p = new Product(db);
+        var p = new Product(db);
         p.name = "foo";
         p.store(tx);
 
-        Account a1 = new Account(db);
+        var a1 = new Account(db);
         a1.name = "a1";
         a1.store(tx);
 
-        Account a2 = new Account(db);
+        var a2 = new Account(db);
         a2.name = "a2";
         a2.store(tx);
 
-        ChargeRule cr = new ChargeRule(db);
+        var cr = new ChargeRule(db);
         cr.setProduct(p);
         cr.setFrom(a1);
         cr.setTo(a2);
         cr.body = "? * 0.25";
         cr.store(tx);
 
-        Resource r = new Resource(db);
+        var r = new Resource(db);
         r.name = "foo";
         r.quantity = 10;
         r.setProduct(p);
         r.store(tx);
 
-        Item i = new Item(db);
+        var i = new Item(db);
         i.setResource(r, tx);
         i.setLength(2 * Time.DAY);
         i.quantity = 2;
@@ -87,16 +87,21 @@ public class ItemTest {
         i.store(tx);
 
         assertEquals(i.product.id, p.id);
-
-        tx.commit();
-        i.reload(tx);
-
         assertEquals(i.charges(tx).count(), 1);
-        Charge c = i.charges(tx).iterator().next();
+        var c = i.charges(tx).iterator().next();
         assertEquals(c.product.id, p.id);
         assertEquals(c.from.id, a1.id);
         assertEquals(c.to.id, a2.id);
         assertEquals(c.amount, Fix.make(250));
+
+        i.price = Fix.make(500);
+        i.store(tx);
+        tx.commit();
+        i.reload(tx);
+
+        assertEquals(i.charges(tx).count(), 1);
+        c = i.charges(tx).iterator().next();
+        assertEquals(c.amount, Fix.make(125));
 
         db.close();
     }

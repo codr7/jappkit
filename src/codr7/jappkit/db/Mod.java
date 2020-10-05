@@ -54,6 +54,8 @@ public abstract class Mod {
 
     public void store(Tx tx) { table.store(toRec(), tx); }
 
+    public void delete(Tx tx) { table.delete(id, tx); }
+
     public Rec toRec() {
         Rec out = new Rec();
         out.set(table.id, id);

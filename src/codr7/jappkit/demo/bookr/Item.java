@@ -58,7 +58,7 @@ public class Item extends Mod {
     public void setProduct(Product it) { this.product = db.itemProduct.ref(it); }
 
     public Charge charge(Account from, Account to, long amount, Tx tx) {
-        var c = new Charge(db, product(tx), from, to, Fix.make(amount));
+        var c = new Charge(db, product(tx), from, to, amount);
         c.store(tx);
         charges.add(new Ref<Charge>(db.charge, c.id, Charge.make(db)));
         return c;
@@ -69,17 +69,24 @@ public class Item extends Mod {
     @Override
     public void store(Tx tx) {
         var pir = table.load(id, tx);
-        boolean updateQuantity = true;
+        var updateQuantity = true;
+        var updateCharge = true;
 
         if (pir != null) {
             var pi = new Item(db, pir);
             updateQuantity = pi.resource.id != resource.id || !pi.start.equals(start) || !pi.end.equals(end) || pi.quantity != quantity;
             if (updateQuantity) { Quantity.update(db, pi.resource(tx), pi.start, pi.end, 0, -pi.quantity, tx); }
+            updateCharge = pi.product.id != product.id || pi.price != price;
+
+            if (updateCharge) {
+                for (var c : charges) { c.deref(tx).delete(tx); }
+                charges.clear();
+            }
         }
 
         if (updateQuantity && quantity != 0) { Quantity.update(db, resource(tx), start, end, 0, quantity, tx); }
 
-        if (product.id != -1 && price != 0) {
+        if (product.id != -1 && price != 0 && updateCharge) {
             var today = Time.today();
 
             db.chargeRuleIndex
@@ -89,7 +96,7 @@ public class Item extends Mod {
                     .forEach((cr) -> {
                         var c = new Calc();
                         c.set("?", FixType.it, price);
-                        var a = Fix.longValue((Long)c.eval(new Reader(cr.body)).data);
+                        var a = (Long)c.eval(new Reader(cr.body)).data;
                         charge(cr.from(tx), cr.to(tx), a, tx);
                     });
         }
