@@ -7,11 +7,7 @@
     * calc improvements
       * add div/sub
         * long / long = fix
-      * check expr right prio like left
       * add grouping with parens
-    * add charge from ModTest
-      * add product field
-    * finish item charge test
     * add product.price
       * copy to item.price
     * add resource/product/item.label
